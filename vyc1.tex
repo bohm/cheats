@@ -1,0 +1,303 @@
+\pdfoutput=1
+\pdfpkresolution=600
+
+\input ucwmac.tex
+\input ucw-ofs.tex
+\input color
+
+\language\czech
+%**start of header
+\newcount\columnsperpage
+
+\columnsperpage=3
+
+\def\versionnumber{1.5}  % Version of this reference card
+\def\year{2007}
+\def\month{January}
+\def\version{\month\ \year\ v\versionnumber}
+
+
+\def\shortcopyrightnotice{
+}
+
+\def\copyrightnotice{
+}
+
+% make \bye not \outer so that the \def\bye in the \else clause below
+% can be scanned without complaint.
+\def\bye{\par\vfill\supereject\end}
+
+\newdimen\intercolumnskip
+\newbox\columna
+\newbox\columnb
+
+\def\ncolumns{\the\columnsperpage}
+
+\message{[\ncolumns\space
+   column\if 1\ncolumns\else s\fi\space per page]}
+
+\def\scaledmag#1{ scaled \magstep #1}
+
+% This multi-way format was designed by Stephen Gildea
+% October 1986.
+
+% Modified for Czech fonts.
+\if 1\ncolumns
+   \hsize 4in
+   \vsize 10in
+   \voffset -.7in
+   \font\titlefont=\fontname\tenbf \scaledmag3
+   \font\headingfont=\fontname\tenbf \scaledmag2
+   \font\smallfont=\fontname\sevenrm
+   \font\smallsy=\fontname\sevensy
+
+   \footline{\hss\folio}
+   \def\makefootline{\baselineskip10pt\hsize6.5in\line{\the\footline}}
+\else
+   \hsize 3.2in
+   \vsize 7.95in
+   \hoffset -.75in
+   \voffset -.745in
+   \font\titlefont=csbx10 \scaledmag2
+   \font\headingfont=csbx10 \scaledmag1
+   \font\smallfont=csr6
+   \font\smallsy=cssy6
+   \font\eightrm=csr8
+   \font\eighti=csmi8
+   \font\eightsy=cssy8
+   \font\eightbf=csbx8
+   \font\eighttt=cstt8
+   \font\eightit=csti8
+   \font\eightsl=cssl8
+   \textfont0=\eightrm
+   \textfont1=\eighti
+   \textfont2=\eightsy
+   \def\rm{\eightrm}
+   \def\bf{\eightbf}
+   \def\tt{\eighttt}
+   \def\it{\eightit}
+   \def\sl{\eightsl}
+   \normalbaselineskip=.8\normalbaselineskip
+   \normallineskip=.8\normallineskip
+   \normallineskiplimit=.8\normallineskiplimit
+   \normalbaselines\rm          %make definitions take effect
+
+   \if 2\ncolumns
+     \let\maxcolumn=b
+     \footline{\hss\rm\folio\hss}
+     \def\makefootline{\vskip 2in \hsize=6.86in\line{\the\footline}}
+   \else \if 3\ncolumns
+     \let\maxcolumn=c
+     \nopagenumbers
+   \else
+     \errhelp{You must set \columnsperpage equal to 1, 2, or 3.}
+     \errmessage{Illegal number of columns per page}
+   \fi\fi
+
+   \intercolumnskip=.46in
+   \def\abc{a}
+   \output={%
+       % This next line is useful when designing the layout.
+       %\immediate\write16{Column \folio\abc\space starts with \firstmark}
+       \if \maxcolumn\abc \multicolumnformat \global\def\abc{a}
+       \else\if a\abc
+        \global\setbox\columna\columnbox \global\def\abc{b}
+         %% in case we never use \columnb (two-column mode)
+         \global\setbox\columnb\hbox to -\intercolumnskip{}
+       \else
+        \global\setbox\columnb\columnbox \global\def\abc{c}\fi\fi}
+   \def\multicolumnformat{\shipout\vbox{\makeheadline
+       \hbox{\box\columna\hskip\intercolumnskip
+         \box\columnb\hskip\intercolumnskip\columnbox}
+       \makefootline}\advancepageno}
+   \def\columnbox{\leftline{\pagebody}}
+
+   \def\bye{\par\vfill\supereject
+     \if a\abc \else\null\vfill\eject\fi
+     \if a\abc \else\null\vfill\eject\fi
+     \end}
+\fi
+
+% ***** Verbatim typesetting *****
+
+% Verbatim typesetting is done by
+%    \verbatim"stuff to verbatim typeset"
+% Any character can be used in place of ".
+% E.g. \verbatim?stuff? or \verbatim|stuff|.  Cf. TeXbook pp.380-382
+
+\def\uncatcodespecials{\def\do##1{\catcode`##1=12}\dospecials}
+\def\setupverbatim{\tt%
+\def\par{\leavevmode\endgraf}\catcode`\`=\active%
+\obeylines\uncatcodespecials\obeyspaces}
+\def\verbatim{\begingroup\setupverbatim\doverbatim}
+\def\doverbatim#1{\def\next##1#1{##1\endgroup}\next}
+
+\def\\{\verbatim}
+\def\ds{\displaystyle}
+\def\SPC{\quad} % space between symbol and command
+
+\parindent 0pt
+\parskip 1ex plus .5ex minus .5ex
+
+\def\small{\smallfont\textfont2=\smallsy\baselineskip=.8\baselineskip}
+
+\outer\def\newcolumn{\vfill\eject}
+
+\outer\def\title#1{{\titlefont\centerline{#1}}\vskip 1ex plus .5ex minus.5ex}
+
+%\outer\def\section#1{\par\filbreak
+%  \vskip 1ex plus 2ex minus 2ex {\headingfont #1}\mark{#1}%
+%  \vskip 1ex plus 1ex minus .5ex}
+\outer\def\section#1{\par\filbreak
+   \vskip .75ex plus 1ex minus 2ex {\headingfont #1}\mark{#1}%
+   \vskip .5ex plus .5ex minus .5ex}
+\outer\def\subsection#1{\par\filbreak
+   \vskip .75ex plus 1ex minus 2ex {\bf #1}\mark{#1}%
+   \vskip .5ex plus .5ex minus .5ex}
+
+\def\paralign{\vskip\parskip\halign}
+
+%\def\<#1>{$\langle${\rm #1}$\rangle$}
+
+\def\begintext{\par\leavevmode\begingroup\parskip0pt\rm}
+\def\endtext{\endgroup}
+
+% smaller indenting of itemize lists for a compact format
+\itemindent=0.15in
+\itemnarrow=0in
+
+% math-related definitions (compressed than usual):
+
+\def\dfn{
+{\color{red} \bf D:}
+}
+
+
+\def\prfcolor{\color{green}}
+\def\thmcolor{\color{blue}}
+\def\lemcolor{\color[rgb]{1,0,1}}
+\def\obscolor{\color{black}}
+
+\def\prf#1{{\bf \begingroup\prfcolor P\ifx#1\empty\else(\endgroup{\I #1}\begingroup\prfcolor)\fi:\endgroup}}
+\def\thm#1{{\bf \begingroup\thmcolor T\ifx#1\empty\else(\endgroup{\I #1}\begingroup\thmcolor)\fi:\endgroup}}
+\def\lem#1{{\bf \begingroup\lemcolor L\ifx#1\empty\else(\endgroup{\I #1}\begingroup\lemcolor)\fi:\endgroup}}
+\def\obs#1{{\bf \begingroup\obscolor O\ifx#1\empty\else(\endgroup{\I #1}\begingroup\obscolor)\fi:\endgroup}}
+\def\res#1{{\bf \begingroup\obscolor R\ifx#1\empty\else(\endgroup{\I #1}\begingroup\obscolor)\fi:\endgroup}}
+
+\def\st{{\rm\ t.ž.\ }}
+\def\iff{\leftrightarrow}
+\def\then{\rightarrow}
+\def\rng{{\rm Rng}}
+% enumerability-related macros
+\def\da{\downarrow}
+\def\ua{\uparrow}
+\def\daeq{\downarrow=}
+\def\daneq{\downarrow\neq}
+
+% ************  TEXT STARTS HERE **************************
+\title{Vyčíslitelnost 1}
+\section{Základní funkce}
+$$\eqalign{ O(x) &= 0\cr
+S(x) &= x+1\cr
+I^j_n(x_1 \dots x_n) &= x_j\cr
+S^m_n(f, g_{[1,m]}) &= h \st h(x_{[1,n]}) \simeq f(g_1(x_{[1,n]} \dots g_m(x_{[1,n]})) \cr
+R_n(f,g) &= h \st \cases{h(0,x_{[2,n]}) = f(x_{[2,n]}) \cr h(i, x_{[2,n]}) = g(i, h(i, x_{[2,n]}), x_{[2,n]})\cr} \cr
+M_n(f) &= h \st \cr
+h(x_{[1,n]}) &\daeq z \iff \cases{f(x_{[1,n]}, z) \daeq 0 \cr \forall j < z: f(x_{[1,n]}) \daneq 0\cr} \cr}$$
+
+\itemize{\dfn}
+\:  $ČRF$ -- lze ji odvodit pomocí základních funkcí
+\:  $ORF$ -- $ČRF$ a zároveň totální (všude definovaná)
+\:  $PRF$ -- lze ji odvodit bez použití minimalizace
+\endlist
+
+\obs{} Zneužití značení v taháku: občas $ČRF$ třída (píši $f \in ČRF$), občas zastupuje slova
+{\I částečně rekurzivní funkce} (píši) $f\ ČRF$ n. $f {\rm\ je\ } ČRF$. Mělo by být jasné
+z kontextu.
+
+\thm{} $ČRF \subset ORF \subset PRF$
+
+\prf{}
+
+\itemize\ibull
+\:  $ČRF \&\neg ORF$ je prázdná funkce $f$: $g(x,y) = y+1, f = M_1(g)$.
+\:  $ORF \&\neg PRF$ je Ackermannova funkce. Dá se naprogramovat, totální též, tedy je $ORF$. Pokud však definujeme
+úrovně výpočtu pro každé $k$, tak se dokážeme pomocí $k$ for cyklů ($PRF$) dostat jen do hloubky $k$ a nikdy to
+tedy nepokryjeme celé.
+\endlist
+
+\thm{} $TM \simeq ČRF$, co se výpočetní síly týče.
+
+\prf{} 
+
+\thm{Kleene} $\forall k \ge 1:$
+
+\numlist\nalpha
+\: $\exists ČRF \Psi_k(e, x_{[1,k]})$ univerzální pro $k$ proměnných.
+\: Lze efektivně získat z funkce její $e$ a z $e$ funkci.
+\: $\exists PRF_1 U \& \exists PRF_{k+2} T_k \st$ \hfil\break
+$\Psi_k(e, x_{[1,k]}) \simeq U(\mu_y(T_k(e, x_{[1,k]},y)))$
+\: $\exists PRF_{m+1} s_m$ prostá a rostoucí $\st$ \hfil\break
+$\Psi_{m+n}(e,y_{[1,m]},x{[1,n]}) \simeq \Psi_m\left(s_m(e,y_{[1,m]}), x_{[1,n]}\right)$
+\: Univerzální funkce je standardní.
+\endlist
+
+\thm{} Univerzální $PRF$ není sama $PRF$, univerzální $ORF$ není sama $ORF$. Univerzální $PRF$ je v $ORF$.
+
+\prf{} První dvě části diagonalizací.
+
+\section{Rekurzivní spočetnost}
+\itemize{\dfn}
+\: $\chi \equiv$ pravdivostní funkce výroku nebo charakteristická funkce mny.
+\: $PRP/ORP$ (predikáty) $\equiv$ jeho $\chi$ je $PRF/ORF$.
+\: $RSP$ predikát $\equiv$ obor konvergence $ČRF$.
+\: $M$ mna je rekurzivní $\equiv \chi \in ORF$.
+\: $M$ mna je rekurzivně spočetná ($RSM$) $\equiv M = dom(f), f \in ČRF$.
+\endlist
+
+\thm{Post} $M$ rekurzivní $\iff$ $M$ i $\overline{M}$ jsou $RSM$. $P$ je $ORP$ $\iff$ $P$ a $\neg P$ jsou $RSP$.
+
+\prf{} Tam: Když je $\chi \in ORF$, můžeme rozhodovat o přítomnosti i nepřítomnosti
+efektivně. Zpátky: Prostě pustíme oba výpočty souběžně, jeden se zastaví, neboť jsou
+obě $RSM$. Pro výroky se to získá z věty o selektoru (níže).
+
+\thm{Vlastnosti $\Psi$}
+
+\numlist\ndotted
+\: $\Psi_k(e,x_{[1,k]})\da, \Psi_k(x_{[1,k]})\da$ jsou $RSP$, ale ne $ORP/PRP$.
+\: $\neg\left(\Psi_k(e, x_{[1,k]})\da\right), \neg\left(\Psi_k(x_{[1,k]})\da\right)$ nejsou $RSP$.
+\: $\Psi_k$ nelze rozšířit do $ORF$.
+\endlist
+
+\prf{}
+
+\thm{O selektoru} $\forall RSP_{k+1} Q \exists ČRF_k \varphi \st$
+$$\eqalign{
+\Phi(x_{[1,n]})\da &\iff \exists y: Q\left(x_{[1,n]}, y\right)\cr
+\Phi(x_{[1,n]})\da &\then Q\left(x_{[1,n]}, \varphi(x_{[1,n]})\right)\cr}$$
+
+\prf{}
+
+\itemize{\res{}}
+\: $\varphi \in ČRF \iff$ má rek. spočetný graf.
+\: $\forall RSM$ je oborem hodnot nějaké $ČRF$.
+\: $\forall f \in ČRF: \rng(f) \in RSM$.
+\endlist
+
+\section{Převoditelnost}
+
+\section{Generování RSM}
+
+\section{Matjasevičova věta}
+
+\section{Věty o rekurzi}
+
+\section{Produktivní a kreativní mny}
+
+\section{Neoddělitelné mny}
+
+\section{Gödelova věta}
+
+\section{Reprezentovatelnost}
+
+\bye
