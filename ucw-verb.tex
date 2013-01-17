@@ -1,0 +1,136 @@
+% The UCW Macro Collection: Verbatim environments
+% Written by Martin Mares <mj@ucw.cz> in 2010 and placed into public domain
+% -------------------------------------------------------------------------
+
+% We'll use internal macros of plain TeX
+\catcode`@=11
+
+% New \frenchspacing, which doesn't leave unwanted spaces in text.
+\def\frenchsp@cing{\sfcode`\.\@m \sfcode`\?\@m \sfcode`\!\@m%
+\sfcode`\:\@m \sfcode`\;\@m \sfcode`\,\@m}
+
+% Typesetting of one verbatim word: |word| (enable by \inlineverbon)
+
+% Set if spaces should be rendered as "bath-tub" glyphs
+\newif\ifshowspaces
+\showspacesfalse
+
+\def\make@ther#1{\catcode`#1=12\relax}
+\def\setverb@tim{\tt\frenchsp@cing\catcode`\`=13\catcode`\'=13\n@ligs%
+\let\do=\make@ther\dospecials\obeyspaces\showsp@ces}
+
+{\catcode`'=13
+\catcode``=13
+\gdef\n@ligs{\def`{\relax\lq}\def'{\relax\rq}}}
+
+{\obeyspaces
+\global\chardef\sp@ce=32
+\gdef\showsp@ces{\ifshowspaces\let =\sp@ce\fi}
+\global\let =\ }
+
+{\catcode124=\active % Make | active
+\gdef\ttst@rt{\begingroup\setverb@tim\let|=\endgroup}
+\gdef\inlineverbon{\catcode124=\active\let|=\ttst@rt}
+\gdef\inlineverboff{\catcode124=12}
+}
+
+% Typesetting of verbatim text with a given delimiter:
+%	- usage: \verb%verbatim text%
+%	- the delimiter is the first character after \verb
+%	- remember that writing (for example) \verbz with meaning \verb
+%	  with the delimiter 'z' is possible only if \catcode`z is not 11
+
+\def\verb{\relax\def\sv@rb##1{\uccode`~=`##1%
+\uppercase{\catcode`~13\global\let~\endgroup}}%
+\begingroup\setverb@tim\sv@rb}
+
+% Typesetting of verbatim blocks:
+%	- the block is enclosed in balanced {}'s
+%	- leading and trailing empty lines are ignored
+%	- all other empty lines are converted to \verbemptylineskip's
+%	- tabs are interpreted (one tab stop per \verbtabsize columns)
+%	- \showspacestrue works here, too, but it does not apply to tabs
+
+\newskip\verbstartskip		% vskip before \verbatim
+\newskip\verbendskip		% vskip after \verbatim
+\newskip\verbinterlineskip	% between adjacent non-empty lines
+\newskip\verbemptylineskip	% instead of every empty line
+\newskip\verbleftskip		% left and right margin
+\newskip\verbrightskip
+
+\verbstartskip=3pt plus 1pt minus 0.3pt
+\verbendskip=\verbstartskip
+\verbinterlineskip=0pt
+\verbemptylineskip=5pt plus 2pt
+\verbleftskip=0in
+\verbrightskip=0pt plus 1fil
+
+% Can be re-defined to customize the verbatim environment
+\def\verblocaldefs{}
+
+% Size of a single tab
+\newcount\verbtabsize
+\verbtabsize=8
+
+\newdimen\v@rbspace
+\newdimen\t@b
+\newdimen\t@bwidth
+
+% When a complete line is assembled in \box0, \verbship is called to add it
+% to the main vertical list. You can override it to get e.g. line numbering.
+\def\verbship{%
+	\ifdim\wd0>0pt
+		\ifdim\v@rbspace>0pt
+			\penalty-100
+			\vskip\v@rbspace
+		\else
+			\ifdim\v@rbspace=0pt
+				\vskip\verbinterlineskip
+			\fi
+		\fi
+		\line{\hskip\verbleftskip \box0 \hskip\verbrightskip}
+		\v@rbspace=0pt
+	\else
+		\advance\v@rbspace by \verbemptylineskip
+	\fi
+}
+
+\newcount\verbcnt
+\def\v@rbend{\par\egroup\endgroup\vskip\verbendskip}
+\def\v@rbl{\ifnum\verbcnt>0\{\fi\global\advance\verbcnt by 1\relax}
+\def\v@rbr{\ifnum\verbcnt>1\}\else\v@rbend\fi\global\advance\verbcnt by -1\relax}
+
+\def\v@rbparams{%
+	\setverb@tim
+	\raggedbottom
+	\verbcnt=0
+	\v@rbspace=-1000pt
+	\catcode124=12
+	\vskip\verbstartskip
+	\let\par=\endb@x
+	\obeylines
+}
+
+\def\startb@x{\setbox0=\hbox\bgroup}
+\def\endb@x{\egroup\verbship\startb@x}
+
+{\catcode`\^^I=\active
+\gdef\setupt@bs{\catcode`\^^I=\active
+\setbox0=\hbox{\ }\t@bwidth=\wd0\multiply\t@bwidth by \verbtabsize
+\def^^I{\egroup\t@b=\wd0\divide\t@b by \t@bwidth%
+\multiply\t@b by \t@bwidth%
+\advance\t@b by \t@bwidth\advance\t@b by -\wd0\startb@x\box0\hbox to \t@b{}}%
+}}
+
+{
+\catcode`[=1\catcode`]=2\catcode123=\active\catcode125=\active
+\gdef\verbatim[\begingroup\v@rbparams\catcode123=\active\catcode125=\active%
+\let{=\v@rbl\let}=\v@rbr\chardef\{=123\chardef\}=125\verblocaldefs\setupt@bs\startb@x%
+]]
+
+% Input file verbatim
+
+\def\verbinput#1{\begingroup\v@rbparams\verblocaldefs\setupt@bs\startb@x\input #1 \egroup\endgroup}
+
+% Let's hide all internal macros
+\catcode`@=12

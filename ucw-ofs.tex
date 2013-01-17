@@ -1,0 +1,98 @@
+% The UCW Macro Collection: Interface to OFS (Olsak's Font System)
+% Written by Martin Mares <mj@ucw.cz> in 2010 and placed into public domain
+% -------------------------------------------------------------------------
+
+\ifx\OFSversion\undefined
+\input ofs.tex
+% \detailfontmessages
+\fi
+
+% We extend OFS's default CM family by several fonts: cmb, cmcsc
+
+\ofsputfamlist{^^JUCW:}
+
+\ofsdeclarefamily [CMRomanUCW] {% ------------ Computer Modern Roman (UCW extended version)
+   \loadtextfam cmr\fotenc;%
+                cmbx\fotenc;%
+                cmti\fotenc;%
+                cmbxti\fotenc;\defaultextraenc;%
+   \newvariant8 \sl   (Slanted)     cmsl\fotenc;\defaultextraenc;%
+   \newvariant9 \bxsl (BoldSlanted) cmbxsl\fotenc;\defaultextraenc;%
+   \newvariant a \bo  (BoldNormal)  cmb\fotenc;\defaultextraenc;%
+   \newvariant b \csc (CapsAndSmallCaps)  cmcsc\fotenc;\defaultextraenc;%
+   \newvariant c \sltt (SlantedTypewriter) cmsltt\fotenc;\defaultextraenc;%
+   \newvariant d \itt (ItalicTypewriter) cmitt\fotenc;\defaultextraenc;%
+   \modifyenc 8z:csfont;%
+}
+\registerenc: 8z
+
+\registertfm cmb8z     -      csb10
+\registertfm cmb8z  0pt-6pt   csb5
+\registertfm cmb8z  6pt-7pt   csb6
+\registertfm cmb8z  7pt-8pt   csb7
+\registertfm cmb8z  8pt-9pt   csb8
+\registertfm cmb8z  9pt-10pt  csb9
+\registertfm cmb8z  10pt-12pt csb10
+\registertfm cmb8z  12pt-17pt csb12
+\registertfm cmb8z  17pt-*    csb17
+
+\registertfm cmcsc8z     -      cscsc10
+\registertfm cmcsc8z  0pt-6pt   cscsc5
+\registertfm cmcsc8z  6pt-7pt   cscsc6
+\registertfm cmcsc8z  7pt-8pt   cscsc7
+\registertfm cmcsc8z  8pt-9pt   cscsc8
+\registertfm cmcsc8z  9pt-10pt  cscsc9
+\registertfm cmcsc8z  10pt-12pt cscsc10
+\registertfm cmcsc8z  12pt-17pt cscsc12
+\registertfm cmcsc8z  17pt-*    cscsc17
+
+\ofsdeclarefamily [BlackboardBold] {%
+   \loadtextfam bbm;%
+   		;%
+		;%
+		;\defaultextraenc;%
+}
+
+\registertfm bbm     -      bbm10
+\registertfm bbm  0pt-6pt   bbm5
+\registertfm bbm  6pt-7pt   bbm6
+\registertfm bbm  7pt-8pt   bbm7
+\registertfm bbm  8pt-9pt   bbm8
+\registertfm bbm  9pt-10pt  bbm9
+\registertfm bbm  10pt-12pt bbm10
+\registertfm bbm  12pt-17pt bbm12
+\registertfm bbm  17pt-*    bbm17
+
+\setfonts[CMRomanUCW/]
+
+% \bb - blackboard bold math font
+
+\newfam\bbfam
+\def\bb{\fam\bbfam}
+
+\def\loadbbm{%
+	\loadmathfam\bbfam[/bbm]%
+}
+\loadbbm
+
+% Recalculate line spacing for a given point size of the font (assuming CM-like metrics).
+% Also sets \strut and \topskip.
+\def\setbaselines#1{%
+	\dimen0=1pt
+	\dimen0=#1\dimen0
+	\normalbaselineskip=1.2\dimen0
+	\normallineskip=0.1\dimen0
+	\setbox\strutbox=\hbox{\vrule height 0.85\dimen0 depth 0.35\dimen0 width 0pt}%
+	\topskip=1\dimen0
+	\normalbaselines
+}
+
+% Switch to a specified font size (including math, line spacing etc.)
+\def\settextsize#1{%
+	\def\fomenc{CM}%
+	\setfonts[/#1]%
+	\setmath[//]%
+	\setbaselines{#1}%
+	\loadbbm
+}
+\def\twelvepoint{\settextsize{12}}

@@ -1,0 +1,241 @@
+% The UCW Macro Collection (a successor of mjmac.tex)
+% Written by Martin Mares <mj@ucw.cz> in 2010 and placed into public domain
+% -------------------------------------------------------------------------
+
+%%% Prolog %%%
+
+% We'll use internal macros of plain TeX
+\catcode`@=11
+
+%%% PDF output detection %%%
+
+\newif\ifpdf
+\pdffalse
+
+\ifx\pdfoutput\undefined
+\else\ifnum\pdfoutput>0
+	\pdftrue
+\fi\fi
+
+%%% Page size and margins %%%
+
+% If you modify these registers, call \setuppage afterwards
+\newdimen\pagewidth
+\newdimen\pageheight
+\newdimen\leftmargin
+\newdimen\rightmargin
+\newdimen\topmargin
+\newdimen\bottommargin
+\newdimen\evenpageshift
+
+\def\setuppage{%
+	\hsize=\pagewidth
+	\advance\hsize by -\leftmargin
+	\advance\hsize by -\rightmargin
+	\vsize=\pageheight
+	\advance\vsize by -\topmargin
+	\advance\vsize by -\bottommargin
+	\hoffset=\leftmargin
+	\advance\hoffset by -1truein
+	\voffset=\topmargin
+	\advance\voffset by -1truein
+	\ifpdf
+		\pdfpagewidth=\pagewidth
+		\pdfpageheight=\pageheight
+	\fi
+}
+
+% Set multiple margins to the same value
+\def\sethmargins#1{\leftmargin=#1\relax\rightmargin=#1\relax\evenpageshift=0pt\relax}
+\def\setvmargins#1{\topmargin=#1\relax\bottommargin=#1\relax}
+\def\setmargins#1{\sethmargins{#1}\setvmargins{#1}}
+
+% Define inner/outer margin instead of left/right
+\def\setinneroutermargin#1#2{\leftmargin#1\relax\rightmargin#2\relax\evenpageshift=\rightmargin\advance\evenpageshift by -\leftmargin}
+
+% Use a predefined paper format, calls \setuppage automagically
+\def\setpaper#1{%
+	\expandafter\let\expandafter\currentpaper\csname paper-#1\endcsname
+	\ifx\currentpaper\relax
+		\errmessage{Undefined paper format #1}
+	\fi
+	\currentpaper
+}
+
+% Switch to landscape orientation, calls \setuppage automagically
+\def\landscape{%
+	\dimen0=\pageheight
+	\pageheight=\pagewidth
+	\pagewidth=\dimen0
+	\setuppage
+}
+
+% Common paper sizes
+\def\defpaper#1#2#3{\expandafter\def\csname paper-#1\endcsname{\pagewidth=#2\pageheight=#3\setuppage}}
+\defpaper{a3}{297truemm}{420truemm}
+\defpaper{a4}{210truemm}{297truemm}
+\defpaper{a5}{148truemm}{210truemm}
+\defpaper{a6}{105truemm}{148truemm}
+\defpaper{letter}{8.5truein}{11truein}
+\defpaper{legal}{8.5truein}{14truein}
+
+% Default page parameters
+\setmargins{1truein}
+\setpaper{a4}
+
+%%% Placing material at specified coordinates %%%
+
+% Set all dimensions of a given box register to zero
+\def\smashbox#1{\ht#1=0pt \dp#1=0pt \wd#1=0pt}
+\def\smashedhbox#1{{\setbox0=\hbox{#1}\smashbox0\box0}}
+\def\smashedvbox#1{{\setbox0=\vbox{#1}\smashbox0\box0}}
+
+% Variants of \llap and \rlap working equally on both sides and/or vertically
+\def\hlap#1{\hbox to 0pt{\hss #1\hss}}
+\def\vlap#1{\vbox to 0pt{\vss #1\vss}}
+\def\clap#1{\vlap{\hlap{#1}}}
+
+% \placeat{right}{down}{hmaterial} places <hmaterial>, so that its
+% reference point lies at the given position wrt. the current ref point
+\long\def\placeat#1#2#3{\smashedhbox{\hskip #1\lower #2\hbox{#3}}}
+
+% Like \vbox, but with reference point in the upper left corner
+\def\vhang#1{\vtop{\hrule height 0pt\relax #1}}
+
+% Like \vhang, but respecting interline skips
+\def\vhanglines#1{\vtop{\hbox to 0pt{}#1}}
+
+% Crosshair with reference point in its center
+\def\crosshair#1{\clap{\vrule height 0.2pt width #1}\clap{\vrule height #1 width 0.2pt}}
+
+%%% Output routine %%%
+
+\newbox\pageunderlays
+\newbox\pageoverlays
+\newbox\commonunderlays
+\newbox\commonoverlays
+
+% In addition to the normal page contents, you can define page overlays
+% and underlays, which are zero-size vboxes positioned absolutely in the
+% front / in the back of the normal material. Also, there are global
+% versions of both which are not reset after every page.
+\def\addlay#1#2{\setbox#1=\vbox{\ifvbox#1\box#1\fi\smashedvbox{#2}}}
+\def\pageunderlay{\addlay\pageunderlays}
+\def\pageoverlay{\addlay\pageoverlays}
+\def\commonunderlay{\addlay\commonoverlays}
+\def\commonoverlay{\addlay\commonoverlays}
+
+% Our variation on \plainoutput, which manages inner/outer margins and overlays
+\output{\ucwoutput}
+\def\ucwoutput{\wigglepage\shipout\vbox{%
+	\makeheadline
+	\ifvbox\commonunderlays\copy\commonunderlays\nointerlineskip\fi
+	\ifvbox\pageunderlays\box\pageunderlays\nointerlineskip\fi
+	\pagebody
+	\ifvbox\commonoverlays\vbox to 0pt{\vskip -\vsize\copy\commonoverlays}\fi
+	\ifvbox\pageoverlays\vbox to 0pt{\vskip -\vsize\box\pageoverlays}\fi
+	\makefootline
+}\advancepageno
+\ifnum\outputpenalty>-\@MM \else\dosupereject\fi}
+
+\def\wigglepage{\ifodd\pageno\else\advance\hoffset by \evenpageshift\fi}
+
+% Make it easier to redefine footline font (also, fix it so that OFS won't change it unless asked)
+\let\footfont=\tenrm
+\footline={\hss\footfont\folio\hss}
+
+%%% Itemization %%%
+
+% Default dimensions of itemized lists
+\newdimen\itemindent		\itemindent=0.5in
+\newdimen\itemnarrow		\itemnarrow=0.5in			% make lines narrower by this amount
+\newskip\itemmarkerskip		\itemmarkerskip=0.4em			% between marker and the item
+\newskip\preitemizeskip		\preitemizeskip=3pt plus 2pt minus 1pt	% before the list
+\newskip\postitemizeskip	\postitemizeskip=3pt plus 2pt minus 1pt	% after the list
+\newskip\interitemskip		\interitemskip=2pt plus 1pt minus 0.5pt	% between two items
+
+% Analogues for nested lists
+\newdimen\nesteditemindent	\nesteditemindent=0.25in
+\newdimen\nesteditemnarrow	\nesteditemnarrow=0.25in
+\newskip\prenesteditemizeskip	\prenesteditemizeskip=0pt
+\newskip\postnesteditemizeskip	\postnesteditemizeskip=0pt
+
+\newif\ifitems\itemsfalse
+\newbox\itembox
+\newcount\itemcount
+
+\def\preitemize{
+	\ifitems
+		\vskip\prenesteditemizeskip
+		\advance\leftskip by \nesteditemindent
+		\advance\rightskip by \nesteditemnarrow
+	\else
+		\vskip\preitemizeskip
+		\advance\leftskip by \itemindent
+		\advance\rightskip by \itemnarrow
+	\fi
+	\parskip=\interitemskip
+}
+
+\def\postitemize{
+	\ifitems
+		\vskip\postnesteditemizeskip
+	\else
+		\vskip\postitemizeskip
+	\fi
+}
+
+\def\inititemize{\begingroup\preitemize\itemstrue\parindent=0pt}
+
+\def\itemize#1{\inititemize\setbox\itembox\llap{#1\hskip\itemmarkerskip}%
+\let\:=\singleitem}
+
+\def\singleitem{\par\leavevmode\copy\itembox\ignorespaces}
+
+\def\endlist{\par\endgroup\postitemize}
+
+\def\ibull{\raise0.2ex\hbox{$\bullet$}} % Signs frequently used for \itemize
+\def\idot{\raise0.2ex\hbox{$\cdot$}}
+\def\istar{\raise0.2ex\hbox{$\ast$}}
+
+\def\numlist#1{\inititemize\itemcount=0\let\:=\numbereditem
+\let\itemnumbering=#1}
+
+\def\numbereditem{\par\leavevmode\advance\itemcount by 1
+\llap{\itemnumbering\hskip\itemmarkerskip}\ignorespaces}
+
+\def\nnorm{\the\itemcount}
+\def\ndotted{\nnorm.}
+\def\nparen{\nnorm)}
+\def\nroman{\romannumeral\itemcount}
+\def\nromanp{\nroman)}
+\def\nalpha{\count@=96\advance\count@ by\itemcount\char\count@)}
+\def\nAlpha{\count@=64\advance\count@ by\itemcount\char\count@)}
+\def\ngreek{$\ifcase\itemcount\or\alpha\or\beta\or\gamma\or\delta\or\epsilon\or
+\zeta\or\eta\or\theta\or\iota\or\kappa\or\lambda\or\mu\or\nu\or\xi\or\pi\or\rho
+\or\sigma\or\tau\or\upsilon\or\phi\or\chi\or\psi\or\omega\fi$)}
+
+%%% Miscellanea %%%
+
+% {\I italic} with automatic italic correction
+\def\I{\it\aftergroup\/}
+
+% A breakable dash, to be repeated on the next line
+\def\={\discretionary{-}{-}{-}}
+
+% Non-breakable identifiers
+\def\<#1>{\leavevmode\hbox{\I #1}}
+
+% A handy shortcut
+\let\>=\noindent
+
+% Variants of \centerline, \leftline and \rightline, which are compatible with
+% verbatim environments and other catcode hacks
+\def\cline{\bgroup\def\linet@mp{\aftergroup\box\aftergroup0\aftergroup\egroup\hss\bgroup\aftergroup\hss\aftergroup\egroup}\afterassignment\linet@mp\setbox0\hbox to \hsize}
+\def\lline{\bgroup\def\linet@mp{\aftergroup\box\aftergroup0\aftergroup\egroup\bgroup\aftergroup\hss\aftergroup\egroup}\afterassignment\linet@mp\setbox0\hbox to \hsize}
+\def\rline{\bgroup\def\linet@mp{\aftergroup\box\aftergroup0\aftergroup\egroup\hss\bgroup\aftergroup\egroup}\afterassignment\linet@mp\setbox0\hbox to \hsize}
+
+%%% Epilog %%%
+
+% Let's hide all internal macros
+\catcode`@=12
