@@ -253,6 +253,9 @@ $\Psi_{m+n}(e,y_{[1,m]},x{[1,n]}) \simeq \Psi_m\left(s_m(e,y_{[1,m]}), x_{[1,n]}
 \: $RSP$ predikát $\equiv$ obor konvergence $ČRF$.
 \: $M$ mna je rekurzivní $\equiv \chi \in ORF$.
 \: $M$ mna je rekurzivně spočetná ($RSM$) $\equiv M = dom(f), f \in ČRF$.
+\: $W_x = \left\{ m | \varphi_x(m) \da \right\}.$
+\: $K = \left\{x | x \in W_x \right\}.$
+\: $K_0 = \left\{ (y,x) | y \in W_x \right\}.$
 \endlist
 
 \thm{Post} $M$ rekurzivní $\iff$ $M$ i $\overline{M}$ jsou $RSM$. $P$ je $ORP$ $\iff$ $P$ a $\neg P$ jsou $RSP$.
@@ -285,6 +288,22 @@ $$\eqalign{
 \endlist
 
 \section{Převoditelnost}
+\itemize{\dfn}
+\: $A \le_m B \equiv \exists f, f \in ORF \st x \in A \iff f(x) \in B$.
+\: $A \le_1 B \equiv f$ navíc prostá.
+\: $M$ 1-úplná $\equiv$ $M \in RSM$ a $\forall B \in RSM: B \le_1 M$.
+\: $M$ m-úplná $\equiv$ $M \in RSM$ a $\forall B \in RSM: B \le_m M$.
+\endlist
+
+\thm{Vlastnosti $K$} $K \in RSM$, $K$ není rekurzivní, $K$ je 1-úplná.
+
+\prf{} První dvě vlastnosti zřejmé, pro třetí vezmi $W_x$ a $ČRF \alpha(y,x,w)$,
+která ji popisuje ($w$ volná). Použij s-m-n větu, získej $h(y,x) = s_2(e,y,x)$. Pak
+$\forall y \in W_x: \alpha(x,y,w)\da \iff \varphi_{h(y,x)}(w)\da \iff  \varphi_{h(y,x)}(h(y,x))\da \iff h(y,x) \in K$.
+
+\thm{Vlastnosti $K_0$} $K_0$ je 1-úplná.
+
+\prf{} Převodem $K$ na $K_0$.
 
 \section{Generování RSM}
 
