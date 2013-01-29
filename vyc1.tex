@@ -499,7 +499,7 @@ nemůže existovat.
 $A = \{x | \varphi_x(x) \simeq 0 \}, B = \{ x | \varphi_x(x) \simeq 1 \}$.
 
 \prf{} Mějme $A \subseteq W_x$, $B \subseteq W_y$. Vyrobíme $\varphi_{\alpha(x,y)}(w)$ divergující, když $w \not \in A \cup B$.
-Úvahou plus použitím $s-m-n$ věty víme, že $\exists \varphi_{\alpha(x,y)}(w)$ taková, že vrátí $1$, pokud $w$ padne do $W_x$ dříve než do $W_y$ a $0$ naopak. Diagonalizací vidíme, Ze $\varphi_{\alpha(x,y)}$ diverguje.
+Úvahou plus použitím $s-m-n$ věty víme, že $\exists \varphi_{\alpha(x,y)}(w)$ taková, že vrátí $1$, pokud $w$ padne do $W_x$ dříve než do $W_y$, $0$ naopak a jinak diverguje. Diagonalizací vidíme, že $\varphi_{\alpha(x,y)}(\alpha(x,y))$ diverguje.
 
 \obs{} Efektivně neoddělitelné $RSM$ $A$ a $B$ jsou kreativní.
 
@@ -523,7 +523,7 @@ neodd. $(A,B)$.
 $(A,B)$. Zadefinuj $W_{\gamma_1(x)}$ a $W_{\gamma_2(x)}$ takto:
 $$\eqalign{
 x \in D &\then W_{\gamma_1(x)} = A \cup \{f(\gamma_1(x), \gamma_2(x))\} \& W_{\gamma_2(x)} = B, \cr
-x \in C &\then W_{\gamma_2(x)} = B \cup \{f(\gamma_1(x), \gamma_2(x))\} \& W_{\gamma_1(x)} = B. \cr}$$
+x \in C &\then W_{\gamma_2(x)} = B \cup \{f(\gamma_1(x), \gamma_2(x))\} \& W_{\gamma_1(x)} = A. \cr}$$
 
 Pokud $x \not \in C \cup D$ pak $f(\gamma_1(x), \gamma_2(x)) \not \in A \cup
 B$.  Pokud $x \in C$, tak $f(\gamma_1(x), \gamma_2(x)) \in A$. Pro $x \in D$
