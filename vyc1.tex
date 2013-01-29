@@ -57,7 +57,7 @@
    \footline{\hss\folio}
    \def\makefootline{\baselineskip10pt\hsize6.5in\line{\the\footline}}
 \else
-   \hsize 3.46in
+   \hsize 3.56in
    \vsize 7.95in
    \hoffset -.75in
    \voffset -.745in
@@ -286,12 +286,18 @@ obě $RSM$. Pro výroky se to získá z věty o selektoru (níže).
 
 \prf{}
 
+\numlist\ndotted
+\: Zřejmá.
+\: $\Psi_1(x,x)\ua$ je $RSP \then \exists g \in ČRF$ co to počítá, tedy má kód $x_0$, diagonalizační spor.
+\: Varianta důkazu, že neexistuje univerzální $PRF$.\
+\endlist
+
 \thm{O selektoru} $\forall RSP_{k+1} Q \exists ČRF_k \varphi \st$
 $$\eqalign{
 \Phi(x_{[1,n]})\da &\iff \exists y: Q\left(x_{[1,n]}, y\right)\cr
 \Phi(x_{[1,n]})\da &\then Q\left(x_{[1,n]}, \varphi(x_{[1,n]})\right)\cr}$$
 
-\prf{}
+\prf{} Pro $Q \in RSP \exists T$ Turingův stroj takový, že $T$ se zastaví a přijme vstup $\iff$ $Q(x_{[1,n]},y)$.
 
 \itemize{\res{}}
 \: $\varphi \in ČRF \iff$ má rek. spočetný graf.
@@ -299,7 +305,7 @@ $$\eqalign{
 \: $\forall f \in ČRF: \rng(f) \in RSM$.
 \endlist
 
-\section{Převoditelnost}
+\fakesection{Převoditelnost}
 \itemize{\dfn}
 \: $A \le_m B \equiv \exists f, f \in ORF \st x \in A \iff f(x) \in B$.
 \: $A \le_1 B \equiv f$ navíc prostá.
@@ -309,9 +315,11 @@ $$\eqalign{
 
 \thm{Vlastnosti $K$} $K \in RSM$, $K$ není rekurzivní, $K$ je 1-úplná.
 
-\prf{} První dvě vlastnosti zřejmé, pro třetí vezmi $W_x$ a $ČRF \alpha(y,x,w)$,
-která ji popisuje ($w$ volná). Použij s-m-n větu, získej $h(y,x) = s_2(e,y,x)$. Pak
-$\forall y \in W_x: \alpha(x,y,w)\da \iff \varphi_{h(y,x)}(w)\da \iff  \varphi_{h(y,x)}(h(y,x))\da \iff h(y,x) \in K$.
+\prf{} První dvě vlastnosti zřejmé, pro třetí vezměme $W_x$ a $\alpha(y,x,w)$,
+která ji popisuje ($w$ volná). Použijeme s-m-n větu, získejme $h(y,x) = s_2(e,y,x)$. Pak
+$\forall y \in W_x:$
+
+$$ \alpha(x,y,w)\da \iff \varphi_{h(y,x)}(w)\da \iff  \varphi_{h(y,x)}(h(y,x))\da \iff h(y,x) \in K.$$
 
 \thm{Vlastnosti $K_0$} $K_0$ je 1-úplná.
 
@@ -344,14 +352,15 @@ která nemusí být prostá. Tak zadefinujeme $g(0) = f(0), g(k+1) = f(\mu_j(f(j
 
 \thm{} Každá nekonečná $RSM$ obsahuje nekonečnou rostoucí podmnožinu.
  
-\section{Imunní a simple množiny}
+\fakesection{Imunní a simple množiny}
 
 \dfn $M$ imunní $\equiv |M| \ge \omega \& W_x \subseteq M \then |W_x| < \omega$. 
+
 \dfn $X$ simple $\equiv X \in RSM \& \overline{X}$ imunní.
 
 \obs{Neefektivní konstrukce imunní množiny} Procházej prvky $W_x$ pro každé $x$ a přidávej elementy do $\overline{M}$.
 
-\obs{Efektivní konstrukce simple množiny} Definujme predikát $Q(x,y)$:
+\obs{Efektivní konstrukce simple množiny} Definujme predikát $Q$:
 $$ Q(x,y) \iff y \in W_x \& y > 2x.$$
 Tvrdíme, že $A = \rng(\varphi)$ je simple:
 
@@ -364,21 +373,21 @@ je nekonečná.
 
 $\overline{A}$ je tedy imunní.
 
-\section{Věty o rekurzi}
+\fakesection{Věty o rekurzi}
 
 \thm{První} $f \in ČRF_1 \then \exists a \st \forall x:$
 $$\varphi_{f(a)}(x) \daeq \varphi_a(x).$$
 
 \prf{} Hledané $a$ bude tvaru $a = s_1(z,z)$. Protože $s_1 \in PRF$, tak $\varphi_{f(s_1(z,x))}(x)$
 je funkcí jen $z,x \then \exists e \st:$
-$$\varphi_{f(s_1(z,x))}(x) \simeq \Psi_2(e,z,x) \simeq \Psi_1(s_1(e,z),x) \simeq \varphi_{s_1(e,z)}(x).$$
+$$\varphi_{f(s_1(z,z))}(x) \simeq \Psi_2(e,z,x) \simeq \Psi_1(s_1(e,z),x) \simeq \varphi_{s_1(e,z)}(x).$$
 Dosaď za $z = e$, $a = s_1(e,e)$.
-
+\goodbreak
 \thm{Druhá} $f \in ČRF_1 \then \exists {\rm\ rostoucí\ } g \in PRF_1 \st \forall x:$
 $$ \varphi_{f(g(j))}(x) \simeq \varphi_{g(j)}(x).$$
 
 \prf{} $g(j) = s_2(z,z,j)$, vol $z = e$, podobně jako první věta.
-
+\goodbreak
 \thm{Třetí, pro více proměnných}
 $f \in ČRF_{n+1} \then \exists a \forall x_{[1,n]}:$
 $$ \varphi_a(x_{[1,n]}) \simeq f(a,x_{[1,n]}).$$
@@ -388,8 +397,9 @@ $$ \varphi_a(x_{[1,n]}) \simeq f(a,x_{[1,n]}).$$
 \: Jedna proměnná: $$f(y,x) \simeq \Psi_2(e,y,x) \simeq \Psi_1(s_1(e,y),x) \simeq \varphi_{s_1(e,y)}(x).$$
 Vol $g(y) = s_1(e,y)$, použij první větu.
 \: Více proměnných:
-$$f(y,\mls x n ) \simeq \Psi_{n+1}(e,y,\mls x n ) \simeq \Psi_n(s_1(e,y), \mls x n ) \simeq
-\varphi_{s_1(e,y)}(\mls x n ).$$
+$$\eqalign{
+f(y,\mls x n ) &\simeq \Psi_{n+1}(e,y,\mls x n ) \simeq \Psi_n(s_1(e,y), \mls x n )\cr
+\Psi_n(s_1(e,y), \mls x n ) &\simeq \varphi_{s_1(e,y)}(\mls x n ).\cr}$$
 $s_1(e,y)$ má pevný bod $a$, vol $y = a$.
 \endlist
 
@@ -471,7 +481,7 @@ W_{\alpha(y,x)} = \{ w | f(w) = f(y) \& x \in K \}$.
 Nyní použij čtvrtou větu o rekurzi: $\exists g(x) \st \varphi_{g(x}(z) \simeq \varphi_{\alpha(g(x),x)}(z)$.
 \endlist
 
-\section{Neoddělitelné množiny}
+\fakesection{Neoddělitelné množiny}
 
 \dfn $A,B$ jsou rekurzivně neoddělitelné $\equiv$ $\not \exists$ rekurzivní $M \st A \subseteq M \& B \subseteq \overline{M}$.
 
@@ -498,7 +508,27 @@ $A = \{x | \varphi_x(x) \simeq 0 \}, B = \{ x | \varphi_x(x) \simeq 1 \}$.
 \prf{} $\varphi_{f(x,y)} \then$ VR4 $\then \exists \alpha \st \varphi_{f(\alpha(y),y)} \simeq \varphi_{\alpha(y)}$.
 $\varphi_{g(\alpha(y),y)} \then$ VR1 $\then \exists n \st \varphi_{g(\alpha(n), n)} \simeq \varphi_m$. Vol $m = \alpha(n)$.
 
-\thm{Ekvivalence $1$-úplnosti a efektivní neoddělitelnosti}
+\dfn (1-převoditelnost) $(A,B),(C,D)$ disj. dvojice, pak $(A,B) \le_1 (C,D) \equiv$ $A \le_1 C$ pomocí $h$ a $B \le_1 D$ pomocí té samé $h$.
+
+\thm{Ekvivalence $1$-úplnosti a efektivní neoddělitelnosti} $(A,B)$ je $1$-úplná $\iff (A,B)$ efekt. neodd.
+
+\prf{}
+
+\itemize\ibull
+\: \uv{$\then$}: $(A,B)$ 1-úplné, mohu zvolit $(C,D)$ efektivně neoddělitelné,
+že $(C,D) \le_1 (A,B)$. Převodem přes $h$ tam a zpět získám funkci dokazující
+neodd. $(A,B)$.
+
+\: \uv{$\leftarrow$}: Máme $(C,D)$ efekt. neodd., což dokazuje $f$, a nějaké
+$(A,B)$. Zadefinuj $W_{\gamma_1(x)}$ a $W_{\gamma_2(x)}$ takto:
+$$\eqalign{
+x \in D &\then W_{\gamma_1(x)} = A \cup \{f(\gamma_1(x), \gamma_2(x))\} \& W_{\gamma_2(x)} = B, \cr
+x \in C &\then W_{\gamma_2(x)} = B \cup \{f(\gamma_1(x), \gamma_2(x))\} \& W_{\gamma_1(x)} = B. \cr}$$
+
+Pokud $x \not \in C \cup D$ pak $f(\gamma_1(x), \gamma_2(x)) \not \in A \cup
+B$.  Pokud $x \in C$, tak $f(\gamma_1(x), \gamma_2(x)) \in A$. Pro $x \in D$
+podobně. Složení $f$ s $\gamma_{\{1,2\}}$ tedy dokazuje $1$-úplnost.
+\endlist
 
 \section{Gödelova věta}
 \uv{V rozumných teoriích je množina dokazatelných a vyvratitelných formulí neoddělitelná.}
@@ -517,7 +547,8 @@ $\varphi_{g(\alpha(y),y)} \then$ VR1 $\then \exists n \st \varphi_{g(\alpha(n), 
 \dfn $f \in ČRF$ je reprezentovatelná $\equiv$ $f(\mls x n ) = y \iff \vdash F( \mls x n , y)$ a také
 $\vdash F(\mls x n , q) \& \vdash F(\mls x n , j) \then q = j$.
 
-\dfn $P$ predikát je diofantický $\equiv \exists p_1, p_2$ polynomy $\st \forall \mls x n : \exists \mls y k P(\mls x n ) \iff p_1(\mls x n , \mls y k ) = p_2(\mls x n , \mls y k )$.
+\dfn $P$ predikát je diofantický $\equiv \exists p_1, p_2$ polynomy $\st \forall \mls x n :$
+$$ \exists \mls y k P(\mls x n ) \iff p_1(\mls x n , \mls y k ) = p_2(\mls x n , \mls y k ).$$
 
 \thm{Matjasevič} $P$ diofantický $\iff$ $P$ rek. spočetný.
 
