@@ -6,14 +6,16 @@
 \input color
 
 \language\czech
+
 \landscape
+
 %**start of header
 \newcount\columnsperpage
 
 \columnsperpage=3
 
-\def\versionnumber{1.5}  % Version of this reference card
-\def\year{2007}
+\def\versionnumber{0.01}  % Version of this reference card
+\def\year{2012}
 \def\month{January}
 \def\version{\month\ \year\ v\versionnumber}
 
@@ -55,7 +57,7 @@
    \footline{\hss\folio}
    \def\makefootline{\baselineskip10pt\hsize6.5in\line{\the\footline}}
 \else
-   \hsize 3.2in
+   \hsize 3.46in
    \vsize 7.95in
    \hoffset -.75in
    \voffset -.745in
@@ -95,7 +97,8 @@
      \errmessage{Illegal number of columns per page}
    \fi\fi
 
-   \intercolumnskip=.46in
+   % \intercolumnskip=.46in
+   \intercolumnskip=.20in
    \def\abc{a}
    \output={%
        % This next line is useful when designing the layout.
@@ -149,13 +152,17 @@
 %\outer\def\section#1{\par\filbreak
 %  \vskip 1ex plus 2ex minus 2ex {\headingfont #1}\mark{#1}%
 %  \vskip 1ex plus 1ex minus .5ex}
+
 \outer\def\section#1{\par\filbreak
    \vskip .75ex plus 1ex minus 2ex {\headingfont #1}\mark{#1}%
    \vskip .5ex plus .5ex minus .5ex}
 \outer\def\subsection#1{\par\filbreak
    \vskip .75ex plus 1ex minus 2ex {\bf #1}\mark{#1}%
    \vskip .5ex plus .5ex minus .5ex}
-
+% looks like a section, but does not use the splitting algorithm
+\outer\def\fakesection#1{\par
+   \vskip .75ex plus 1ex minus 2ex {\headingfont #1}%
+   \vskip .5ex plus .5ex minus .5ex}
 \def\paralign{\vskip\parskip\halign}
 
 %\def\<#1>{$\langle${\rm #1}$\rangle$}
@@ -359,30 +366,35 @@ $\overline{A}$ je tedy imunní.
 
 \section{Věty o rekurzi}
 
-\thm{První} $f \in ČRF_1 \then \exists a \st \forall x: \varphi_{f(a)}(x) \daeq \varphi_a(x)$.
+\thm{První} $f \in ČRF_1 \then \exists a \st \forall x:$
+$$\varphi_{f(a)}(x) \daeq \varphi_a(x).$$
 
 \prf{} Hledané $a$ bude tvaru $a = s_1(z,z)$. Protože $s_1 \in PRF$, tak $\varphi_{f(s_1(z,x))}(x)$
 je funkcí jen $z,x \then \exists e \st:$
 $$\varphi_{f(s_1(z,x))}(x) \simeq \Psi_2(e,z,x) \simeq \Psi_1(s_1(e,z),x) \simeq \varphi_{s_1(e,z)}(x).$$
 Dosaď za $z = e$, $a = s_1(e,e)$.
 
-\thm{Druhá} $f \in ČRF_1 \then \exists {\rm\ rostoucí\ } g \in PRF_1 \st \forall x: \varphi_{f(g(j))}(x) \simeq \varphi_{g(j)}(x)$.
+\thm{Druhá} $f \in ČRF_1 \then \exists {\rm\ rostoucí\ } g \in PRF_1 \st \forall x:$
+$$ \varphi_{f(g(j))}(x) \simeq \varphi_{g(j)}(x).$$
 
 \prf{} $g(j) = s_2(z,z,j)$, vol $z = e$, podobně jako první věta.
 
 \thm{Třetí, pro více proměnných}
-$f \in ČRF_{n+1} \then \exists a \forall x_{[1,n]}: \varphi_a(x_{[1,n]}) \simeq f(a,x_{[1,n]})$.
+$f \in ČRF_{n+1} \then \exists a \forall x_{[1,n]}:$
+$$ \varphi_a(x_{[1,n]}) \simeq f(a,x_{[1,n]}).$$
 
 \prf{}
 \itemize\ibull
-\: Jedna proměnná: $f(y,x) \simeq \Psi_2(e,y,x) \simeq \Psi_1(s_1(e,y),x) \simeq \varphi_{s_1(e,y)}(x)$.
+\: Jedna proměnná: $$f(y,x) \simeq \Psi_2(e,y,x) \simeq \Psi_1(s_1(e,y),x) \simeq \varphi_{s_1(e,y)}(x).$$
 Vol $g(y) = s_1(e,y)$, použij první větu.
-\: více proměnných: $f(y,\mls x n ) \simeq \Psi_{n+1}(e,y,\mls x n ) \simeq \Psi_n(s_1(e,y), \mls x n ) \simeq
-\varphi_{s_1(e,y)}(\mls x n )$. $s_1(e,y)$ má povný bod $a$, vol $y = a$.
+\: Více proměnných:
+$$f(y,\mls x n ) \simeq \Psi_{n+1}(e,y,\mls x n ) \simeq \Psi_n(s_1(e,y), \mls x n ) \simeq
+\varphi_{s_1(e,y)}(\mls x n ).$$
+$s_1(e,y)$ má pevný bod $a$, vol $y = a$.
 \endlist
 
-\thm{Čtvrtá} $f \in ČRF_{n+1} \then \exists g \in PRF_n \st \forall x,\mls y n : \varphi_{f(g(\mls y n ), \mls y n )}(x) \simeq
-\varphi_{g(\mls y n )}(x)$.
+\thm{Čtvrtá} $f \in ČRF_{n+1} \then \exists g \in PRF_n \st \forall x,\mls y n :$
+$$ \varphi_{f(g(\mls y n ), \mls y n )}(x) \simeq \varphi_{g(\mls y n )}(x).$$
 
 \prf{} Vol $g(\mls y n ) = s_{n+1}(z,z,\mls y n )$, zopakuj postup stejný, jako výše.
 
@@ -393,9 +405,11 @@ $f(x)$ je $ORF \then \exists e \st \varphi_{f(e)}(x) \simeq \varphi_e(x)$, a ted
 
 \res{} Nelze efektivně rozhodnout ekvivalence programů.
 
-\section{Produktivní a kreativní množiny}
+\fakesection{Produktivní a kreativní množiny}
 
-\dfn $B$ je produktivní $\equiv \exists \varphi \in ČRF \st \forall x: W_x \in B \then \varphi(x) \da \& \varphi(x) \in B \ W_x$.
+\dfn $B$ je produktivní $\equiv \exists \Phi \in ČRF \st \forall x: W_x \in B \then \Phi(x) \da \& \Phi(x) \in B \ W_x$.
+
+\dfn Funkci $\Phi$, která dokazuje produktivitu pro $B$, také říkáme produktivní.
 
 \dfn $A$ kreativní $\equiv A RSM \& \overline{A}$ je produktivní.
 
@@ -403,16 +417,49 @@ $f(x)$ je $ORF \then \exists e \st \varphi_{f(e)}(x) \simeq \varphi_e(x)$, a ted
 
 \obs{} $f$ prostá a $ORF$, pak $\{x | f(x) \not \in W_x\}$ produktivní
 
-\obs{} Každá produktivní obsahuje nekonečnou $RSM$. 
+\obs{} Každá produktivní množina obsahuje nekonečnou $RSM$. 
 
-\thm{O produktivní $ORF$} $\forall B$ produktivní $f \in ORF$.
+\thm{O produktivní $ORF$} $\forall B$ produktivní $\exists$ produktivní $f \in ORF$.
 
+\prf{}
+$B$ je tedy produktivní, $\Phi$ přiřazená produktivní funkce. Výsledkem (jako obvykle) bude
+nějaká funkce $f \equiv \varphi_g(x)$ pro vhodné $g$.
+
+Nejprve pomocná funkce $\alpha(x,y,z)$: $\alpha(x,y,z)\da \iff \Phi(x)\da \& z \in W_y$.
+Použijeme $s-m-n$ větu, dostaneme:
+$$ \alpha(x,y,z) \simeq \Psi_3(e,x,y,z) \simeq \Psi_1(s_2(e,z,y),z).$$
+Zadefinuj $PRF$ $\beta(x,y) \equiv s_2(e,x,y)$. Pak platí:
+$$ \Psi_1(\beta(x,y),z) \da \iff \Phi(x)\da \& z \in W_y. $$
+Co je $W_{\beta(x,y)}$? Pokud $\Phi(x) \ua$, tak $\emptyset$, jinak $W_y$.
+
+Nyní aplikuj čtvrtou větu o rekurzi:
+$$ \exists g \in PRF: \Psi_1(\Beta(g(y),y),z) \simeq \Psi_1(g(y),z). $$
+$W_g(y)$ je tedy $W_{\beta(g(y),y)}$. Když $\Psi(g(y)) \da$, tak je to rovno $W_y$. 
+Tvrdím, že $\Psi(g(y))$ nemůže nikdy divergovat.
+ 
 \thm{O produktivní $ORF$ bijekci}
+Každá produktivní množina $B$ má i příslušnou produktivní funkci, která je v $ORF$ a je bijekcí.
+
+\prf{} Z minulé věty máme $ORF f$ pro příslušnou $B$. Tu nejdřív přepočítáme na surjektivní $g$,
+a nakonec i na injektivní $h$.
+
+\itemize\ibull
+\: V prvním kroku vytvoříme nekonečnou $M \st x \in M \then W_x = \omega$. Volíme programy, které
+se zastaví na každý vstup.
+\: V druhém kroku zadefinujeme $g(x)$ jako $g(x) = f(x) | x \not \in M$ a nebo $g(x) = j$, pokud $x$ je $j$-tý
+prvek $M$. 
+\: V třetím kroku definujeme $h(x)$ jako $g(x)$, pokud neporušíme prostotu. Když ji porušíme, najdeme index
+$y_1$ množiny $W_{y_1} = W_x \cup \{g(x)\}$ a podíváme se na $g(y_1)$. 
+
+\numlist\ndotted
+\: Pokud $W_{y_1} \subseteq B$, tak $g(y_1) \in B \backslash W_{y_1}$. Kdyby i $g(y_1)$ se trefilo do předchozích $h(x)$, přidej předchozí $h(x)$ do $W_{y_1}$, vytvoř $y_2$ a opakuj, dokud se nedostaneš mimo předchozí hodnoty $h(x)$.
+\: Pokud $W_{y_1} \not \subseteq B$, tak zvol $h(x)$ libovolně z nových hodnot.
+\endlist
+\endlist
 
 \thm{O ekvivalenci pojmů} $\overline{K} \le_1 B \iff \overline{K} \le_m B \iff B$ je produktivní.
 
 \prf{}
-
 \itemize\ibull
 \: $1 \then 2$ jasné.
 \: $2 \then 3$: Ukážeme, že produktivita se zachovává vzhůru. Máme $C \le_m B$, čili
@@ -424,7 +471,7 @@ W_{\alpha(y,x)} = \{ w | f(w) = f(y) \& x \in K \}$.
 Nyní použij čtvrtou větu o rekurzi: $\exists g(x) \st \varphi_{g(x}(z) \simeq \varphi_{\alpha(g(x),x)}(z)$.
 \endlist
 
-\section{Neoddělitelné mny}
+\section{Neoddělitelné množiny}
 
 \dfn $A,B$ jsou rekurzivně neoddělitelné $\equiv$ $\not \exists$ rekurzivní $M \st A \subseteq M \& B \subseteq \overline{M}$.
 
@@ -438,10 +485,18 @@ nemůže existovat.
 
 \thm{} Rek. neoddělitelné množiny nemusí být efektivně neoddělitelné.
 
-\thm{} Existují dvě efektivně neoddělitelné množiny.
+\thm{} Existují dvě efektivně neoddělitelné množiny, a to:
 $A = \{x | \varphi_x(x) \simeq 0 \}, B = \{ x | \varphi_x(x) \simeq 1 \}$.
 
-\thm{Dvojná věta o rekurzi}
+\prf{} Mějme $A \subseteq W_x$, $B \subseteq W_y$. Vyrobíme $\varphi_{\alpha(x,y)}(w)$ divergující, když $w \not \in A \cup B$.
+Úvahou plus použitím $s-m-n$ věty víme, že $\exists \varphi_{\alpha(x,y)}(w)$ taková, že vrátí $1$, pokud $w$ padne do $W_x$ dříve než do $W_y$ a $0$ naopak. Diagonalizací vidíme, Ze $\varphi_{\alpha(x,y)}$ diverguje.
+
+\obs{} Efektivně neoddělitelné $RSM$ $A$ a $B$ jsou kreativní.
+
+\thm{Dvojná věta o rekurzi} Pro $ORF$ $f,g$ existují $m,n \st \varphi_m \simeq \varphi_{f(m,n)} \& \varphi_n \simeq \varphi_{g(m,n)}$.
+
+\prf{} $\varphi_{f(x,y)} \then$ VR4 $\then \exists \alpha \st \varphi_{f(\alpha(y),y)} \simeq \varphi_{\alpha(y)}$.
+$\varphi_{g(\alpha(y),y)} \then$ VR1 $\then \exists n \st \varphi_{g(\alpha(n), n)} \simeq \varphi_m$. Vol $m = \alpha(n)$.
 
 \thm{Ekvivalence $1$-úplnosti a efektivní neoddělitelnosti}
 
@@ -473,5 +528,6 @@ $\vdash F(\mls x n , q) \& \vdash F(\mls x n , j) \then q = j$.
 \prf{} Podle Matjaseviče.
 
 \res{}  Jsou-li $A$, $B$ disj. $RSM$, pak $\exists G$ formule v $\sigma_1 \st$ \dots
- 
+
+{\tt Verze \versionnumber, chyby zaručeny.} 
 \bye
