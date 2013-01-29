@@ -5,7 +5,7 @@
 $$\eqalign{ O(x) &= 0\cr
 S(x) &= x+1\cr
 I^j_n(x_1 \dots x_n) &= x_j\cr
-S^m_n(f, g_{[1,m]}) &= h \st h(x_{[1,n]}) \simeq f(g_1(x_{[1,n]} \dots g_m(x_{[1,n]})) \cr
+S^m_n(f, g_{[1,m]}) &= h \st h(x_{[1,n]}) \simeq f(g_1(x_{[1,n]}) \dots g_m(x_{[1,n]})) \cr
 R_n(f,g) &= h \st \cases{h(0,x_{[2,n]}) = f(x_{[2,n]}) \cr h(i, x_{[2,n]}) = g(i, h(i, x_{[2,n]}), x_{[2,n]})\cr} \cr
 M_n(f) &= h \st \cr
 h(x_{[1,n]}) &\daeq z \iff \cases{f(x_{[1,n]}, z) \daeq 0 \cr \forall j < z: f(x_{[1,n]}) \daneq 0\cr} \cr}$$
@@ -139,9 +139,9 @@ pak minimalizujeme.
 
 \thm{} Rekurzivně spočetné množiny jsou právě obory hodnot prostých úsekových $ČRF$.
 
-\prf{} Vyrob z $\varphi$ množinu $B = \{(x,s) | \varphi(x) \da$ teprve po $s$ krocích $\}$.
-Ta je rekurzivní, takže má generátor rostoucí úsekovou $f$ (resp. po vybrání první složky z dvojic),
-která nemusí být prostá. Tak zadefinujeme $g(0) = f(0), g(k+1) = f(\mu_j(f(j) = g(k))$.
+\prf{} Vyrob z $\varphi$ množinu $B = \{(x,s) | \varphi(x)$ vydá $x \in M$ přesně po $s$ krocích $\}$.
+Ta je rekurzivní, takže má generátor rostoucí úsekovou $f$. Zadefinujeme $g(j) = (f(j))_{2,1}$
+(druhá složka). Funkce $g$ je úseková a prostá, neboť ke každému $x$ existuje nejvýše jedno $s$.
 
 \thm{} Každá nekonečná $RSM$ obsahuje nekonečnou rostoucí podmnožinu.
  
