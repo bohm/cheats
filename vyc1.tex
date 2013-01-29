@@ -1,212 +1,5 @@
-\pdfoutput=1
-\pdfpkresolution=600
+\input macros.tex
 
-\input ucwmac.tex
-\input ucw-ofs.tex
-\input color
-
-\language\czech
-
-\landscape
-
-%**start of header
-\newcount\columnsperpage
-
-\columnsperpage=3
-
-\def\versionnumber{0.01}  % Version of this reference card
-\def\year{2012}
-\def\month{January}
-\def\version{\month\ \year\ v\versionnumber}
-
-
-\def\shortcopyrightnotice{
-}
-
-\def\copyrightnotice{
-}
-
-% make \bye not \outer so that the \def\bye in the \else clause below
-% can be scanned without complaint.
-\def\bye{\par\vfill\supereject\end}
-
-\newdimen\intercolumnskip
-\newbox\columna
-\newbox\columnb
-
-\def\ncolumns{\the\columnsperpage}
-
-\message{[\ncolumns\space
-   column\if 1\ncolumns\else s\fi\space per page]}
-
-\def\scaledmag#1{ scaled \magstep #1}
-
-% This multi-way format was designed by Stephen Gildea
-% October 1986.
-
-% Modified for Czech fonts.
-\if 1\ncolumns
-   \hsize 4in
-   \vsize 10in
-   \voffset -.7in
-   \font\titlefont=\fontname\tenbf \scaledmag3
-   \font\headingfont=\fontname\tenbf \scaledmag2
-   \font\smallfont=\fontname\sevenrm
-   \font\smallsy=\fontname\sevensy
-
-   \footline{\hss\folio}
-   \def\makefootline{\baselineskip10pt\hsize6.5in\line{\the\footline}}
-\else
-   \hsize 3.56in
-   \vsize 7.95in
-   \hoffset -.75in
-   \voffset -.745in
-   \font\titlefont=csbx10 \scaledmag2
-   \font\headingfont=csbx10 \scaledmag1
-   \font\smallfont=csr6
-   \font\smallsy=cssy6
-   \font\eightrm=csr8
-   \font\eighti=csmi8
-   \font\eightsy=cssy8
-   \font\eightbf=csbx8
-   \font\eighttt=cstt8
-   \font\eightit=csti8
-   \font\eightsl=cssl8
-   \textfont0=\eightrm
-   \textfont1=\eighti
-   \textfont2=\eightsy
-   \def\rm{\eightrm}
-   \def\bf{\eightbf}
-   \def\tt{\eighttt}
-   \def\it{\eightit}
-   \def\sl{\eightsl}
-   \normalbaselineskip=.8\normalbaselineskip
-   \normallineskip=.8\normallineskip
-   \normallineskiplimit=.8\normallineskiplimit
-   \normalbaselines\rm          %make definitions take effect
-
-   \if 2\ncolumns
-     \let\maxcolumn=b
-     \footline{\hss\rm\folio\hss}
-     \def\makefootline{\vskip 2in \hsize=6.86in\line{\the\footline}}
-   \else \if 3\ncolumns
-     \let\maxcolumn=c
-     \nopagenumbers
-   \else
-     \errhelp{You must set \columnsperpage equal to 1, 2, or 3.}
-     \errmessage{Illegal number of columns per page}
-   \fi\fi
-
-   % \intercolumnskip=.46in
-   \intercolumnskip=.20in
-   \def\abc{a}
-   \output={%
-       % This next line is useful when designing the layout.
-       %\immediate\write16{Column \folio\abc\space starts with \firstmark}
-       \if \maxcolumn\abc \multicolumnformat \global\def\abc{a}
-       \else\if a\abc
-        \global\setbox\columna\columnbox \global\def\abc{b}
-         %% in case we never use \columnb (two-column mode)
-         \global\setbox\columnb\hbox to -\intercolumnskip{}
-       \else
-        \global\setbox\columnb\columnbox \global\def\abc{c}\fi\fi}
-   \def\multicolumnformat{\shipout\vbox{\makeheadline
-       \hbox{\box\columna\hskip\intercolumnskip
-         \box\columnb\hskip\intercolumnskip\columnbox}
-       \makefootline}\advancepageno}
-   \def\columnbox{\leftline{\pagebody}}
-
-   \def\bye{\par\vfill\supereject
-     \if a\abc \else\null\vfill\eject\fi
-     \if a\abc \else\null\vfill\eject\fi
-     \end}
-\fi
-
-% ***** Verbatim typesetting *****
-
-% Verbatim typesetting is done by
-%    \verbatim"stuff to verbatim typeset"
-% Any character can be used in place of ".
-% E.g. \verbatim?stuff? or \verbatim|stuff|.  Cf. TeXbook pp.380-382
-
-\def\uncatcodespecials{\def\do##1{\catcode`##1=12}\dospecials}
-\def\setupverbatim{\tt%
-\def\par{\leavevmode\endgraf}\catcode`\`=\active%
-\obeylines\uncatcodespecials\obeyspaces}
-\def\verbatim{\begingroup\setupverbatim\doverbatim}
-\def\doverbatim#1{\def\next##1#1{##1\endgroup}\next}
-
-\def\\{\verbatim}
-\def\ds{\displaystyle}
-\def\SPC{\quad} % space between symbol and command
-
-\parindent 0pt
-\parskip 1ex plus .5ex minus .5ex
-
-\def\small{\smallfont\textfont2=\smallsy\baselineskip=.8\baselineskip}
-
-\outer\def\newcolumn{\vfill\eject}
-
-\outer\def\title#1{{\titlefont\centerline{#1}}\vskip 1ex plus .5ex minus.5ex}
-
-%\outer\def\section#1{\par\filbreak
-%  \vskip 1ex plus 2ex minus 2ex {\headingfont #1}\mark{#1}%
-%  \vskip 1ex plus 1ex minus .5ex}
-
-\outer\def\section#1{\par\filbreak
-   \vskip .75ex plus 1ex minus 2ex {\headingfont #1}\mark{#1}%
-   \vskip .5ex plus .5ex minus .5ex}
-\outer\def\subsection#1{\par\filbreak
-   \vskip .75ex plus 1ex minus 2ex {\bf #1}\mark{#1}%
-   \vskip .5ex plus .5ex minus .5ex}
-% looks like a section, but does not use the splitting algorithm
-\outer\def\fakesection#1{\par
-   \vskip .75ex plus 1ex minus 2ex {\headingfont #1}%
-   \vskip .5ex plus .5ex minus .5ex}
-\def\paralign{\vskip\parskip\halign}
-
-%\def\<#1>{$\langle${\rm #1}$\rangle$}
-
-\def\begintext{\par\leavevmode\begingroup\parskip0pt\rm}
-\def\endtext{\endgroup}
-
-% smaller indenting of itemize lists for a compact format
-\itemindent=0.15in
-\itemnarrow=0in
-
-% math-related definitions (compressed than usual):
-
-\def\dfn{
-{\color{red} \bf D:}
-}
-
-
-\def\prfcolor{\color{green}}
-\def\thmcolor{\color{blue}}
-\def\lemcolor{\color[rgb]{1,0,1}}
-\def\obscolor{\color{black}}
-
-\def\prf#1{{\bf \begingroup\prfcolor P\ifx#1\empty\else(\endgroup{\I #1}\begingroup\prfcolor)\fi:\endgroup}}
-\def\thm#1{{\bf \begingroup\thmcolor T\ifx#1\empty\else(\endgroup{\I #1}\begingroup\thmcolor)\fi:\endgroup}}
-\def\lem#1{{\bf \begingroup\lemcolor L\ifx#1\empty\else(\endgroup{\I #1}\begingroup\lemcolor)\fi:\endgroup}}
-\def\obs#1{{\bf \begingroup\obscolor O\ifx#1\empty\else(\endgroup{\I #1}\begingroup\obscolor)\fi:\endgroup}}
-\def\res#1{{\bf \begingroup\obscolor R\ifx#1\empty\else(\endgroup{\I #1}\begingroup\obscolor)\fi:\endgroup}}
-
-\def\st{{\rm\ t.ž.\ }}
-\def\iff{\leftrightarrow}
-\def\then{\rightarrow}
-\def\rng{{\rm Rng}}
-\def\dom{{\rm Dom}}
-% my compact notation for $x_1, x_2, \dots, x_n$.
-\def\mls#1#2{#1_{[1,#2]}}
-
-% enumerability-related macros
-\def\da{\downarrow}
-\def\ua{\uparrow}
-\def\daeq{\downarrow=}
-\def\daneq{\downarrow\neq}
-
-% ************  TEXT STARTS HERE **************************
 \title{Vyčíslitelnost 1}
 \section{Základní funkce}
 $$\eqalign{ O(x) &= 0\cr
@@ -217,7 +10,7 @@ R_n(f,g) &= h \st \cases{h(0,x_{[2,n]}) = f(x_{[2,n]}) \cr h(i, x_{[2,n]}) = g(i
 M_n(f) &= h \st \cr
 h(x_{[1,n]}) &\daeq z \iff \cases{f(x_{[1,n]}, z) \daeq 0 \cr \forall j < z: f(x_{[1,n]}) \daneq 0\cr} \cr}$$
 
-\itemize{\dfn}
+\itemize{\dfn{}}
 \:  $ČRF$ -- lze ji odvodit pomocí základních funkcí
 \:  $ORF$ -- $ČRF$ a zároveň totální (všude definovaná)
 \:  $PRF$ -- lze ji odvodit bez použití minimalizace
@@ -259,7 +52,7 @@ $\Psi_{m+n}(e,y_{[1,m]},x{[1,n]}) \simeq \Psi_m\left(s_m(e,y_{[1,m]}), x_{[1,n]}
 \prf{} První dvě části diagonalizací.
 
 \section{Rekurzivní spočetnost}
-\itemize{\dfn}
+\itemize{\dfn{}}
 \: $\chi \equiv$ pravdivostní funkce výroku nebo charakteristická funkce mny.
 \: $PRP/ORP$ (predikáty) $\equiv$ jeho $\chi$ je $PRF/ORF$.
 \: $RSP$ predikát $\equiv$ obor konvergence $ČRF$.
@@ -306,7 +99,7 @@ $$\eqalign{
 \endlist
 
 \fakesection{Převoditelnost}
-\itemize{\dfn}
+\itemize{\dfn{}}
 \: $A \le_m B \equiv \exists f, f \in ORF \st x \in A \iff f(x) \in B$.
 \: $A \le_1 B \equiv f$ navíc prostá.
 \: $M$ 1-úplná $\equiv$ $M \in RSM$ a $\forall B \in RSM: B \le_1 M$.
@@ -327,7 +120,7 @@ $$ \alpha(x,y,w)\da \iff \varphi_{h(y,x)}(w)\da \iff  \varphi_{h(y,x)}(h(y,x))\d
 
 \section{Generování RSM}
 
-\dfn $f$ úseková $\equiv \dom(f) = [0,n]$.
+\dfn{} $f$ úseková $\equiv \dom(f) = [0,n]$.
 
 \obs{} $PRF, ORF$ jsou úsekové vždy.
 
@@ -354,9 +147,9 @@ která nemusí být prostá. Tak zadefinujeme $g(0) = f(0), g(k+1) = f(\mu_j(f(j
  
 \fakesection{Imunní a simple množiny}
 
-\dfn $M$ imunní $\equiv |M| \ge \omega \& W_x \subseteq M \then |W_x| < \omega$. 
+\dfn{} $M$ imunní $\equiv |M| \ge \omega \& W_x \subseteq M \then |W_x| < \omega$. 
 
-\dfn $X$ simple $\equiv X \in RSM \& \overline{X}$ imunní.
+\dfn{} $X$ simple $\equiv X \in RSM \& \overline{X}$ imunní.
 
 \obs{Neefektivní konstrukce imunní množiny} Procházej prvky $W_x$ pro každé $x$ a přidávej elementy do $\overline{M}$.
 
@@ -417,11 +210,11 @@ $f(x)$ je $ORF \then \exists e \st \varphi_{f(e)}(x) \simeq \varphi_e(x)$, a ted
 
 \fakesection{Produktivní a kreativní množiny}
 
-\dfn $B$ je produktivní $\equiv \exists \Phi \in ČRF \st \forall x: W_x \in B \then \Phi(x) \da \& \Phi(x) \in B \ W_x$.
+\dfn{} $B$ je produktivní $\equiv \exists \Phi \in ČRF \st \forall x: W_x \in B \then \Phi(x) \da \& \Phi(x) \in B \ W_x$.
 
-\dfn Funkci $\Phi$, která dokazuje produktivitu pro $B$, také říkáme produktivní.
+\dfn{} Funkci $\Phi$, která dokazuje produktivitu pro $B$, také říkáme produktivní.
 
-\dfn $A$ kreativní $\equiv A RSM \& \overline{A}$ je produktivní.
+\dfn{} $A$ kreativní $\equiv A RSM \& \overline{A}$ je produktivní.
 
 \obs{} $K$ je kreativní. $\varphi$ by byla identita.
 
@@ -483,9 +276,9 @@ Nyní použij čtvrtou větu o rekurzi: $\exists g(x) \st \varphi_{g(x}(z) \sime
 
 \fakesection{Neoddělitelné množiny}
 
-\dfn $A,B$ jsou rekurzivně neoddělitelné $\equiv$ $\neg\exists$ rekurzivní $M \st A \subseteq M \& B \subseteq \overline{M}$.
+\dfn{} $A,B$ jsou rekurzivně neoddělitelné $\equiv$ $\neg\exists$ rekurzivní $M \st A \subseteq M \& B \subseteq \overline{M}$.
 
-\dfn $A,B$ jsou efektivně neoddělitelné $\exists ČRF f \st:$
+\dfn{} $A,B$ jsou efektivně neoddělitelné $\exists ČRF f \st:$
 $$(A \subseteq W_x \& B \subseteq W_y \& W_x \cap W_y = \emptyset) \then f(x,y)\da \& f(x,y) \not \in W_x \cup W_y. $$
 
 \obs{} Efektivně neoddělitelné množiny jsou rek. neoddělitelné. 
@@ -508,7 +301,7 @@ $A = \{x | \varphi_x(x) \simeq 0 \}, B = \{ x | \varphi_x(x) \simeq 1 \}$.
 \prf{} $\varphi_{f(x,y)} \then$ VR4 $\then \exists \alpha \st \varphi_{f(\alpha(y),y)} \simeq \varphi_{\alpha(y)}$.
 $\varphi_{g(\alpha(y),y)} \then$ VR1 $\then \exists n \st \varphi_{g(\alpha(n), n)} \simeq \varphi_m$. Vol $m = \alpha(n)$.
 
-\dfn (1-převoditelnost) $(A,B),(C,D)$ disj. dvojice, pak $(A,B) \le_1 (C,D) \equiv$ $A \le_1 C$ pomocí $h$ a $B \le_1 D$ pomocí té samé $h$.
+\dfn{1-převoditelnost} $(A,B),(C,D)$ disj. dvojice, pak $(A,B) \le_1 (C,D) \equiv$ $A \le_1 C$ pomocí $h$ a $B \le_1 D$ pomocí té samé $h$.
 
 \thm{Ekvivalence $1$-úplnosti a efektivní neoddělitelnosti} $(A,B)$ je $1$-úplná $\iff (A,B)$ efekt. neodd.
 
@@ -533,7 +326,7 @@ podobně. Složení $f$ s $\gamma_{\{1,2\}}$ tedy dokazuje $1$-úplnost.
 \section{Gödelova věta}
 \uv{V rozumných teoriích je množina dokazatelných a vyvratitelných formulí neoddělitelná.}
 
-\dfn Teorie $T$ je axiomatizovatelná $\equiv$ množina dokazatelných formulí v $T$ je $RSM$. 
+\dfn{} Teorie $T$ je axiomatizovatelná $\equiv$ množina dokazatelných formulí v $T$ je $RSM$. 
 
 \thm{Gödel} Jestliže teorie $T$ 1. řádu je $ZAS$ a je bezesporná:
 
@@ -544,10 +337,10 @@ podobně. Složení $f$ s $\gamma_{\{1,2\}}$ tedy dokazuje $1$-úplnost.
 
 \section{Reprezentovatelnost}
 
-\dfn $f \in ČRF$ je reprezentovatelná $\equiv$ $f(\mls x n ) = y \iff \vdash F( \mls x n , y)$ a také
+\dfn{} $f \in ČRF$ je reprezentovatelná $\equiv$ $f(\mls x n ) = y \iff \vdash F( \mls x n , y)$ a také
 $\vdash F(\mls x n , q) \& \vdash F(\mls x n , j) \then q = j$.
 
-\dfn $P$ predikát je diofantický $\equiv \exists p_1, p_2$ polynomy $\st \forall \mls x n :$
+\dfn{} $P$ predikát je diofantický $\equiv \exists p_1, p_2$ polynomy $\st \forall \mls x n :$
 $$ \exists \mls y k P(\mls x n ) \iff p_1(\mls x n , \mls y k ) = p_2(\mls x n , \mls y k ).$$
 
 \thm{Matjasevič} $P$ diofantický $\iff$ $P$ rek. spočetný.
