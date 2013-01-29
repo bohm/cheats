@@ -6,6 +6,7 @@
 \input color
 
 \language\czech
+\landscape
 %**start of header
 \newcount\columnsperpage
 
@@ -188,6 +189,10 @@
 \def\iff{\leftrightarrow}
 \def\then{\rightarrow}
 \def\rng{{\rm Rng}}
+\def\dom{{\rm Dom}}
+% my compact notation for $x_1, x_2, \dots, x_n$.
+\def\mls#1#2{#1_{[1,#2]}}
+
 % enumerability-related macros
 \def\da{\downarrow}
 \def\ua{\uparrow}
@@ -233,7 +238,7 @@ tedy nepokryjeme celé.
 \thm{Kleene} $\forall k \ge 1:$
 
 \numlist\nalpha
-\: $\exists ČRF \Psi_k(e, x_{[1,k]})$ univerzální pro $k$ proměnných.
+\: $\exists ČRF \Psi_k(e, \mls{x}{k})$ univerzální pro $k$ proměnných.
 \: Lze efektivně získat z funkce její $e$ a z $e$ funkci.
 \: $\exists PRF_1 U \& \exists PRF_{k+2} T_k \st$ \hfil\break
 $\Psi_k(e, x_{[1,k]}) \simeq U(\mu_y(T_k(e, x_{[1,k]},y)))$
@@ -307,16 +312,166 @@ $\forall y \in W_x: \alpha(x,y,w)\da \iff \varphi_{h(y,x)}(w)\da \iff  \varphi_{
 
 \section{Generování RSM}
 
-\section{Matjasevičova věta}
+\dfn $f$ úseková $\equiv \dom(f) = [0,n]$.
+
+\obs{} $PRF, ORF$ jsou úsekové vždy.
+
+\thm{Generátory $PRM$} Rekurzivní množiny jsou právě $\rng$ rostoucích úsekových $ČRF$. 
+
+\prf{}
+
+\itemize\ibull
+\: \uv{$\then$}: očísluj prvky rek. množiny, $f(0) = \mu_x(x \in M)$, $f(k+1) = \mu_y(y > f(k), y \in M)$.
+\: \uv{$\leftarrow$}: Pokud $f$ není totální, tak ji konečným cyklem umíme
+vyčíslit, $\rng(f)$ je rekurzivní.  Pokud $f$ totální je, tak musíme pro $y$
+najít $x \st f(x) = y$ bez minimalizace. Jenže víme, že díky úsekovosti a růstu
+platí, že $\exists x: x \le f(x)$. Tak prostě najdeme horní mez pomocí $y$ a
+pak minimalizujeme.
+\endlist
+
+\thm{} Rekurzivně spočetné množiny jsou právě obory hodnot prostých úsekových $ČRF$.
+
+\prf{} Vyrob z $\varphi$ množinu $B = \{(x,s) | \varphi(x) \da$ teprve po $s$ krocích $\}$.
+Ta je rekurzivní, takže má generátor rostoucí úsekovou $f$ (resp. po vybrání první složky z dvojic),
+která nemusí být prostá. Tak zadefinujeme $g(0) = f(0), g(k+1) = f(\mu_j(f(j) = g(k))$.
+
+\thm{} Každá nekonečná $RSM$ obsahuje nekonečnou rostoucí podmnožinu.
+ 
+\section{Imunní a simple množiny}
+
+\dfn $M$ imunní $\equiv |M| \ge \omega \& W_x \subseteq M \then |W_x| < \omega$. 
+\dfn $X$ simple $\equiv X \in RSM \& \overline{X}$ imunní.
+
+\obs{Neefektivní konstrukce imunní množiny} Procházej prvky $W_x$ pro každé $x$ a přidávej elementy do $\overline{M}$.
+
+\obs{Efektivní konstrukce simple množiny} Definujme predikát $Q(x,y)$:
+$$ Q(x,y) \iff y \in W_x \& y > 2x.$$
+Tvrdíme, že $A = \rng(\varphi)$ je simple:
+
+\itemize\ibull
+\: Obor hodnot $ČRF$ je $RSM$.
+\: $\varphi(x) > 2x$, pokud $\varphi(x) \da \then$ z množiny $[0,2x]$ jsme do $A$ dali nejvýš $x$ čísel $\then \overline{A}$
+je nekonečná.
+\: z konstrukce plyne: nepřidali jsme žádnou nekonečnou $RSM$ do $\overline{A}$.
+\endlist
+
+$\overline{A}$ je tedy imunní.
 
 \section{Věty o rekurzi}
 
-\section{Produktivní a kreativní mny}
+\thm{První} $f \in ČRF_1 \then \exists a \st \forall x: \varphi_{f(a)}(x) \daeq \varphi_a(x)$.
+
+\prf{} Hledané $a$ bude tvaru $a = s_1(z,z)$. Protože $s_1 \in PRF$, tak $\varphi_{f(s_1(z,x))}(x)$
+je funkcí jen $z,x \then \exists e \st:$
+$$\varphi_{f(s_1(z,x))}(x) \simeq \Psi_2(e,z,x) \simeq \Psi_1(s_1(e,z),x) \simeq \varphi_{s_1(e,z)}(x).$$
+Dosaď za $z = e$, $a = s_1(e,e)$.
+
+\thm{Druhá} $f \in ČRF_1 \then \exists {\rm\ rostoucí\ } g \in PRF_1 \st \forall x: \varphi_{f(g(j))}(x) \simeq \varphi_{g(j)}(x)$.
+
+\prf{} $g(j) = s_2(z,z,j)$, vol $z = e$, podobně jako první věta.
+
+\thm{Třetí, pro více proměnných}
+$f \in ČRF_{n+1} \then \exists a \forall x_{[1,n]}: \varphi_a(x_{[1,n]}) \simeq f(a,x_{[1,n]})$.
+
+\prf{}
+\itemize\ibull
+\: Jedna proměnná: $f(y,x) \simeq \Psi_2(e,y,x) \simeq \Psi_1(s_1(e,y),x) \simeq \varphi_{s_1(e,y)}(x)$.
+Vol $g(y) = s_1(e,y)$, použij první větu.
+\: více proměnných: $f(y,\mls x n ) \simeq \Psi_{n+1}(e,y,\mls x n ) \simeq \Psi_n(s_1(e,y), \mls x n ) \simeq
+\varphi_{s_1(e,y)}(\mls x n )$. $s_1(e,y)$ má povný bod $a$, vol $y = a$.
+\endlist
+
+\thm{Čtvrtá} $f \in ČRF_{n+1} \then \exists g \in PRF_n \st \forall x,\mls y n : \varphi_{f(g(\mls y n ), \mls y n )}(x) \simeq
+\varphi_{g(\mls y n )}(x)$.
+
+\prf{} Vol $g(\mls y n ) = s_{n+1}(z,z,\mls y n )$, zopakuj postup stejný, jako výše.
+
+\thm{Rice} $A$ buď netriviální třída $ČRF_1 \then B = \{x | \varphi_x \in A\}$ není rekurzivní.
+
+\prf{} Sporem, existuje nutně $b \in B$, $c \not \in B$, zadefinuj $f(x) = b$ pokud $x \in B$, $c$ jinak.
+$f(x)$ je $ORF \then \exists e \st \varphi_{f(e)}(x) \simeq \varphi_e(x)$, a tedy $e \in B$ a $e \not \in B$.
+
+\res{} Nelze efektivně rozhodnout ekvivalence programů.
+
+\section{Produktivní a kreativní množiny}
+
+\dfn $B$ je produktivní $\equiv \exists \varphi \in ČRF \st \forall x: W_x \in B \then \varphi(x) \da \& \varphi(x) \in B \ W_x$.
+
+\dfn $A$ kreativní $\equiv A RSM \& \overline{A}$ je produktivní.
+
+\obs{} $K$ je kreativní. $\varphi$ by byla identita.
+
+\obs{} $f$ prostá a $ORF$, pak $\{x | f(x) \not \in W_x\}$ produktivní
+
+\obs{} Každá produktivní obsahuje nekonečnou $RSM$. 
+
+\thm{O produktivní $ORF$} $\forall B$ produktivní $f \in ORF$.
+
+\thm{O produktivní $ORF$ bijekci}
+
+\thm{O ekvivalenci pojmů} $\overline{K} \le_1 B \iff \overline{K} \le_m B \iff B$ je produktivní.
+
+\prf{}
+
+\itemize\ibull
+\: $1 \then 2$ jasné.
+\: $2 \then 3$: Ukážeme, že produktivita se zachovává vzhůru. Máme $C \le_m B$, čili
+$x \in C \iff h(x) \in B$. Je-li $W_x \subseteq B$, tak $h^{-1}(W_x) \subseteq C$. Sestrojíme
+tedy $\beta(x,y)$ tak, aby $\beta(x,y)\da \iff h(y) \in W_x$.
+\: $3 \then 1$: Hledáme prostou $h \in ORF \st x \in \overline{K} \iff h(x) \in B$.
+Zadefinuj $\beta(y,x,w) \da \iff w = f(y) \& x \in K$. Použij $s-m-n$ větu: $\alpha(y,x) = s_2(e,y,x) \then 
+W_{\alpha(y,x)} = \{ w | f(w) = f(y) \& x \in K \}$. 
+Nyní použij čtvrtou větu o rekurzi: $\exists g(x) \st \varphi_{g(x}(z) \simeq \varphi_{\alpha(g(x),x)}(z)$.
+\endlist
 
 \section{Neoddělitelné mny}
 
+\dfn $A,B$ jsou rekurzivně neoddělitelné $\equiv$ $\not \exists$ rekurzivní $M \st A \subseteq M \& B \subseteq \overline{M}$.
+
+\dfn $A,B$ jsou efektivně neoddělitelné $\exists ČRF f \st:$
+$$(A \subseteq W_x \& B \subseteq W_y \& W_x \cap W_y = \emptyset) \then f(x,y)\da \& f(x,y) \not \in W_x \cup W_y. $$
+
+\obs{} Efektivně neoddělitelné množiny jsou rek. neoddělitelné. 
+
+\prf{} Mám-li rekurzivní množinu $M$, pak snadno najdu funkce tak, aby $W_x = M$ a $W_y = \overline{M}$ a tedy $f$
+nemůže existovat.
+
+\thm{} Rek. neoddělitelné množiny nemusí být efektivně neoddělitelné.
+
+\thm{} Existují dvě efektivně neoddělitelné množiny.
+$A = \{x | \varphi_x(x) \simeq 0 \}, B = \{ x | \varphi_x(x) \simeq 1 \}$.
+
+\thm{Dvojná věta o rekurzi}
+
+\thm{Ekvivalence $1$-úplnosti a efektivní neoddělitelnosti}
+
 \section{Gödelova věta}
+\uv{V rozumných teoriích je množina dokazatelných a vyvratitelných formulí neoddělitelná.}
+
+\dfn Teorie $T$ je axiomatizovatelná $\equiv$ množina dokazatelných formulí v $T$ je $RSM$. 
+
+\thm{Gödel} Jestliže teorie $T$ 1. řádu je $ZAS$ a je bezesporná:
+
+\itemize\ibull
+\: Množina axiomatizovatelných formulí není rekurzivní.
+\: je-li $T$ axiomatizovatelná, tak $\exists$ formule $f$ nerozhodnutelná v $T$ a nelze v $T$ rozhodnout vlastní bezespornost.
+\endlist
 
 \section{Reprezentovatelnost}
 
+\dfn $f \in ČRF$ je reprezentovatelná $\equiv$ $f(\mls x n ) = y \iff \vdash F( \mls x n , y)$ a také
+$\vdash F(\mls x n , q) \& \vdash F(\mls x n , j) \then q = j$.
+
+\dfn $P$ predikát je diofantický $\equiv \exists p_1, p_2$ polynomy $\st \forall \mls x n : \exists \mls y k P(\mls x n ) \iff p_1(\mls x n , \mls y k ) = p_2(\mls x n , \mls y k )$.
+
+\thm{Matjasevič} $P$ diofantický $\iff$ $P$ rek. spočetný.
+
+\prf{} Zpětná implikace je těžká a neříká se, dopředná naopak jednoduchá -- zkoušíme všechny možnosti.
+
+\thm{} $\forall f \in ČRF, f$ je reprezentovatelná, dokonce $\exists$ formule, která ji reprezentuje ve všech teoriích.
+
+\prf{} Podle Matjaseviče.
+
+\res{}  Jsou-li $A$, $B$ disj. $RSM$, pak $\exists G$ formule v $\sigma_1 \st$ \dots
+ 
 \bye
