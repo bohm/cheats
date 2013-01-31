@@ -203,20 +203,20 @@ $$ \varphi_{f(g(\mls y n ), \mls y n )}(x) \simeq \varphi_{g(\mls y n )}(x).$$
 
 \thm{Rice} $A$ buď netriviální třída $ČRF_1 \then B = \{x | \varphi_x \in A\}$ není rekurzivní.
 
-\prf{} Sporem, existuje nutně $b \in B$, $c \not \in B$, zadefinuj $f(x) = b$ pokud $x \in B$, $c$ jinak.
+\prf{} Sporem, existuje nutně $b \in B$, $c \not \in B$, zadefinuj $f(x) = b$ pokud $x \not \in B$, $c$ jinak.
 $f(x)$ je $ORF \then \exists e \st \varphi_{f(e)}(x) \simeq \varphi_e(x)$, a tedy $e \in B$ a $e \not \in B$.
 
 \res{} Nelze efektivně rozhodnout ekvivalence programů.
 
 \fakesection{Produktivní a kreativní množiny}
 
-\dfn{} $B$ je produktivní $\equiv \exists \Phi \in ČRF \st \forall x: W_x \in B \then \Phi(x) \da \& \Phi(x) \in B \ W_x$.
+\dfn{} $B$ je produktivní $\equiv \exists \Phi \in ČRF \st \forall x: W_x \subseteq B \then \Phi(x) \da \& \Phi(x) \in B \ W_x$.
 
 \dfn{} Funkci $\Phi$, která dokazuje produktivitu pro $B$, také říkáme produktivní.
 
-\dfn{} $A$ kreativní $\equiv A RSM \& \overline{A}$ je produktivní.
+\dfn{} $A$ kreativní $\equiv A$ $RSM \& \overline{A}$ je produktivní.
 
-\obs{} $K$ je kreativní. $\varphi$ by byla identita.
+\obs{} $K$ je kreativní. $\Phi$ by byla identita.
 
 \obs{} $f$ prostá a $ORF$, pak $\{x | f(x) \not \in W_x\}$ produktivní
 
@@ -225,8 +225,8 @@ $f(x)$ je $ORF \then \exists e \st \varphi_{f(e)}(x) \simeq \varphi_e(x)$, a ted
 \thm{O produktivní $ORF$} $\forall B$ produktivní $\exists$ produktivní $f \in ORF$.
 
 \prf{}
-$B$ je tedy produktivní, $\Phi$ přiřazená produktivní funkce. Výsledkem (jako obvykle) bude
-nějaká funkce $f \equiv \varphi_g(x)$ pro vhodné $g$.
+$B$ je produktivní, $\Phi$ přiřazená produktivní funkce. Výsledkem (jako obvykle) bude
+nějaká funkce $f \equiv \varphi_{g(x)}$ pro vhodné $g$.
 
 Nejprve pomocná funkce $\alpha(x,y,z)$: $\alpha(x,y,z)\da \iff \Phi(x)\da \& z \in W_y$.
 Použijeme $s-m-n$ větu, dostaneme:
@@ -238,12 +238,12 @@ Co je $W_{\beta(x,y)}$? Pokud $\Phi(x) \ua$, tak $\emptyset$, jinak $W_y$.
 Nyní aplikuj čtvrtou větu o rekurzi:
 $$ \exists g \in PRF: \Psi_1(\Beta(g(y),y),z) \simeq \Psi_1(g(y),z). $$
 $W_g(y)$ je tedy $W_{\beta(g(y),y)}$. Když $\Psi(g(y)) \da$, tak je to rovno $W_y$. 
-Tvrdím, že $\Psi(g(y))$ nemůže nikdy divergovat.
+Sporem dokáži, že $\Psi(g(y))$ nemůže nikdy divergovat.
  
 \thm{O produktivní $ORF$ bijekci}
 Každá produktivní množina $B$ má i příslušnou produktivní funkci, která je v $ORF$ a je bijekcí.
 
-\prf{} Z minulé věty máme $ORF f$ pro příslušnou $B$. Tu nejdřív přepočítáme na surjektivní $g$,
+\prf{} Z minulé věty máme $ORF$ $f$ pro příslušnou $B$. Tu nejdřív přepočítáme na surjektivní $g$,
 a nakonec i na injektivní $h$.
 
 \itemize\ibull
@@ -331,7 +331,7 @@ podobně. Složení $f$ s $\gamma_{\{1,2\}}$ tedy dokazuje $1$-úplnost.
 \thm{Gödel} Jestliže teorie $T$ 1. řádu je $ZAS$ a je bezesporná:
 
 \itemize\ibull
-\: Množina axiomatizovatelných formulí není rekurzivní.
+\: Množina dokazatalných formulí není rekurzivní.
 \: je-li $T$ axiomatizovatelná, tak $\exists$ formule $f$ nerozhodnutelná v $T$ a nelze v $T$ rozhodnout vlastní bezespornost.
 \endlist
 
