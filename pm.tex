@@ -23,12 +23,21 @@ $$P[S_n > a] < e^{-a^2 / 2n}.$$
 nezávislou velikosti $k$}.
 
 \dfn{}$m(k)$ bude označovat minimálni počet hran $k$-unif. hypergrafu, který není
-$2$-obarvitelný. $m(2) = 3$, $m(3) = 7$.
+$2$-obarvitelný. $m(2) = 3$ -- Fano.
+
+\obs{} $m(3) \ge 7$.
+
+\prf{} $6$ hran hypergrafu. Nejvýš $6$ vrcholů: rozeber. Aspoň $7$: dva nejsou spojené hranou, tak je spoj do jednoho vrcholu.
 
 \thm{Odhad $m(k)$} $m(k) \ge 2^{k-1}$.
 
-\prf{} Vezmi menší náhodný hypergraf. Zvol náhodné obarvení, spočti pravděpodobnost
-že existuje jednobarevná (a tedy špatná) hrana.
+\prf{} Vezmi menší náhodný hypergraf. Zvol náhodné obarvení, spočti
+pravděpodobnost že existuje jednobarevná (a tedy špatná) hrana.
+
+\thm{} Pokud ${n \choose k} (1 - 2^{-k})^{n-k} <1$, tak existuje turnaj
+s vlastností, že každých $k$ vrcholů má společného vst. souseda.
+
+\prf{} Union bound.
 
 \section{Náhodné permutace}
 
@@ -50,13 +59,27 @@ $A_s$. Pak $P[\sigma(A_s) \in F] \le k/n$.
 
 \thm{} Existuje turnaj, který má alespoň $n!/2^{n-1}$ Ham. cest.
 
+\prf{} Rozděl jev na jednotlivé permutace. 
+
 \thm{} Každý graf s $m$ hranami obsahuje bipartitní graf s $m/2$ hranami.
 
-\section{Alterace}
+\prf{} Derandomizací nebo i deterministicky.
+
+\fsection{Alterace}
 
 \thm{Slabý Turán} $\alpha(G) \ge n/2d$.
 
-\prf{}
+\prf{} Vezmi náhodnou podmnožinu $S$, každý vrchol vlož s pravd. $p$.
+$E[|S|] = np$. $E[||S||] = {ndp^2 \over 2}$. $|S| - ||S||$ odpovídá
+tomu, že smažeme z každé hrany jeden vrchol. Zvolme $p$, ať
+maximalizujeme $E[|S| - ||S||]$.
+
+\thm{Další Ramsey} $\forall k,n: R(k,k) > n - {n \choose k} 2^{1 - {k \choose 2}}$.
+
+\prf{} Vezmi náhodné obarvení grafu na $n$ vrcholech. Střední hodnota
+počtu jednobarevných $k$-klik je ${n \choose k} 2^{1 - {k \choose
+2}}$. Existuje obarvení, co to dosahuje, z každé kliky smaž jeden
+vrchol.
 
 \thm{Erdös} $\forall k,l \exists G \st \chi(G) > k \& g(G) > l$.
 
@@ -72,7 +95,45 @@ e^{(\ln n -p(a-1)/2)a}.$$
 To jde do nuly, tedy zase máme $P[\alpha] < 1/2$. Smaž jeden vrchol ze všech krátkých cyklů.
 Zbyde půlka vrcholů, barevnost odhadni velikostí $\alpha$.
 
+\thm{} Existuje množina $S$ $n$ vrcholů v jednotkovém čtverci, kde
+největší trojúhelník má obsah alepsoň $T(S) \ge 1/(100n^2)$.
+
+\prf{} Zvol tři body $A,B,C$ uniformně z množiny všech bodů ve
+čtverci. Nechť je $|AB| = x$. Chceme odhadnout $P[\mu(PQR) < c]$.
+Nejdřív najdeme vzorec pro $P[b \le x \le b + \Delta b]$. Kdyby to
+platilo, tak jsou $A$ a $B$ od sebe někde mezi dvěma kruhy, čili $P[b
+\le x \le b + \Delta b] \le \pi(b+\Delta b)^2 - \pi b^2$. V limitě
+$P[b \le x \le b + db] \le 2\pi b db$.
+
+No a pokud vzdálenost je kolem $b$, pak výška musí být nejvýš $2c/b$,
+což znamená, že $R$ je v pásu šířky $4c/b$ a šířky $\sqrt{2}$. Nyní
+zintergruj možnosti podle $b$:
+
+$$ \int_0^{\sqrt{2}}(2 \pi b)(4 \sqrt{2} c / b) db = 16 \pi c. $$ 
+
+Zvolíme $c = 1/(100n^2)$ a spočítáme střední hodnotu počtu trojic,
+které splňují, že jejich obsah je víc než $c$. Je to $E[T] \le {2n
+\choose 3}(0.6n^{-2}) < n$. Alteruj.
+
+\thm{Komlós, Pintz, Szemerédi} $T(S) = \Omega({\log n \over n^2})$.
+ 
 \section{Dependent Random Choice}
+
+\section{Rozptyl}
+
+\thm{} $\forall m\ge 1: {2m \choose m} \ge 2^{2m}/(4\sqrt{m}+2)$.
+
+\prf{} Vezmi náhodný součet $2m$ $0/1$-proměnných s $p=1/2$. $E[X] = m, \var[X] = m/2$. Čebyšev dává: $P[|X-m| < \sqrt{m}] \ge 1/2$. 
+Pravděpodobnost, že $X$ nabyde přesně $m+k$ pro $|k| < \sqrt{m}$, 
+je nejvýš ${2m \choose m-k}2^{-2m} \le {2m \choose m}2^{-2m}$.
+Celkem tedy:
+
+$$1/2 \le \sum_{|k| < \sqrt{m}} P[X = m+k] \le (2\sqrt{m} -1) {2m \choose m} 2^{-2m}.$$
+
+\dfn{} $H$ graf je {\I balancovaný}, pokud jeho hustota je větší nebo
+rovna všem jeho podgrafům.
+
+\thm{} Pokud je $H$ balancovaný, $\rho$ jeho hustota, pak funkce $n^{-1/\rho}$ je jeho prahová funkce.
 
 \section{Lovászovo lokální lemma}
 
@@ -99,7 +160,7 @@ S kladnou pravděpodobností se nic zlého nestane, pokud:
 \: $\sum_{(i,j) \in E} (2p)^t_j \le t_j /2$.
 \endlist
 
-\dfn{}Obarvení je {\I silně hvězdicové} ($\chi_h$), pokud indukovaný graf každých dvou barev
+\dfn{} Obarvení je {\I silně hvězdicové} ($\chi_h$), pokud indukovaný graf každých dvou barev
 je hvězda (plus izolované vrcholy).
 
 \thm{} Pro $G$ s $\Delta$ a $m$ hranami, $\chi_h(G) \le 14 \sqrt{\Delta m}$.
