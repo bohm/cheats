@@ -1,4 +1,4 @@
-\input macros.tex
+\input cheatmac
 
 \title{Vyčíslitelnost 1}
 \section{Základní funkce}
@@ -10,10 +10,13 @@ R_n(f,g) &= h \st \cases{h(0,x_{[2,n]}) = f(x_{[2,n]}) \cr h(i, x_{[2,n]}) = g(i
 M_n(f) &= h \st \cr
 h(x_{[1,n]}) &\daeq z \iff \cases{f(x_{[1,n]}, z) \daeq 0 \cr \forall j < z: f(x_{[1,n]}) \daneq 0\cr} \cr}$$
 
+\dfn{} Bogus definice s dvěma řádky, abych pořádně mohl zkontrolovat,
+jestli to funguje dobře. Tak.
+
 \itemize{\dfn{}}
-\:  $ČRF$ -- lze ji odvodit pomocí základních funkcí
-\:  $ORF$ -- $ČRF$ a zároveň totální (všude definovaná)
-\:  $PRF$ -- lze ji odvodit bez použití minimalizace
+\:  $ČRF$ -- lze ji odvodit pomocí základních funkcí.
+\:  $ORF$ -- $ČRF$ a zároveň totální (všude definovaná).
+\:  $PRF$ -- lze ji odvodit bez použití minimalizace.
 \endlist
 
 \obs{} Zneužití značení v taháku: občas $ČRF$ třída (píši $f \in ČRF$), občas zastupuje slova
@@ -98,7 +101,7 @@ $$\eqalign{
 \: $\forall f \in ČRF: \rng(f) \in RSM$.
 \endlist
 
-\fakesection{Převoditelnost}
+\fsection{Převoditelnost}
 \itemize{\dfn{}}
 \: $A \le_m B \equiv \exists f, f \in ORF \st x \in A \iff f(x) \in B$.
 \: $A \le_1 B \equiv f$ navíc prostá.
@@ -145,7 +148,7 @@ Ta je rekurzivní, takže má generátor rostoucí úsekovou $f$. Zadefinujeme $
 
 \thm{} Každá nekonečná $RSM$ obsahuje nekonečnou rostoucí podmnožinu.
  
-\fakesection{Imunní a simple množiny}
+\fsection{Imunní a simple množiny}
 
 \dfn{} $M$ imunní $\equiv |M| \ge \omega \& W_x \subseteq M \then |W_x| < \omega$. 
 
@@ -166,7 +169,7 @@ je nekonečná.
 
 $\overline{A}$ je tedy imunní.
 
-\fakesection{Věty o rekurzi}
+\fsection{Věty o rekurzi}
 
 \thm{První} $f \in ČRF_1 \then \exists a \st \forall x:$
 $$\varphi_{f(a)}(x) \daeq \varphi_a(x).$$
@@ -208,7 +211,7 @@ $f(x)$ je $ORF \then \exists e \st \varphi_{f(e)}(x) \simeq \varphi_e(x)$, a ted
 
 \res{} Nelze efektivně rozhodnout ekvivalence programů.
 
-\fakesection{Produktivní a kreativní množiny}
+\fsection{Produktivní a kreativní množiny}
 
 \dfn{} $B$ je produktivní $\equiv \exists \Phi \in ČRF \st \forall x: W_x \subseteq B \then \Phi(x) \da \& \Phi(x) \in B \ W_x$.
 
@@ -274,7 +277,7 @@ W_{\alpha(y,x)} = \{ w | f(w) = f(y) \& x \in K \}$.
 Nyní použij čtvrtou větu o rekurzi: $\exists g(x) \st \varphi_{g(x}(z) \simeq \varphi_{\alpha(g(x),x)}(z)$.
 \endlist
 
-\fakesection{Neoddělitelné množiny}
+\fsection{Neoddělitelné množiny}
 
 \dfn{} $A,B$ jsou rekurzivně neoddělitelné $\equiv$ $\neg\exists$ rekurzivní $M \st A \subseteq M \& B \subseteq \overline{M}$.
 

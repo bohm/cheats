@@ -1,15 +1,14 @@
+% set up PDF output here, so we won't pollute the source
 \pdfoutput=1
 \pdfpkresolution=600
 
-\input ucwmac.tex
-\input ucw-ofs.tex
+\input ucwmac
+\input ucw-ofs
 \input color
-
 \language\czech
 
 \landscape
 
-%**start of header
 \newcount\columnsperpage
 
 \columnsperpage=3
@@ -18,13 +17,6 @@
 \def\year{2012}
 \def\month{January}
 \def\version{\month\ \year\ v\versionnumber}
-
-
-\def\shortcopyrightnotice{
-}
-
-\def\copyrightnotice{
-}
 
 % make \bye not \outer so that the \def\bye in the \else clause below
 % can be scanned without complaint.
@@ -43,8 +35,8 @@
 
 % This multi-way format was designed by Stephen Gildea
 % October 1986.
-
 % Modified for Czech fonts.
+
 \if 1\ncolumns
    \hsize 4in
    \vsize 10in
@@ -122,24 +114,6 @@
      \end}
 \fi
 
-% ***** Verbatim typesetting *****
-
-% Verbatim typesetting is done by
-%    \verbatim"stuff to verbatim typeset"
-% Any character can be used in place of ".
-% E.g. \verbatim?stuff? or \verbatim|stuff|.  Cf. TeXbook pp.380-382
-
-\def\uncatcodespecials{\def\do##1{\catcode`##1=12}\dospecials}
-\def\setupverbatim{\tt%
-\def\par{\leavevmode\endgraf}\catcode`\`=\active%
-\obeylines\uncatcodespecials\obeyspaces}
-\def\verbatim{\begingroup\setupverbatim\doverbatim}
-\def\doverbatim#1{\def\next##1#1{##1\endgroup}\next}
-
-\def\\{\verbatim}
-\def\ds{\displaystyle}
-\def\SPC{\quad} % space between symbol and command
-
 \parindent 0pt
 \parskip 1ex plus .5ex minus .5ex
 
@@ -149,18 +123,15 @@
 
 \outer\def\title#1{{\titlefont\centerline{#1}}\vskip 1ex plus .5ex minus.5ex}
 
-%\outer\def\section#1{\par\filbreak
-%  \vskip 1ex plus 2ex minus 2ex {\headingfont #1}\mark{#1}%
-%  \vskip 1ex plus 1ex minus .5ex}
-
 \outer\def\section#1{\par\filbreak
    \vskip .75ex plus 1ex minus 2ex {\headingfont #1}\mark{#1}%
    \vskip .5ex plus .5ex minus .5ex}
 \outer\def\subsection#1{\par\filbreak
    \vskip .75ex plus 1ex minus 2ex {\bf #1}\mark{#1}%
    \vskip .5ex plus .5ex minus .5ex}
-% looks like a section, but does not use the splitting algorithm
-\outer\def\fakesection#1{\par
+% fake section -- looks the same, but does not force itself
+% to a new column that much
+\outer\def\fsection#1{\par
    \vskip .75ex plus 1ex minus 2ex {\headingfont #1}%
    \vskip .5ex plus .5ex minus .5ex}
 \def\paralign{\vskip\parskip\halign}
@@ -175,25 +146,42 @@
 \itemnarrow=0in
 
 % math-related definitions (compressed than usual):
+\def\slightnegindent{\parshape 2 -3pt \hsize 0in \hsize}
 
-\def\dfncolor{\color{red}}
-\def\prfcolor{\color{green}}
-\def\thmcolor{\color{blue}}
+\def\claimitem#1#2{{\bf \begingroup\csname#1color\endcsname \csname#1name\endcsname\ifx#2\empty\else(\endgroup{\I #2}\begingroup\csname#1color\endcsname)\fi:\endgroup}}
+\def\claim#1#2{\slightnegindent \claimitem{#1}{#2}}
+
+\def\dfnname{D}
+\def\dfncolor{\color[rgb]{0.8,0,0}}
+\def\dfn#1{\claim{dfn}{#1}}
+
+\def\thmname{T}
+\def\thmcolor{\color[rgb]{0,0,0.5}}
+\def\thm#1{\claim{thm}{#1}}
+
+\def\lemname{L}
 \def\lemcolor{\color[rgb]{1,0,1}}
-\def\obscolor{\color{black}}
+\def\lem#1{\claim{lem}{#1}}
 
-\def\dfn#1{{\bf \begingroup\dfncolor D\ifx#1\empty\else(\endgroup{\I #1}\begingroup\dfncolor)\fi:\endgroup}}
-\def\prf#1{{\bf \begingroup\prfcolor P\ifx#1\empty\else(\endgroup{\I #1}\begingroup\prfcolor)\fi:\endgroup}}
-\def\thm#1{{\bf \begingroup\thmcolor T\ifx#1\empty\else(\endgroup{\I #1}\begingroup\thmcolor)\fi:\endgroup}}
-\def\lem#1{{\bf \begingroup\lemcolor L\ifx#1\empty\else(\endgroup{\I #1}\begingroup\lemcolor)\fi:\endgroup}}
-\def\obs#1{{\bf \begingroup\obscolor O\ifx#1\empty\else(\endgroup{\I #1}\begingroup\obscolor)\fi:\endgroup}}
-\def\res#1{{\bf \begingroup\obscolor R\ifx#1\empty\else(\endgroup{\I #1}\begingroup\obscolor)\fi:\endgroup}}
+\def\prfname{P}
+\def\prfcolor{\color[rgb]{0,0.5,0}}
+\def\prf#1{\claim{prf}{#1}}
+
+\def\obsname{O}
+\def\obscolor{\color{black}}
+\def\obs#1{\claim{obs}{#1}}
+
+\def\resname{R}
+\def\rescolor{\color{black}}
+\def\res#1{\claim{res}{#1}}
 
 \def\st{{\rm\ t.ž.\ }}
 \def\iff{\leftrightarrow}
 \def\then{\rightarrow}
+\def\neht{\leftarrow}
 \def\rng{{\rm Rng}}
 \def\dom{{\rm Dom}}
+\def\var{{\rm Var}}
 % my compact notation for $x_1, x_2, \dots, x_n$.
 \def\mls#1#2{#1_{[1,#2]}}
 

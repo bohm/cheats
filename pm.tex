@@ -1,232 +1,19 @@
-\pdfoutput=1
-\pdfpkresolution=600
-
-\input ucwmac.tex
-\input ucw-ofs.tex
-\input color
-
-%**start of header
-\newcount\columnsperpage
-
-% This file can be printed with 1, 2, or 3 columns per page (see below).
-% [For 2 or 3 columns, you'll need 6 and 8 point fonts.]
-% Specify how many you want here.  Nothing else needs to be changed.
-
-\columnsperpage=3
-
-% Smaller (97%) pdf file with horizontal offset 1.5in
-% dvipdfm -l -m 0.97 -x 1.5in -o TeXRefCard.v1.5.pdf TeXRefCard.v1.5.dvi
-
-% There are a couple extra sections included at the end of the document
-% (after the \bye) that didn't fit into six columns.
-% It would be nice to have additional sections covering:
-% \hrules and \vrules, Registers
-% \input and \output files (including \read, \write, \message)
-
-% This reference card is distributed in the hope that it will be useful,
-% but WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-% This file is intended to be processed by plain TeX (TeX82).
-%
-% The final reference card has six columns, three on each side.
-% This file can be used to produce it in any of three ways:
-% 1 column per page
-%    produces six separate pages, each of which needs to be reduced to 80%.
-%    This gives the best resolution.
-% 2 columns per page
-%    produces three already-reduced pages.
-%    You will still need to cut and paste.
-% 3 columns per page
-%    produces two pages which must be printed sideways to make a
-%    ready-to-use 8.5 x 11 inch reference card.
-%    For this you need a dvi device driver that can print sideways.
-% Which mode to use is controlled by setting \columnsperpage above.
-%
-
-\def\versionnumber{1.5}  % Version of this reference card
-\def\year{2007}
-\def\month{January}
-\def\version{\month\ \year\ v\versionnumber}
-
-
-\def\shortcopyrightnotice{
-}
-
-\def\copyrightnotice{
-}
-
-% make \bye not \outer so that the \def\bye in the \else clause below
-% can be scanned without complaint.
-\def\bye{\par\vfill\supereject\end}
-
-\newdimen\intercolumnskip
-\newbox\columna
-\newbox\columnb
-
-\def\ncolumns{\the\columnsperpage}
-
-\message{[\ncolumns\space
-   column\if 1\ncolumns\else s\fi\space per page]}
-
-\def\scaledmag#1{ scaled \magstep #1}
-
-% This multi-way format was designed by Stephen Gildea
-% October 1986.
-
-% Modified for Czech fonts.
-\if 1\ncolumns
-   \hsize 4in
-   \vsize 10in
-   \voffset -.7in
-   \font\titlefont=\fontname\tenbf \scaledmag3
-   \font\headingfont=\fontname\tenbf \scaledmag2
-   \font\smallfont=\fontname\sevenrm
-   \font\smallsy=\fontname\sevensy
-
-   \footline{\hss\folio}
-   \def\makefootline{\baselineskip10pt\hsize6.5in\line{\the\footline}}
-\else
-   \hsize 3.2in
-   \vsize 7.95in
-   \hoffset -.75in
-   \voffset -.745in
-   \font\titlefont=csbx10 \scaledmag2
-   \font\headingfont=csbx10 \scaledmag1
-   \font\smallfont=csr6
-   \font\smallsy=cssy6
-   \font\eightrm=csr8
-   \font\eighti=csmi8
-   \font\eightsy=cssy8
-   \font\eightbf=csbx8
-   \font\eighttt=cstt8
-   \font\eightit=csti8
-   \font\eightsl=cssl8
-   \textfont0=\eightrm
-   \textfont1=\eighti
-   \textfont2=\eightsy
-   \def\rm{\eightrm}
-   \def\bf{\eightbf}
-   \def\tt{\eighttt}
-   \def\it{\eightit}
-   \def\sl{\eightsl}
-   \normalbaselineskip=.8\normalbaselineskip
-   \normallineskip=.8\normallineskip
-   \normallineskiplimit=.8\normallineskiplimit
-   \normalbaselines\rm          %make definitions take effect
-
-   \if 2\ncolumns
-     \let\maxcolumn=b
-     \footline{\hss\rm\folio\hss}
-     \def\makefootline{\vskip 2in \hsize=6.86in\line{\the\footline}}
-   \else \if 3\ncolumns
-     \let\maxcolumn=c
-     \nopagenumbers
-   \else
-     \errhelp{You must set \columnsperpage equal to 1, 2, or 3.}
-     \errmessage{Illegal number of columns per page}
-   \fi\fi
-
-   \intercolumnskip=.46in
-   \def\abc{a}
-   \output={%
-       % This next line is useful when designing the layout.
-       %\immediate\write16{Column \folio\abc\space starts with \firstmark}
-       \if \maxcolumn\abc \multicolumnformat \global\def\abc{a}
-       \else\if a\abc
-        \global\setbox\columna\columnbox \global\def\abc{b}
-         %% in case we never use \columnb (two-column mode)
-         \global\setbox\columnb\hbox to -\intercolumnskip{}
-       \else
-        \global\setbox\columnb\columnbox \global\def\abc{c}\fi\fi}
-   \def\multicolumnformat{\shipout\vbox{\makeheadline
-       \hbox{\box\columna\hskip\intercolumnskip
-         \box\columnb\hskip\intercolumnskip\columnbox}
-       \makefootline}\advancepageno}
-   \def\columnbox{\leftline{\pagebody}}
-
-   \def\bye{\par\vfill\supereject
-     \if a\abc \else\null\vfill\eject\fi
-     \if a\abc \else\null\vfill\eject\fi
-     \end}
-\fi
-
-% ***** Verbatim typesetting *****
-
-% Verbatim typesetting is done by
-%    \verbatim"stuff to verbatim typeset"
-% Any character can be used in place of ".
-% E.g. \verbatim?stuff? or \verbatim|stuff|.  Cf. TeXbook pp.380-382
-
-\def\uncatcodespecials{\def\do##1{\catcode`##1=12}\dospecials}
-\def\setupverbatim{\tt%
-\def\par{\leavevmode\endgraf}\catcode`\`=\active%
-\obeylines\uncatcodespecials\obeyspaces}
-\def\verbatim{\begingroup\setupverbatim\doverbatim}
-\def\doverbatim#1{\def\next##1#1{##1\endgroup}\next}
-
-\def\\{\verbatim}
-\def\ds{\displaystyle}
-\def\SPC{\quad} % space between symbol and command
-
-\parindent 0pt
-\parskip 1ex plus .5ex minus .5ex
-
-\def\small{\smallfont\textfont2=\smallsy\baselineskip=.8\baselineskip}
-
-\outer\def\newcolumn{\vfill\eject}
-
-\outer\def\title#1{{\titlefont\centerline{#1}}\vskip 1ex plus .5ex minus.5ex}
-
-%\outer\def\section#1{\par\filbreak
-%  \vskip 1ex plus 2ex minus 2ex {\headingfont #1}\mark{#1}%
-%  \vskip 1ex plus 1ex minus .5ex}
-\outer\def\section#1{\par\filbreak
-   \vskip .75ex plus 1ex minus 2ex {\headingfont #1}\mark{#1}%
-   \vskip .5ex plus .5ex minus .5ex}
-\outer\def\subsection#1{\par\filbreak
-   \vskip .75ex plus 1ex minus 2ex {\bf #1}\mark{#1}%
-   \vskip .5ex plus .5ex minus .5ex}
-
-\def\paralign{\vskip\parskip\halign}
-
-%\def\<#1>{$\langle${\rm #1}$\rangle$}
-
-\def\begintext{\par\leavevmode\begingroup\parskip0pt\rm}
-\def\endtext{\endgroup}
-
-% smaller indenting of itemize lists for a compact format
-\itemindent=0.15in
-\itemnarrow=0in
-
-% math-related definitions (compressed than usual):
-
-\def\dfn{
-{\color{red} \bf D:}
-}
-
-\def\prfcolor{\color{green}}
-\def\thmcolor{\color{blue}}
-\def\lemcolor{\color[rgb]{1,0,1}}
-
-\def\prf#1{{\bf \begingroup\prfcolor P\ifx#1\empty\else(\endgroup{\I #1}\begingroup\prfcolor)\fi:\endgroup}}
-\def\thm#1{{\bf \begingroup\thmcolor T\ifx#1\empty\else(\endgroup{\I #1}\begingroup\thmcolor)\fi:\endgroup}}
-\def\lem#1{{\bf \begingroup\lemcolor L\ifx#1\empty\else(\endgroup{\I #1}\begingroup\lemcolor)\fi:\endgroup}}
-
-\def\st{{\rm\ t.ž.\ }}
-% ************  TEXT STARTS HERE **************************
+\input cheatmac
 
 \title{Pravděpodobnostní metoda}
 
 \section{Nástroje a odhady}
 
 \thm{Union-bound}
-
+$$P[\bigcup A_i] \le \sum_{i=0}^n P[A_i].$$
 \thm{Čebyšev}
-
+$$P[|X-E[X]| \ge \lambda\sigma] \le {1 \over \lambda^2}.$$
+\prf{}
+$$\sigma^2 = \var[X] = E[(X - E[X])^2] \ge \lambda^2 \sigma^2 P[|X-E[X]| \ge \lambda\sigma. $$
 \thm{Markov}
-
-\thm{Černov}
+$$P[X > \alpha E[X]] < {1 \over \alpha}.$$
+\thm{Černov} Nechť $S_n$ je součtová náhodná proměnná pro $n$ mincí s hodnotami ${+1,-1}$. Pak:
+$$P[S_n > a] < e^{-a^2 / 2n}.$$
 
 \section{Základní použití}
 
@@ -235,7 +22,7 @@
 \prf{} Vezmi $G(n,1/2)$, použij union-bound na jev \uv{$G$ obsahuje kliku nebo
 nezávislou velikosti $k$}.
 
-\dfn $m(k)$ bude označovat minimálni počet hran $k$-unif. hypergrafu, který není
+\dfn{}$m(k)$ bude označovat minimálni počet hran $k$-unif. hypergrafu, který není
 $2$-obarvitelný. $m(2) = 3$, $m(3) = 7$.
 
 \thm{Odhad $m(k)$} $m(k) \ge 2^{k-1}$.
@@ -245,7 +32,7 @@ $2$-obarvitelný. $m(2) = 3$, $m(3) = 7$.
 
 \section{Náhodné permutace}
 
-\dfn Systém množin $F$ {\I má průnik} pokud mají průnik všechny dvojice množin z $F$.
+\dfn{}Systém množin $F$ {\I má průnik} pokud mají průnik všechny dvojice množin z $F$.
 
 \thm{Slunečnicové lemma} Nosná množina $n \ge 2k$. Pokud má systém
 $k-prvkových$ množin $F$ průnik, tak $|F| \le {n-1 \choose k-1}$.
@@ -293,7 +80,7 @@ Zbyde půlka vrcholů, barevnost odhadni velikostí $\alpha$.
 orientovaném grafu jsou nanejvýš $d$. Pokud $ep(d+1) \le 1$, pak 
 $$P[\bigcup_{i=1}^n \overline{A_i}] > 0.$$
 
-\prf{lll a} Buď $A_i$, nastav k nim reálné 0-1-proměnné $x_i$. Pokud platí
+\prf{} Buď $A_i$, nastav k nim reálné 0-1-proměnné $x_i$. Pokud platí
 $$P[A_i] \ge x_i \prod_{(i,j) \in E} (1-x_j), $$
 Pak
 $$P[\bigcap_i \overline{A_i}] \ge \prod_i (1-x_i) > 0.$$
@@ -312,7 +99,7 @@ S kladnou pravděpodobností se nic zlého nestane, pokud:
 \: $\sum_{(i,j) \in E} (2p)^t_j \le t_j /2$.
 \endlist
 
-\dfn Obarvení je {\I silně hvězdicové} ($\chi_h$), pokud indukovaný graf každých dvou barev
+\dfn{}Obarvení je {\I silně hvězdicové} ($\chi_h$), pokud indukovaný graf každých dvou barev
 je hvězda (plus izolované vrcholy).
 
 \thm{} Pro $G$ s $\Delta$ a $m$ hranami, $\chi_h(G) \le 14 \sqrt{\Delta m}$.
