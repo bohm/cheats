@@ -1,0 +1,133 @@
+\input cheatmacp.tex
+
+\def\UGC{{\csc UGC}}
+\def\SSEH{{\csc SSEH}}
+\def\Es{\tilde{E}}
+
+\title{Hypercontractivity,}
+\title{Sum-of-Squares Proofs,}
+\title{and their Applications}
+\authors{B. Barak, F. Brandao, A. Harrow, J. Kelner, D. Steurer, Y. Zhou}
+\authors{Presented by Martin Böhm}
+
+\conj{UGC} For every $\varepsilon>0$, the following problem is NP-hard:
+
+``Given a system of equations $x_i - x_j = c$ mod $k$, answer {\bf Yes} at least $1-\varepsilon$ of equations are satisfiable, {\bf No} otherwise.''
+
+UGC implies that for a large class of problems ({\bf Max Cut, Vertex Cover, Max CSP}) SDP-approximations are the best possible.
+
+\dfn{} $\Phi_G(S) = { E(S, V - S) \over d|S|}$ and $\Phi_G(\delta)$ is the minimum of $\Phi_G(S)$ over sets with relative size $\delta$.
+
+\conj{small-set expansion} For every $\eta >0$, there exists $\delta>0$ such that the following problem is NP-hard:
+
+``Given a (regular) graph $G$, answer {\bf Yes} if $\Phi_G(\delta) \ge 1 -\eta$ and {\bf No} otherwise.''
+
+
+\lclaim{} SSEH implies UGC, the converse is not yet known.
+
+Two main results of this work:
+\itemize\ibull
+\: An algorithm that solves all known UGC instances, including ones
+hard for other algorithms $\then$ UGC might not hold.
+\: SSEH, a natural strengthening of UGC, needs quasi-polynomial time
+$\then$ UGC might hold.
+\endlist
+
+\dfn{} A $p\then q$ norm $||A||_{p \then q}$ of
+a linear operator $A$ between vector spaces of functions $\Omega \then \Real$ is the smallest number $c \ge 0$ such that $||Af||_q \le c||f||_p$.
+
+\dfn{} Such norm is {\I hypercontractive} when $p < q$.
+
+\dfn{SDP hierarchy} A relaxation of {\tt SDP} into levels
+(rounds) where $r$ rounds must be managable in time $n^{O(r)}$.
+
+\dfn{} A functional $\Es$ that maps a polynomial $P$ over $\Real^n$
+of degree at most $r$ into a real number $\Es_x P(x)$ is a {\I level-$r$
+pseudo-expectation (functional)} if it satisfies:
+
+\itemize\ibull
+\: Linearity for polynomials of degree at most $r$,
+\: $\Es P^2 \ge 0$ for polynomials of degree at most $r/2$,
+\: $\Es 1 =1$.
+\endlist
+
+\dfn{} Let $P_0,  \dots,  P_m$ be polynomials over $\Real^n$ of degree at
+most $d$, and lest $r \ge 2d$. The value of $r$-round SoS SDP for the
+program {\I max $P_0$ subject to $P_i^2 = 0$ for $i \in [m]$ is equal to
+the maximum of $\Es_{P_0}$ where $\Es$ ranges over all level $r$
+pseudo-expectation functionals satisfying $\Es P_i^2 =0 \forall i \in
+[m]$.}
+
+\dfn{} An algorithm provides a {\I $(c,C)$-aproximation} for
+the $2 \then q$ norm if for an operator $A$ on input, the algorithm
+then can distunguish between the case that $||A||_{2 \then q} \le c\sigma$ and the case that $||A||_{2 \then q} \ge C\sigma$, where $\sigma$ is the minimum nonzero singular value of $A$.
+
+\thm{2.1} For every $1 < c < C$, there is a $poly(n) exp(n^{2/q})$-time
+algorithm that computes a $(c,C)$-approximation for the $2 \then q$ norm
+of any linear operator whose range is $\Real^n$.
+
+\thm{2.5, informal} Assuming ETH, then for any $\varepsilon, \delta$
+satisfying $\varepsilon + \delta < 1$ the $2 \then 4$ norm of an $m
+\times m$ matrix $A$ cannot be approximated to within an
+$m^{\varepsilon}$multiplicative factor in time less than
+$m^{\log^{\delta}(m)}$ time. This hardness result holds even with $A$
+being a projector.
+
+\thm{2.6, informal} Eight rounds of the SoS relaxation certifies that it
+is possible to satisfy at most $1/100$ fraction of the constraints in
+{\bf Unique Games} instances of the ``quotient noisy cube'' and ``short
+code'' types.
+
+\vskip 4em
+\
+\section{The 2-to-q norm and small-set expansion}
+
+For simplicity, we consider only regular graphs.
+
+\dfn{} {\I A measure} $\mu$ of $S \subseteq V(G)$ will be $|S|/|V|$. $G(S)$
+will be the distribution obtained by picking a random $x \in S$ and then
+outputting a random neighbor $y$ of $x$. Expansion $\Phi_G(S)$ can be
+then defined as $P_{y \in G(S)}[y \not \in S]$.
+
+We also identify $G$ with its normalized adjacency matrix (adjacency matrix divided by $d$). The Subspace $V_{\ge \lambda}(G)$ is defined as the span of eigenvectors of $G$ with eigenvalue at least $\lambda$. The projector into such subspace will be denoted $P_{\ge \lambda(G)}$.
+
+For a distribution $D$, we will use $cp(D)$ to denote the collision probability of $D$ (that two indepedent samples from $D$ are identical).
+
+\thm{2.4, equivalence } For every regular graph $G$, $\lambda > 0$ and
+even $q$:
+
+\itemize\ibull
+
+\: (Norm bound implies expansion)
+
+$$\forall \delta > 0, \varepsilon >0, ||P_{\ge \lambda}(G)||_{2 \then q} \le {\varepsilon \over \delta^{(q-2)/2q}}.$$
+
+implies that $\Phi_G(\delta) \ge 1 - \lambda - \varepsilon^2$.
+
+\: (Expansion implies norm bound) There is a constant $c$ such that
+
+$$\forall \delta > 0, \Phi_G(\delta) > 1 - \delta 2^{-cq} $$
+implies that $||P_{\ge \lambda}(G)||_{2 \then q} \le {2 \over \sqrt{\delta}}$.
+
+\endlist
+
+We will prove the second part of the theorem, as the previous one has
+already been proven before. We will require a few lemmas:
+
+\lem{Cheeger} If $\Phi_G(\delta) \ge 1 - \eta$ then for all $f \in L_2(V)$ satisfying $||f||_1^2 \le ||f||_2^2$ holds the following: $||Gf||_2^2 \le c\sqrt{\eta} ||f||_2^2$.
+
+\lem{} Let $D$ be a distribution with $cp(D) \le 1/N$ and $g$ a function on a common ground set. Then $\exists T, |T| = N$ such that $E_{x \in T}[g(x)^2] \ge {(E[g(D)])^2) \over 4}$.
+
+The essence of the second part of the theorem is contained in the following lemma:
+
+\lem{Main lemma} Set $e = e(\lambda,q) = 2^{cq}/\lambda$, with a constant $c \le 100$. Then for every $\lambda > 0$ and $\delta \in [0,1]$, if $G$ is a regular graph that satisfies $cp(G(S)) \le 1/(e|S|)$ for all $S$ with $\mu(S) \le q$, then $||f||_q \le 2||f||_2 / \sqrt{\delta}$ for all $f \in V_{\ge \lambda}(G)$.
+
+We will use several claims throughout the proof of the Main lemma. They are stated here without specifying the various variables that will be context-bound.
+
+\lclaim{} Let $S \subseteq V$ and $\beta > 0$ be such that $|S| \le \delta$ and $|f(x)| \ge \beta$ for all $x \in S$. Then there is a set $T$ of size at least $e|S|$ such that $E_{x \in T}[g(x)^2] \ge \beta^2/4$.
+
+\lclaim{} $E_{x \in V}[g_j(x)^q] \ge e \alpha_{i_j}/(10c^2)^{q/2}$.
+
+\lclaim{The last claim} $E_{x \in T}[g'_{k}(x)^2] \le 100^{-i'} \beta_{i_j}^2 / 4$.
+
+\bye
