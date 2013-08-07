@@ -7,7 +7,7 @@
 \title{Hypercontractivity,}
 \title{Sum-of-Squares Proofs,}
 \title{and their Applications}
-\authors{B. Barak, F. Brandao, A. Harrow, J. Kelner, D. Steurer, Y. Zhou}
+\authors{B. Barak, F. Brand\~{a}o, A. Harrow, J. Kelner, D. Steurer, Y. Zhou}
 \authors{Presented by Martin Böhm}
 
 \conj{UGC} For every $\varepsilon>0$, the following problem is NP-hard:
@@ -27,7 +27,7 @@ UGC implies that for a large class of problems ({\bf Max Cut, Vertex Cover, Max 
 
 Two main results of this work:
 \itemize\ibull
-\: An algorithm that solves all known UGC instances, including ones
+\: An algorithm that solves all known hard UGC instances, including ones
 hard for other algorithms $\then$ UGC might not hold.
 \: SSEH, a natural strengthening of UGC, needs quasi-polynomial time
 $\then$ UGC might hold.
@@ -89,7 +89,10 @@ will be the distribution obtained by picking a random $x \in S$ and then
 outputting a random neighbor $y$ of $x$. Expansion $\Phi_G(S)$ can be
 then defined as $P_{y \in G(S)}[y \not \in S]$.
 
-We also identify $G$ with its normalized adjacency matrix (adjacency matrix divided by $d$). The Subspace $V_{\ge \lambda}(G)$ is defined as the span of eigenvectors of $G$ with eigenvalue at least $\lambda$. The projector into such subspace will be denoted $P_{\ge \lambda(G)}$.
+We also identify $G$ with its normalized adjacency matrix (adjacency matrix
+divided by $d$). The subspace $V_{\ge \lambda}(G)$ is defined as the span of
+eigenvectors of $G$ with eigenvalue at least $\lambda$. The projector into such
+subspace will be denoted $P_{\ge \lambda(G)}$.
 
 For a distribution $D$, we will use $cp(D)$ to denote the collision probability of $D$ (that two indepedent samples from $D$ are identical).
 
@@ -106,7 +109,7 @@ implies that $\Phi_G(\delta) \ge 1 - \lambda - \varepsilon^2$.
 
 \: (Expansion implies norm bound) There is a constant $c$ such that
 
-$$\forall \delta > 0, \Phi_G(\delta) > 1 - \delta 2^{-cq} $$
+$$\forall \delta > 0, \Phi_G(\delta) > 1 - \lambda 2^{-cq} $$
 implies that $||P_{\ge \lambda}(G)||_{2 \then q} \le {2 \over \sqrt{\delta}}$.
 
 \endlist
@@ -120,7 +123,11 @@ already been proven before. We will require a few lemmas:
 
 The essence of the second part of the theorem is contained in the following lemma:
 
-\lem{Main lemma} Set $e = e(\lambda,q) = 2^{cq}/\lambda$, with a constant $c \le 100$. Then for every $\lambda > 0$ and $\delta \in [0,1]$, if $G$ is a regular graph that satisfies $cp(G(S)) \le 1/(e|S|)$ for all $S$ with $\mu(S) \le q$, then $||f||_q \le 2||f||_2 / \sqrt{\delta}$ for all $f \in V_{\ge \lambda}(G)$.
+\lem{Main lemma} Set $e = e(\lambda,q) = 2^{cq}/\lambda$, with a constant $c
+\le 100$. Then for every $\lambda > 0$ and $\delta \in [0,1]$, if $G$ is a
+regular graph that satisfies $cp(G(S)) \le 1/(e|S|)$ for all $S$ with $\mu(S)
+\le \delta$, then $||f||_q \le 2||f||_2 / \sqrt{\delta}$ for all $f \in V_{\ge
+\lambda}(G)$.
 
 We will use several claims throughout the proof of the Main lemma. They are stated here without specifying the various variables that will be context-bound.
 
