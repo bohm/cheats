@@ -4,115 +4,174 @@
 
 \fsection{Nástroje a odhady}
 
-\thm{Union-bound}
+\thm[Union-bound]{
 $P[\bigcup A_i] \le \sum_{i=0}^n P[A_i].$
+}
 
-\thm{Markov} $X$ nezáporná, $a > 0$:
+\thm[Markov]{ $X$ nezáporná, $a > 0$:
 $P[X > \alpha E[X]] < {1 \over \alpha}.$
+}
 
-\thm{Čebyšev}
+\thm[Čebyšev]{
 $P[|X-E[X]| \ge \lambda\sigma] \le {1 \over \lambda^2}.$
+}
 
-\prf{}
+\prf{
 $\sigma^2 = \var[X] = E[(X - E[X])^2] \ge \lambda^2 \sigma^2 P[|X-E[X]| \ge \lambda\sigma. $
+}
 
-\thm{Černov} Nechť $S_n$ je součtová náhodná proměnná pro $n$ mincí s hodnotami ${+1,-1}$. Pak:
+\thm[Černov]{
+Nechť $S_n$ je součtová náhodná proměnná pro $n$ mincí s hodnotami ${+1,-1}$. Pak:
 $P[S_n > a] < e^{-a^2 / 2n}.$
+}
 
-\prf{} Vytvoříme náhodnou proměnnou $Y = e^{uX}$.
+\prf{
+Vytvoříme náhodnou proměnnou $Y = e^{uX}$.
 
 $E[Y] = \prod_{i=1}^n E[e^{uX_i}] = {e^u + e^{-u} \over 2}^n \le e^{nu^2/2}$. Použitím Markova pak
 $P[X \ge t] = P[Y \ge e^{ut}] \le E[Y] / e^{ut} \le e^{nu^2/2 - ut}$. Zvol $u =
 t/n$.
+}
 
 \fsection{Základní použití}
 
-\thm{Hrubý Ramsey} $\forall k \ge 3: R(k,k) > 2^{k/2 - 1}$.
+\thm[Hrubý Ramsey]{
+$\forall k \ge 3: R(k,k) > 2^{k/2 - 1}$.
+}
 
-\prf{} Vezmi $G(n,1/2)$, použij union-bound na jev \uv{$G$ obsahuje kliku nebo
+\prf{
+Vezmi $G(n,1/2)$, použij union-bound na jev \uv{$G$ obsahuje kliku nebo
 nezávislou velikosti $k$}.
+}
 
-\dfn{}$m(k)$ bude označovat minimálni počet hran $k$-unif. hypergrafu, který není
+\dfn{
+$m(k)$ bude označovat minimálni počet hran $k$-unif. hypergrafu, který není
 $2$-obarvitelný. $m(2) = 3$ -- Fano.
+}
 
-\obs{} $m(3) \ge 7$.
+\obs{
+$m(3) \ge 7$.
+}
 
-\prf{} $6$ hran hypergrafu. Nejvýš $6$ vrcholů: rozeber. Aspoň $7$: dva nejsou
-spojené hranou, tak je spoj do jednoho vrcholu.
+\prf{ $6$ hran hypergrafu. Nejvýš $6$ vrcholů: rozeber. Aspoň $7$: dva nejsou
+spojené hranou, tak je spoj do jednoho vrcholu.}
 
-\thm{Odhad $m(k)$} $m(k) \ge 2^{k-1}$.
+\thm[Odhad $m(k)$]{
+$m(k) \ge 2^{k-1}$.
+}
 
-\prf{} Vezmi menší náhodný hypergraf. Zvol náhodné obarvení, spočti
+\prf{
+Vezmi menší náhodný hypergraf. Zvol náhodné obarvení, spočti
 pravděpodobnost že existuje jednobarevná (a tedy špatná) hrana.
+}
 
-\thm{} Pokud ${n \choose k} (1 - 2^{-k})^{n-k} <1$, tak existuje turnaj
+\thm{
+Pokud ${n \choose k} (1 - 2^{-k})^{n-k} <1$, tak existuje turnaj
 s vlastností, že každých $k$ vrcholů má společného vst. souseda.
+}
 
-\prf{} Union bound.
+\prf{
+Union bound.
+}
 
 \fsection{Náhodné permutace}
 
-\dfn{} Systém množin $F$ {\I má průnik} pokud mají průnik všechny dvojice množin z $F$.
+\dfn{
+Systém množin $F$ {\I má průnik} pokud mají průnik všechny dvojice množin z $F$.
+}
 
-\thm{Slunečnicové lemma} Nosná množina $n \ge 2k$. Pokud má systém
+\thm[Slunečnicové lemma]{
+Nosná množina $n \ge 2k$. Pokud má systém
 $k-prvkových$ množin $F$ průnik, tak $|F| \le {n-1 \choose k-1}$.
+}
 
-\lem{Lemma pro lemma} $X = Z_n$, zadefinuj $A_s = \{s,s+1,\dots s+k-1\}$ pro $s \in X$, $n$ buď
+\lem[Lemma pro lemma]{
+$X = Z_n$, zadefinuj $A_s = \{s,s+1,\dots s+k-1\}$ pro $s \in X$, $n$ buď
 větší jak $2k$.  Pak $F$ s průnikem obsahuje nanejvýš $k$ z množin $A_s$.
+}
 
-\prf{} Když tam patří jedna $A_i$, tak tam patří nanejvýš ty, co se s ní pronikají ($2k-2$), a
+\prf{
+Když tam patří jedna $A_i$, tak tam patří nanejvýš ty, co se s ní pronikají ($2k-2$), a
 ty se dají rozdělit ještě do disjunktních dvojic.
+}
 
-\prf{Slunečnicové lemma} Budeme volit náhodné $s$ a náhodnou $\sigma$, co
+\prf[Slunečnicové lemma]{
+Budeme volit náhodné $s$ a náhodnou $\sigma$, co
 přepermutuje $A_s$. Díky lemmatu je nejvýš $k$ obraz $\sigma(A_s)$ uvnitř $F$,
 čili $P[\sigma(A_s) \in F] \le k/n$.  Každá $k$-tice má ale stejně permutací,
 ve kterých je za sebou, čili taky $P[\sigma(A_s) \in F] = |F|/{n \choose k}$.
 Počítej dvěma způsoby.
+}
 
-\dfn{} Definujme $n(k,l)$ jako maximální $n \st \exists \mls A n \andamp \mls B n \st$
+\dfn{
+Definujme $n(k,l)$ jako maximální $n \st \exists \mls A n \andamp \mls B n \st$
 \numlist\ndotted
 \:$|A_i| = k, |B_i| = l,$
 \:$A_i \cap B_i = \emptyset,$
 \:$i \neq j \then A_i \cap B_j \neq \emptyset.$
 \endlist
+}
 
-\thm{Bollobásovo lemma o průnicích} $n(k,l) = {k + l \choose k}$.
+\thm[Bollobásovo lemma o průnicích]{
+$n(k,l) = {k + l \choose k}$.
+}
 
-\prf{} Náhodně přepermutuj prvky. Zadefinuj jev: $U_i \equiv$ všechny prvky
+\prf{
+Náhodně přepermutuj prvky. Zadefinuj jev: $U_i \equiv$ všechny prvky
 $A_i$ přechází všechno z $B_i$.  $P[U_i] = 1/{k +l \choose k}$. $U_i$ a $U_j$
 nemohou nastat zároveň, čili $1 \ge P[\bigcup U_i]  = \sum_i P[U_i] = n {k+l \choose k}$.
+}
 
-\res{} Spernerova věta.
+\res{ Spernerova věta.}
 
 \fsection{Linearita střední hodnoty}
 
-\thm{} Existuje turnaj, který má alespoň $n!/2^{n-1}$ Ham. cest.
+\thm{
+Existuje turnaj, který má alespoň $n!/2^{n-1}$ Ham. cest.
+}
 
-\prf{} Rozděl jev na jednotlivé permutace. 
+\prf{
+Rozděl jev na jednotlivé permutace. 
+}
 
-\thm{} Každý graf s $m$ hranami obsahuje bipartitní graf s $m/2$ hranami.
+\thm{
+Každý graf s $m$ hranami obsahuje bipartitní graf s $m/2$ hranami.
+}
 
-\prf{} Derandomizací nebo i deterministicky.
+\prf{
+Derandomizací nebo i deterministicky.
+}
 
 \fsection{Alterace}
 
-\thm{Slabý Turán} $\alpha(G) \ge n/2d$.
+\thm[Slabý Turán]{
+$\alpha(G) \ge n/2d$.
+}
 
-\prf{} Vezmi náhodnou podmnožinu $S$, každý vrchol vlož s pravd. $p$.
+\prf{
+Vezmi náhodnou podmnožinu $S$, každý vrchol vlož s pravd. $p$.
 $E[|S|] = np$. $E[||S||] = {ndp^2 \over 2}$. $|S| - ||S||$ odpovídá
 tomu, že smažeme z každé hrany jeden vrchol. Zvolme $p$, ať
 maximalizujeme $E[|S| - ||S||]$.
+}
 
-\thm{Další Ramsey} $\forall k,n: R(k,k) > n - {n \choose k} 2^{1 - {k \choose 2}}$.
+\thm[Další Ramsey]{
+$\forall k,n: R(k,k) > n - {n \choose k} 2^{1 - {k \choose 2}}$.
+}
 
-\prf{} Vezmi náhodné obarvení grafu na $n$ vrcholech. Střední hodnota
+\prf{
+Vezmi náhodné obarvení grafu na $n$ vrcholech. Střední hodnota
 počtu jednobarevných $k$-klik je ${n \choose k} 2^{1 - {k \choose
 2}}$. Existuje obarvení, co to dosahuje, z každé kliky smaž jeden
 vrchol.
+}
 
-\thm{Erdös, obvod neurčuje barevnost} $\forall k,l \exists G \st \chi(G) > k \andamp g(G) > l$.
+\thm[Erdös, obvod neurčuje barevnost]{
+$\forall k,l \exists G \st \chi(G) > k \andamp g(G) > l$.
+}
 
-\prf{} Nastav $\varepsilon = 1/2l, p = n^{\varepsilon-1}$. Střední hodnota počtu cyklů
+\prf{
+Nastav $\varepsilon = 1/2l, p = n^{\varepsilon-1}$. Střední hodnota počtu cyklů
 délky $l$ je $$E[X] \le \sum_{i=3}^l n^{\varepsilon i} = o(n).$$
 Zvol $n \st E[X] < n/4$. To nám dá $E[X] < 1/2$, použij Markova na $P[X \ge n/2] < 1/2$.
 
@@ -123,11 +182,15 @@ e^{(\ln n -p(a-1)/2)a}.$$
 
 To jde do nuly, tedy zase máme $P[\alpha] < 1/2$. Smaž jeden vrchol ze všech
 krátkých cyklů.  Zbyde půlka vrcholů, barevnost odhadni velikostí $\alpha$.
+}
 
-\thm{} Existuje množina $S$ $n$ vrcholů v jednotkovém čtverci, kde
+\thm{
+Existuje množina $S$ $n$ vrcholů v jednotkovém čtverci, kde
 největší trojúhelník má obsah alepsoň $T(S) \ge 1/(100n^2)$.
+}
 
-\prf{} Zvol tři body $A,B,C$ uniformně z množiny všech bodů ve
+\prf{
+Zvol tři body $A,B,C$ uniformně z množiny všech bodů ve
 čtverci. Nechť je $|AB| = x$. Chceme odhadnout $P[\mu(PQR) < c]$.
 Nejdřív najdeme vzorec pro $P[b \le x \le b + \Delta b]$. Kdyby to
 platilo, tak jsou $A$ a $B$ od sebe někde mezi dvěma kruhy, čili $P[b
@@ -143,17 +206,23 @@ $$ \int_0^{\sqrt{2}}(2 \pi b)(4 \sqrt{2} c / b) db = 16 \pi c. $$
 Zvolíme $c = 1/(100n^2)$ a spočítáme střední hodnotu počtu trojic,
 které splňují, že jejich obsah je víc než $c$. Je to $E[T] \le {2n
 \choose 3}(0.6n^{-2}) < n$. Alterujeme.
+}
 
-\thm{Komlós, Pintz, Szemerédi} $T(S) = \Omega({\log n \over n^2})$.
+\thm[Komlós, Pintz, Szemerédi]{
+$T(S) = \Omega({\log n \over n^2})$.
+}
  
 \fsection{Dependent Random Choice}
 
-\lem{Základní DRC} $G$ graf, $|G| = n, d$ prům. stupeň. Pokud existuje
+\lem[Základní DRC]{
+$G$ graf, $|G| = n, d$ prům. stupeň. Pokud existuje
 přirozené číslo $t$ takové, že ${d^t \over n^{t-1}} - {n \choose r} {m \over
 n}^t \ge a$, pak $G$ obsahuje podmnožinu vcholů $|U|=a \st \forall r$ vrcholů z
 ní má alespoň $m$ společných sousedů (značíme $|N_s(R)| = m$.
+}
 
-\prf{} Zvol $t$ vrcholů $T$ náhodně s opakováním. $A = N_s(T)$, $X = |A|$. Použijeme
+\prf{
+Zvol $t$ vrcholů $T$ náhodně s opakováním. $A = N_s(T)$, $X = |A|$. Použijeme
 konvexitu $z^t$ pro nerovnost:
 $E[X] = \sum_{v \in V(G)} \left({ |N_s(v)| \over n}^t\right) = n^{-t} \sum \left(|N_s(v)|^t\right) =$ $n^{-t} n (\sum |N_s(v)|/n)^t
 = {d^t \over n^{t-1}}.$
@@ -162,42 +231,60 @@ $Y$ buď počet špatných podmnožin $A$, tj. s velikostí $r$ ale s méně jak
 sousedy. $P[S \subseteq A] = (|N(S)|/n)^t$, a tedy $E[Y] < {n \choose r} \left(m/n\right)^t$.
 
 Alteruj,  $E[X-Y] \ge a$, smaž špatné vrcholy.
+}
 
-\lem{} Pokud máme podmnožinu $U \subseteq V(G), |U|=a$ takovou, že každá $r$ prvková podmnožina
+\lem{
+Pokud máme podmnožinu $U \subseteq V(G), |U|=a$ takovou, že každá $r$ prvková podmnožina
 má alespoň $a+b$ společnych sousedů, tak sem umíme vnořit $H$ bipartitní s partitami velikosti
 $a,b$, kde jedna z nich má $\Delta = r$.
+}
 
-\prf{} Indukcí, společných sousedů je $a+b$ a to stačí pro vnořování vrcholů s max. stupněm
+\prf{
+Indukcí, společných sousedů je $a+b$ a to stačí pro vnořování vrcholů s max. stupněm
 $b$ (společní sousedé mohou být opět v $U$, to nevadí).
+}
 
-\thm{} $H$ bipartitní graf s $\Delta = r$ v jedné partitě $\then$ $ex(n,H) \le cn^{2-1/r}$.
+\thm{
+$H$ bipartitní graf s $\Delta = r$ v jedné partitě $\then$ $ex(n,H) \le cn^{2-1/r}$.
+}
 
-\prf{} Vol $m = a+b$, $t = r$, $c = \max\left(a^{1/r},{3a+b \over r}\right)$, $||G|| > ex$.
+\prf{
+Vol $m = a+b$, $t = r$, $c = \max\left(a^{1/r},{3a+b \over r}\right)$, $||G|| > ex$.
 Pak $d \ge 2cn^{1-1/r}$, odhadni $r!$ pomocí $(r/e)^r$ a konečně:
 $$ (2c)^r - {n^r \over r!} {(a+b)^r \over n}^r \ge c^r \ge a. $$
 
 Pro celkové vítězství aplikujeme předchozí lemma.
+}
 
 \fsection{Rozptyl}
 
-\thm{} $\forall m\ge 1: {2m \choose m} \ge 2^{2m}/(4\sqrt{m}+2)$.
+\thm{
+$\forall m\ge 1: {2m \choose m} \ge 2^{2m}/(4\sqrt{m}+2)$.
+}
 
-\prf{} Vezmi náhodný součet $2m$ $0/1$-proměnných s $p=1/2$. $E[X] = m, \var[X] = m/2$. Čebyšev dává: $P[|X-m| < \sqrt{m}] \ge 1/2$. 
+\prf{
+Vezmi náhodný součet $2m$ $0/1$-proměnných s $p=1/2$. $E[X] = m, \var[X] = m/2$. Čebyšev dává: $P[|X-m| < \sqrt{m}] \ge 1/2$. 
 Pravděpodobnost, že $X$ nabyde přesně $m+k$ pro $|k| < \sqrt{m}$, 
 je nejvýš ${2m \choose m-k}2^{-2m} \le {2m \choose m}2^{-2m}$.
 Celkem tedy:
 
 $$1/2 \le \sum_{|k| < \sqrt{m}} P[X = m+k] \le (2\sqrt{m} -1) {2m \choose m} 2^{-2m}.$$
+}
 
-\lem{O malém rozptylu.} Nechť $X_i$ je posloupnost proměnných, pro které platí $\lim_{n \rightarrow \infty} {\var(X_n) \over E[X_n]^2} = 0$.
+\lem[O malém rozptylu.]{
+ Nechť $X_i$ je posloupnost proměnných, pro které platí $\lim_{n \rightarrow \infty} {\var(X_n) \over E[X_n]^2} = 0$.
 Pak $\lim_{n \rightarrow \infty} P[X_n > 0] = 1.$
+}
 
-\lem{} Pokud $k(n)$ je funkce splňující
+\lem{
+Pokud $k(n)$ je funkce splňující
 $ \lim_{n \rightarrow \infty} {n \choose k(n)} 2^{-{k(n) \choose 2}} = \infty, $
 pak platí:
 $ \lim_{n \rightarrow \infty} P[\Omega(G(n,1/2)) > k(n)] = 1.$
+}
 
-\prf{} V podstatě dokazujeme pro $k(n) = (2-\varepsilon) \log n$. $E(n,k) \equiv$
+\prf{
+V podstatě dokazujeme pro $k(n) = (2-\varepsilon) \log n$. $E(n,k) \equiv$
 střední počet $k$-klik v $G(n,1/2)$.  $k(n) < 2 \log n$, protože $E(n,2 \log n)
 \rightarrow 0$. $k(n) > 3/2 \log n$, protože\hfil\break $\log E(n,3/2 \log n) = 3/2 \log^2
 n - 9/8 \log^2 n \rightarrow \infty$.
@@ -227,36 +314,48 @@ $$\eqalign{{C(t) \over E[X]} &\le {k \choose k-t} {n \choose k-t} 2^{{t \choose 
 
 Opět omez geometrickou řadou a použij fakt, že $E[X]$ jde do nekonečna, čili to
 platí i pro druhé mocniny.
+}
 
-\dfn{} $H$ graf je {\I balancovaný}, pokud jeho hustota je větší nebo
+\dfn{
+$H$ graf je {\I balancovaný}, pokud jeho hustota je větší nebo
 rovna všem jeho podgrafům.
+}
 
-\thm{} Pokud je $H$ balancovaný, $\rho$ jeho hustota, pak funkce $n^{-1/\rho}$ je jeho prahová funkce.
+\thm{
+Pokud je $H$ balancovaný, $\rho$ jeho hustota, pak funkce $n^{-1/\rho}$ je jeho prahová funkce.
+}
 
-\dfn{} Množina $R \subseteq [n]$ bude mít {\I různé sumy}, pokud její všechny
+\dfn{
+Množina $R \subseteq [n]$ bude mít {\I různé sumy}, pokud její všechny
 sumy jsou různé. $f(n)$ je maximální velikost takové $R$.
+}
 
-\thm{Menší zlepšení rozdílných sum} $f(n) \le \log_2 n + (1/2) \log_2 \log_2 n + O(1)$.
+\thm[Menší zlepšení rozdílných sum]{
+$f(n) \le \log_2 n + (1/2) \log_2 \log_2 n + O(1)$.
+}
 
-\prf{} Máme zadané $\mls r k $, vezmi náhodnou sumu (každé číslo vezmi s pravd.
+\prf{Máme zadané $\mls r k $, vezmi náhodnou sumu (každé číslo vezmi s pravd.
 1/2). Spočítej střední hodnotu, rozptyl. (Indikátory jsou nezávislé.) Čebyšev
 nám dává: $P[|X-\mu| > \lambda n \sqrt{k}/2] \le \lambda^{-2}$, čili i $1 -
 \lambda^{-2} \le P[|X-\mu| \le \lambda n \sqrt{k}/2]$. Všimneme si dále, že
 jedné konkrétní hodnoty nabude $X$ s pravděpodobností $0$ n. $2^-k$, čili
 $P[\ldots] < 2^{-k}(\lambda n \sqrt{k} + 1)$. Spojíme nerovnosti a upravíme.
+}
 
 \section{Lovászovo lokální lemma}
 
-\thm{Symetrické LLL} Buď $A_1, \dots, A_n \st P[A_i] \le p$ a všech\-ny vý\-stup\-ně v zá\-vi\-slostním
+\thm[Symetrické LLL]{ Buď $A_1, \dots, A_n \st P[A_i] \le p$ a všech\-ny vý\-stup\-ně v zá\-vi\-slostním
 orientovaném grafu jsou nanejvýš $d$. Pokud $ep(d+1) \le 1$, pak 
 $$P[\bigcup_{i=1}^n \overline{A_i}] > 0.$$
+}
 
-\thm{Asymetrické LLL} Buď $A_i$, nastav k nim reálné 0-1-proměnné $x_i$. Pokud platí
+\thm[Asymetrické LLL]{ Buď $A_i$, nastav k nim reálné 0-1-proměnné $x_i$. Pokud platí
 $$P[A_i] \ge x_i \prod_{(i,j) \in E} (1-x_j), $$
 Pak
 $$P[\bigcap_i \overline{A_i}] \ge \prod_i (1-x_i) > 0.$$
+}
 
-\prf{} Je třeba počítat $A_i$ (to, co nechceme, aby se stalo) za předpokladu, že
+\prf{Je třeba počítat $A_i$ (to, co nechceme, aby se stalo) za předpokladu, že
 už se nějaka podmnožina $S$ jevů nestala. Indukcí podle $S$ dokazujeme: $ P[A_i|\bigcap_{j \in S} \overline{A_j}] \le x_i.$
 
 Základ indukce je hned z předpokladů. Dále rozdělíme $S$ na zajímavé $(S_1)$ a nezávislé na $A_i$ $(S_2)$.
@@ -274,33 +373,38 @@ $P[\bigcap_{j \in S_1} \overline{A_j} | \bigcap_{l \in S_2} \overline{A_l}] =
 P[A_{j_1} | \bigcap_{l \in S_2} \overline{A_l}] \cdot P[A_{j_2} | \overline{A_{j_1}} \cap \bigcap_{l \in S_2} \overline{A_l}] \cdots
 \le (1-x_{j_1})(1-x_{j_2}) \cdots (1-x_{j_r}).$
 
-\prf{Symetrické LLL} Nastav $x_i$ na $1/(d+1)$. Pak $x_i \prod_{(i,j) \in E} (1-x_j) = (d+1)^{-1} \left( 1 - 1/(d+1)\right)^{d} \le (e(d+1))^{-1}
+}
+
+\prf[Symetrické LLL]{Nastav $x_i$ na $1/(d+1)$. Pak $x_i \prod_{(i,j) \in E} (1-x_j) = (d+1)^{-1} \left( 1 - 1/(d+1)\right)^{d} \le (e(d+1))^{-1}
 \ge p$ a můžeme použít asymetrické lemma.
+}
 
-
-\thm{Barvení hypergrafů} $H$ hypergraf, kde každá hrana má alespoň $k$ vrcholů
+\thm[Barvení hypergrafů]{$H$ hypergraf, kde každá hrana má alespoň $k$ vrcholů
 a proniká nanejvýš $d$ hran. Pokud $e(d+1) \le 2^{k-1}$, tak $H$ je 2-obarvitelné.
+}
 
-\prf{} Použij symetrickou verzi LLL na jev, že hrana je jednobarevná.
+\prf{Použij symetrickou verzi LLL na jev, že hrana je jednobarevná.}
 
-\thm{Cykly dlouhé násobek} $D$ digraf, minimální výstupeň $\delta$, maximální vstupeň
+\thm[Cykly dlouhé násobek]{$D$ digraf, minimální výstupeň $\delta$, maximální vstupeň
 $\Delta$. Pak platí-li $k \le {\delta \over 1 + \ln(1+\delta\Delta)}$, tak $D$ obsahuje
-orientovaný cyklus dělitelný $k$.
+orientovaný cyklus dělitelný $k$.}
 
-\prf{} Přiřaď vrcholům čísla a jev $A_v$ bude jev, kdy $\exists z \in N_+(v) \st$ $k(z) = k(v) +1 \mod k$.
+\prf{Přiřaď vrcholům čísla a jev $A_v$ bude jev, kdy $\exists z \in N_+(v) \st$ $k(z) = k(v) +1 \mod k$.
 $A_v$ pak nezávisí na barvě $v$, jen na barvách $N_+(v)$, čili závisí jen na takových $A_w$, kteří jsou
 buď přímo následníci $v$ nebo mají s $v$ společného následníka. Těch je celkem $\delta \Delta$, čili
 $ep(d+1) \le e(1-1/k)^\delta (\delta \Delta + 1) \le 1$.
+}
 
-\dfn{} Obarvěme reálná čísla $k$ barvami. $S \subseteq R$ je {\I duhová} $\equiv c(S) = [k]$.
+\dfn{Obarvěme reálná čísla $k$ barvami. $S \subseteq R$ je {\I duhová} $\equiv c(S) = [k]$.}
 
-\thm{} $\forall k \exists m \st \forall S \subseteq R, |S|=m$, umíme nabarvit
-reálná čísla $k$ barvami tak, aby jakékoli posunutí $m$ bylo duhové.
+\thm{$\forall k \exists m \st \forall S \subseteq R, |S|=m$, umíme nabarvit
+reálná čísla $k$ barvami tak, aby jakékoli posunutí $m$ bylo duhové.}
 
-\prf{} Konečně mnoho posunutí: jedno posunutí závisí na méně než $m^2$ jiných, 
+\prf{Konečně mnoho posunutí: jedno posunutí závisí na méně než $m^2$ jiných, 
 pravděpodobnost neduhovosti je $k(1-1/k)^m$. Zvol $m$ správně.
 
 Nekonečně mnoho posunutí: kompaktnost.
+}
 
 % \thm{Vážené LLL} $A_i$ jako vždy, $0 \le p \le 1/4$, reálná čísla $t_i$.
 %S kladnou pravděpodobností se nic zlého nestane, pokud:
@@ -318,14 +422,15 @@ Nekonečně mnoho posunutí: kompaktnost.
 
 \fsection{Černov a spol.}
 
-\obs{Černov pro $\{0,1\}$ nez. p.} $P[X \ge E[X] + t] \le e^{-2t^2/n}$ a
-symetricky pod střední hodnotou.
+\obs[Černov pro $\{0,1\}$ nez. p.]{$P[X \ge E[X] + t] \le e^{-2t^2/n}$ a
+symetricky pod střední hodnotou.}
 
-\obs{Černov pro $[0,1]$ nez. p.} $P[X \ge E[X] + t] < \exp({-t^2 \over
+\obs[Černov pro $(0,1)$ nez. p.]{$P[X \ge E[X] + t] < \exp({-t^2 \over
 2(\sigma^2 + t/3)})$ a symetricky pod střední hodnotou.
+}
 
-\dfn{$k$-pakování} Máme rodinu $F, |F|=m$ podmnožin z $[n]$, hledáme max. podrodinu, že
-každý element je nejvýše $k$-krát obsažen. 
+\dfn[$k$-pakování]{Máme rodinu $F, |F|=m$ podmnožin z $[n]$, hledáme max. podrodinu, že
+každý element je nejvýše $k$-krát obsažen.} 
 
 $k$-pakování můžeme reprezentovat jako matici $n \times m$ s hodnotami $0/1$,
 hledáme největší podmnožinu sloupců, co se nasčítají na nejvýš $k$ v každé
@@ -335,15 +440,17 @@ Vyřeš lineárně, zaokrouhluj podle $j$-té složky optima ($x^{*}_j$) na $1$ 
 $E[y] = OPT^{*}, E[(Ay)_i] \le k$, ale to nemusí být přípustné -- nastavíme $y_j = 1$
 s pravd. $(1 - \varepsilon/2) x^{*}_j$. 
 
-\thm{} $\varepsilon \in [0,1]$, $k \ge {10 \over \varepsilon} \ln(2n+2)$. Pak s pravděpodobností
-$> 1/2$ je $y$ přípustné s alespoň $(1-\varepsilon) OPT^*$ množinami.
+\thm{$\varepsilon \in [0,1]$, $k \ge {10 \over \varepsilon} \ln(2n+2)$. Pak s pravděpodobností
+$> 1/2$ je $y$ přípustné s alespoň $(1-\varepsilon) OPT^*$ množinami.}
 
-\prf{} Nastav $X$ součet v $j$-té složce matice. $OPT* > k$, $E[X] = (1
+\prf{
+Nastav $X$ součet v $j$-té složce matice. $OPT* > k$, $E[X] = (1
 \varepsilon/2) OPT^*$, $\var[X] \le E[X]$ jako obvykle.
 
 Pak $P[X < (1 - \varepsilon/2)OPT^*] \le \exp(-{\varepsilon^2 \over 10} OPT^*)
 \le \exp(-{\varepsilon^2 \over 10}k \le {1 \over 2n+2}$.
 
 Druhou stranu uděláme totožně.
+}
 
 \bye
