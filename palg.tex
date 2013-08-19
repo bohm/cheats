@@ -1,8 +1,44 @@
 \input cheatmac
 
-\title{Pravděpodobnostní algoritmy}
+\title{Probabilistic algorithms}
 
- 
+\fsection{Basic algorithms}
+
+{\csc Mincut:} Contract $n-2$ edges (keep parallel, delete loops),
+return the rest as a cut.
+
+\thm{$P[$resulting cut minimal$] ≥ {2 \over n(n-1)}$.}
+
+\prf{Suppose min. cut has $k$ edges. $||G|| ≥ {nk \over 2}$.\hfil\break
+$P[E_1 ≡$ first choice misses min. cut$] ≥ 1 - {k \over nk/2} = 1 - {2 \over n}$.\hfil\break
+$P[E_i |$ missed all until now $] ≥ 1 - { 2 \over n-1}$.\hfil\break
+$P[$we missed all $] ≥ ∏_{i=1}^{n-2}( 1- {2 \over n+1-i}) = {2 \over n(n-1)}$.
+Repeat $n^2 \ln n$ times for $1 \over n^2$ probability of missing.
+}
+
+{\csc FastSelect:} $R ≡ $ sample $⌈n^{3/4}⌉$ elements, sort. \hfil\break
+Pick $d ≡ R[⌋n^{3/4}/2 - \sqrt{n}⌊]$, $u ≡ R[⌈ n^{3/4}/2 + \sqrt{n}⌉]$.
+\itemize\ibull
+\: $|R[1..d]| > n/2$,
+\: $|R[u..]| > n/2$,
+\: $|R[d..u]| ≥ 4n^{3/4}$.
+\endlist
+Sort $R[d..u]$, return median.
+
+\obs{$P[(a)] ≤ 1/4 n^{-1/4}$.}
+
+\prf{ $X_i ≡ $ chosen element is $≤$ median. $P[X_i = 1] = 1/2 + {1 \over 2n}$.
+$Var[∑_{i=1}^{n^{3/4}}] = n^{3/4} (1/2 + {1 \over 2n}) (1/2 - {1 \over 2n}) = 1/4 n^{3/4} - {n^{3/4} \over 4n^2} < 1/4 n^{3/4}$.
+
+Chebyshev: $P[∑ X_i < 1/2 n^{3/4} - \sqrt{n}] ≤ P[|∑ X_i - E[∑ X_i]| > \sqrt(n} ≤ {Var[∑ X_i] \over n}] = 1/4 n^{-1/4}$.
+% }
+
+\obs{ $P[(c)] ≤ 1/2 n^{-1/4}$.}
+
+\prf{ Either at least $2n^{3/4}$ elements are above (or below) median. Apply binomial distro again + Chebyshev.}
+
+{\csc Hypercube Routing:} 
+
 \thm{Markov} $X$ nezáporná, $a > 0$:
 $P[X > \alpha E[X]] < {1 \over \alpha}.$
 
