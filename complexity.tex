@@ -1,0 +1,104 @@
+\input cheatmac
+
+% TODO: define \pr to be problem name
+
+\title{Complexity}
+{\bf Note}: Strange structure due to finals topics.
+Will improve later.
+
+\TODO{Turing machine, complexity definition}
+
+\TODO{Blum complexity measure.}
+
+\TODO{Recursive, computable notions.}
+
+\fsection{Speedups and compressions}
+\fsection{Complexity hierarchy}
+
+\thm{$Φ$ recursive function $→ ∃$ recursive language $L ∉ DBLUM(Φ(n))$.}
+\prf{ Diagonal argument. Order machines, inputs $L ≡ \{x_i | M_i$ does not accept $x_i$ in time $Φ(|x_i|) \}$.}
+
+\thm{
+\itemize\ibull
+\: $Φ, Ψ: ℕ → ℕ$ and $Ψ ∈ Ω(Φ)$ with $Ψ$ being space-constructible $\imply ∃ L ∈ DSPACE(Ψ) ∖ DSPACE(Φ)$.
+\: $Φ, Ψ: ℕ → ℕ$ and $Ψ ∈ Ω(Φ \log Φ)$ with $Ψ$ being time-constructible $\imply ∃ L ∈ DTIME(Ψ) ∖ DTIME(Φ)$.
+\endlist
+}
+
+\fsection{Constructible functions}
+
+\dfn{A function $Φ$ is BLUM-enumerable in time $O(f) ≡ ∃$ TM such that the tm halts within $cf(n)$ steps for
+input of size $n$.}
+
+\dfn{A function $Φ$ is BLUM-constructible (time-constructible or space-constructible) $≡ ∃ $ a TM such that it halts
+after exactly $Φ(n)$ steps for input of size $n$.}
+
+
+\fsection{Complexity classes}
+\TODO{DSPACE, DTIME}
+
+\thm[Relationship Theorem]{
+\itemize\ibull
+\: $\DBLUM ⊆ \NBLUM$.
+\: $\DTIME ⊆ \DSPACE$.
+\: $\NTIME ⊆ \DSPACE$ for s-c. functions.
+\: $L ∈ \DSPACE(Φ(n)) ∧ Φ(n) ≥ \log n \then L ∈ \DTIME(c_L^{Φ(n)})$, with $c_L ≡ c(L)$. 
+\: $L ∈ \NSPACE(Φ(n)) ∧ Φ(n) ≥ \log n \then L ∈ \DTIME(c_L^{Φ(n)})$, with $c_L ≡ c(L)$.
+\: $L ∈ \NTIME(Φ(n)) \then L ∈ \DTIME(c_L^{Φ(n)})$ with $c_L ≡ c(L)$.
+\endlist
+}
+
+\fsection{Savitch Theorem}
+
+\thm[Savitch]{If $Φ(n) ≥ \log n$ and $Φ$ is space-constructible $\then NSPACE(Φ(n)) ⊆ DSPACE(Φ^2(n))$.
+
+\prf{USTCON is an NL-complete problem. (Basically, any problem in NL can be solved through graph search of
+the state space.) We can solve USTCON by recursion -- basically, for every middle vertex $v$, we check whether
+there is a $k/2$ $sv$-path and $k/2$ $vt$ path. Recursion takes $O(\log n)$ steps and we remember $O(\log n)$
+at every step -- $O(\log^2 n)$ units of memory in total.}
+
+\res{$PSPACE = NPSPACE$.}
+
+\fsection{NP-complete problems}
+
+\thm[Cook-Levin]{There exists a $NPc$ problem.}
+
+\prf{Proved for $\pr{TILE}$. Simulate operations on the Turing machine tape by tiling.}
+
+Standard transformations:
+
+\pr{TILE} $∝$ \pr{SAT}: $x_{ijk} = 1 ≡$ position $(i,j)$ contains a tile of type $k$. Add clauses
+that ensure validity of transformations of tiles.
+
+\pr{SAT} $∝$ \pr{3-SAT}: Unwrap the long clauses into smaller ones using substitution.
+
+\pr{3-SAT} $∝$ \pr{3-COLOR}: Set a triangle to define T/F colours. Connect all literal vertices to the
+third colour. Use a gadget so that no three variables in the clause get F.
+
+\pr{SAT} $∝$ \pr{CLIQUE}: Set vertices to literals so that every clique is an internally consistent
+assignment.
+
+
+}
+\fsection{$\PSPACE$}
+ 
+\dfn{$\PSPACE ≡$ a class of problems solvable with polynomial space.}
+
+\dfn{$\pr{TQBF} ≡ $ language on a universe of fully quantified Boolean formulas, containing true ones.}
+
+\thm{$\pr{TQBF}$ is a $\PSPACE$-complete problem.}
+
+\prf{$\pr{TQBF} ∈ \PSPACE$: Evaluating it recursively uses $poly(n)$ memory.
+
+$\pr{TQBF}$ is complete: Transform every problem searching on a Turing machine to a $\pr{TQBF}$ in a similar
+way like in the Savitch theorem.}
+
+\fsection{Polynomial Hierarchy}
+
+\fsection{Pseudopolynomial alg.}
+
+\fsection{Strong NP-completeness}
+
+\fsection{#P, #P-completeness}
+
+\bye
