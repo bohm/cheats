@@ -1,0 +1,247 @@
+\input cheatmac
+
+\def\len{{\rm len}}
+
+% TODO: define \pr to be problem name
+
+\title{Data Structures}
+
+{\bf Note}: Strange structure due to finals topics.
+Will improve later.
+
+\section{Binary trees and their balances}
+
+\subsection{AVL trees}
+
+Vertices contain {-1,0,+1} -- difference of {\it balances} between the left
+and the right subtree. {\it Balance} is just the maximum depth of the subtree.
+
+Analysis: prove by induction that for depth $k$, there are between $F_k$ and $2^k$
+vertices in every tree. Since balance only shifts by 1, it's pretty simple.
+
+\subsection{RB trees}
+
+\section{Heaps}
+
+We usually do: INSERT, DELETEMIN, MERGE, DECREASEKEY, INCREASEKEY, and DELETE.
+
+\subsection{Binary/regular heap}
+
+Standard static heap, insert and delete by balancing it upwards.
+Construction in $O(n)$, lookup in $O(\log n)$.
+
+\subsection{Binomial heap}
+
+Recursive definition of binomial trees, binomial heap is just a collection of
+binomial trees. Every tree must be present only once. INSERT is just adding
+an element and merging heaps. Merging is like adding binary numbers, so it happens
+fast. Adding $n$ elements again in $O(n)$.
+
+\subsection{Leftist heap}
+
+\dfn{$dtl(x) ≡$ minimum distance from $x$ to leaf (downwards).}
+
+Leftist rule: left son has dtl $≤$ to the right son.
+
+Only one tree, compared to binomial, but worse amortized complexity.
+
+\subsection{Fibonacci heap}
+
+Vertices of any degree, main assertion: $v$ has $k$ sons means that there are
+at least $F_{k+2}$ vertices below $v$. Fibonacci heap $H$.
+
+MERGE is just concatenation. FINDMIN is either lazy or not, DELETEMIN removes
+children, merges them together, and concatenates the result into $H$.
+
+When doing DECREASEKEY$(v)$ and INCREASEKEY$(v)$, we also balance the
+supertree after removing the tree at $v$ -- go up the hierarchy, and
+cut any marked parent out of the tree and concatenate it with
+$H$. Increase also rips apart the vertex $v$, concatenates children
+into $H$, and finally concatenates $\{v\}$ as a trivial tree.
+
+\fsection{Tries}
+
+\fsection{B-trees}
+
+{\bf General (a,b)-trees}: Every vertex has at least $a$ and at most $b$ sons. Also $a ≥ 2$ and $b ≥ 2a -1$,
+so we can split vertices efficiently. Does not hold for root.
+
+\obs{(2,4)-trees are RB-trees.}
+
+{\bf B-trees} are simply $(a,b)$ trees where $(a,b)$ is $m/2$ and $m$, respectively.
+
+Extensions: We can delay splitting, if it is inconvenient, by simply moving elements to our siblings.
+We can then split 2 into 3, or 3 into 4 -- such trees are called $B^*$-trees.
+
+Also we can have redundant data, prefix trees, variable length data, or finger trees.
+
+\fsection{Hašování (řešení kolizí), univerzální hašování, perfektní hašování}
+
+Traditional operations: MEMBER, INSERT, DELETE.
+
+\dfn{Notation: Universe $U$, of size $u$. Sampling $S$ of size $s$. Hash function $h$.
+List size usually $l$. Domain of hash function either $U$ or $S$, depends on universality.
+Codomain of hash function (buckets) $M$ of size $m$. Load factor $α ≡ s/m$.}
+
+\fsection{Separated chains}
+Assume the following:
+
+\itemize\ibull
+\: $h$ splits items into buckets independently and equally. Think $h(x) = x \mod m$.
+\: $S$ is randomly independently chosen from $U$.
+\endlist
+
+Separated chains $≡$ just linked lists for each bucket.
+
+$P[$one list of size exactly $l]$ = ${s \choose l} (1/m)^l (1 - 1/m)^{n-l}$. Since this
+is a binomial distribution, easily $E[$chain length$] = ∑(l P[\len=l]) = α$.
+
+{\bf Expected maximum list length}
+$$P[\max_{i} \len(j)≥ j) ≤ ∑_{i}P[\len(i) ≥ j] ≤ m {s \choose j}(1/m)^j $$
+$$= {∏_{k=0}^{j-1}(s-k) \over j!} (1/m)^{j-1} ≤ s (s/m)^{j-1}/j!.$$
+
+Bound $s$ by nearest larger factorial $k_0!$. Then $k_0 = O({\log s \over \log \log s})$.
+Clearly, the smallest $j_0$ such that $s (s/m)^{j-1}/j! ≤ 1$ is smaller than $k_0$.
+
+Split the $EMS$ sum until the probability drops below one:
+$$ EMS = ∑_j P[\max_{i}\len(j)≥ j] ≤ j_0 + 1/j_0 = O({\log s \over \log \log s}). $$
+
+{\bf Number of tests}
+
+\dfn{Tests $≡$ number of comparisons after insertion.}
+
+Expected number of tests with an unsuccessful insertion: we test all elements if the list is
+nonempty, otherwise just 1 test. (Since $E$ has no memory, assume $j$ is one fixed value.)
+In total: $1P[$ list empty$] s+ ∑_l lP[\len(j) = l] = e^{-α} + α.$
+
+Expected number of succesful tests: $1+$ expected list length after each insertion: $ 1 + n-1/2m = 1 + α/2$.
+
+{\bf Replacement lists} % Hasovani s premistovanim
+
+If we want to avoid allocating the memory for the separated chains, we can create chains inside the hash
+table itself. The simplest solution is the replacement lists, where we simply link a collision to the next
+free cell in the hash table, and create a linked list. This solution is rather slow for DELETE, because we
+have to rearrange the list.
+
+Number of tests is however still the same.
+
+{\bf Two-pointer hashing}
+
+Two pointers mean that in the hash entry $j$, we store the link to the beginning of the linked list for $j$,
+which can begin elsewhere. INSERT and DELETE are simpler.
+
+The number of tests is greater.
+
+{\bf Coalesced hashing: EISCH, LISCH}
+
+Have no shared memory, still index within the hash tables. Lists coalesce -- they grow together if they collide.
+Early v. Late insertion.
+
+{\bf Coalesced hashing with external memory: VISCH, EISCH, LISCH}
+
+{\bf Linear adding}
+
+{\bf Double hashing}
+
+\fsection{Universal hashing}
+
+Using universal hashing, we want to simulate random choice of $S$ from $U$, which is not always true.
+We assume $S$ is given, we construct a set of hashing functions that will ensure uniform choice.
+
+
+\dfn{A system of functions is \term{$c$-universal} $≡$ only a few elements collide:
+$$  ∀ x,y∈ U, x≠ y: |\{i∈ I; h_i(x)=h_i(y)\}| ≤ {c|I| \over m}.$$
+} 
+
+\obs{There exists a $c$-universal system for any $S$.}
+
+\prf{Assume $U$ is just $1…N$ for some prime. Choose functions of type $h_{a,b}(x) = (ax + b \mod N) \mod m$.
+If $h_{a,b}(x) = h_{a,b}(y)$, then the two functions have a common remainder $i$ and both $r,s$ such that $i+rm = i + sm \mod N$.
+Therefore, the number of solutions is at most $|\{(i,r,s)\}| = m ⌈N/m⌉^2$. The system is therefore universal
+for $c ≡ ⌈N/m⌉^2 / (N/m)^2$.
+}
+
+
+\fsection{Perfect hashing}
+
+\fsection{Třídění ve vnitřní a vnější paměti}
+
+\fsection{Dolní odhady pro uspořádání (rozhodovací stromy)}
+
+\TODO{That old lower bound, plus some probabilistic results from PALG.}
+
+\fsection{Dynamizace datových struktur}
+
+One semidynamization approach needs the following condition: $f(x,A) \andamp f(x,B) = f(x,A ∪ B)$.
+Some problems are not decomposable like this (convex hull).
+
+Our approach is based on a binomial heap.
+
+\subsection{Semidynamization}
+
+Represent dynamic structure as a list of sizes exactly $2^i$. All
+sizes $2^i$ are basically buckets.  INSERT means inserting into the
+first empty bucket and concatenating with all previous buckets.
+MEMBER goes through all buckets. Both have time $O(X log X)$, which
+may be $O(X)$ if $X = n^{ε >0}$.  INSERT has this complexity
+amortized.
+
+To make INSERT with worst case $O(X \log X)$, keep more structures of
+the same size and ``portion'' the steps with batches of
+$P_S(i)/2^i$. The last structure of one bucket $i$ will be
+semi-constructed, the remaining are complete. If you finish one
+structure $A_i$, take two from the previous bucket and start merging a
+new one.  Once you finish INSERT and there are $≥ 2$ finalized
+structures $A_i$ on the highest level, move them to the bucket $i+1$
+and finish.
+
+\subsection{Dynamization}
+
+In order to implement DELETE, take a number (say 1/8) and keep buckets
+full by $2^i$ with lazy deletion ensuring that you start reworking it
+only after there is less than $1/8$ undeleted elements. Once you have
+too few elements, try to merge the bucket with the previous bucket
+$A_{i-1}$, reworking both in the process.
+
+\fsection{Self-correcting structures}
+
+{\bf Lists.}
+
+\itemize\ibull
+\: MFR: move first element to front. 
+\: TR: slowly increase element's position when accessed.
+\: TIMESTAMP: have timestamps, move back based on them.
+\endlist
+
+
+\thm{Expected time of MFR $P_{MFR} ≤ 2P_{OPT}$.}
+
+\prf{Proving only for MEMBER(x). Call $β_x$ probability
+that $x$ on input. Build Markov chain based on $β_x$. Markov chain is irreducible, aperiodic, has a stationary
+distribution $γ_π$. $π$ is a list of elements, $B$ is the ground set.
+
+\dfn{$δ(x,y) ≡ ∑\{γ_π | π(x) < π(y)\}$.}
+
+\obs{$P_{OPT} = ∑_{i=1}^n i β_i$.}
+
+\obs{$P_{MFR} = ∑_{x ∈ B} β_x( 1 + ∑_yδ(y,x))$.}
+
+\obs{$δ(x,y) = {β_x \over β_x + β_y}$.}
+
+Calculate the result using the previous observations.
+}
+
+{\bf Splay trees.}
+
+Trees with no data for balancing, only ZIG, ZIG-ZIG, and ZIG-ZAG rules.
+Splay any element to the root.
+
+{\it Static optimality:}
+
+{\it Dynamic optimality:}
+
+\fsection{Relaxed search trees}
+
+Relaxation $≡$ attempt at accomodating parallelism through laziness.
+
+\bye

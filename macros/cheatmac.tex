@@ -68,6 +68,7 @@
    \font\eighttt=cstt8
    \font\eightit=csti8
    \font\eightsl=cssl8
+   
    \textfont0=\eightrm
    \textfont1=\eighti
    \textfont2=\eightsy
@@ -76,6 +77,9 @@
    \def\tt{\eighttt}
    \def\it{\eightit}
    \def\sl{\eightsl}
+   \font\msbm=msbm8
+   \def\mathbb{\msbm}
+   
    \normalbaselineskip=.8\normalbaselineskip
    \normallineskip=.8\normallineskip
    \normallineskiplimit=.8\normallineskiplimit
@@ -225,17 +229,27 @@
     \statement
 }
 
+\def\opn{%
+    \def\curname{Q}
+    \def\curcolor{\color{black}}
+    \statement
+}
+
 \def\andamp{\mathop\&}
 
-\def\st{{\rm\ t.ž.\ }}
+\def\st{{\rm\ s.t.\ }}
 \def\iff{\leftrightarrow}
 \def\then{\rightarrow}
 \def\neht{\leftarrow}
 \def\rng{{\rm Rng}}
 \def\dom{{\rm Dom}}
 \def\var{{\rm Var}}
-\def\mod{{\rm mod}}
+\def\mod{{\ \rm mod\ }}
 
+\def\Natu{{\mathbb N}}
+
+\def\TODO{{\bf TODO:}}
+\def\term#1{{\it #1}}
 % my compact notation for $x_1, x_2, \dots, x_n$.
 \def\mls#1#2{#1_{[1,#2]}}
 
@@ -244,3 +258,4 @@
 \def\ua{\uparrow}
 \def\daeq{\downarrow=}
 \def\daneq{\downarrow\neq}
+

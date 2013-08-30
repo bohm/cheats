@@ -1,47 +1,145 @@
 \input cheatmac
 
+
+\def\DSPACE{{\rm DSPACE}}
+\def\NSPACE{{\rm NSPACE}}
+\def\DTIME{{\rm DTIME}}
+\def\NTIME{{\rm NTIME}}
+\def\PSPACE{{\rm PSPACE}}
+\def\pr#1{{\csc #1}}
+
 % TODO: define \pr to be problem name
 
 \title{Complexity}
 {\bf Note}: Strange structure due to finals topics.
 Will improve later.
 
-\TODO{Turing machine, complexity definition}
+\dfn{A \term{deterministic Turing machine with $k$ tapes} $M_k$ is a tuple $(Σ,Q,δ,q_0,F)$.
+$δ$ is the usual transition function, $Q$ the set of all states, $Σ$
+language, $F$ accepting states, $q_0$ starting state.}
+
+\dfn{A \term{nondeterministic Turing machine} is a machine such that $δ$ produces a set
+of future states instead of just one state.}
+
+{\bf Notation:} In this text, $L$ will always be a language, and $Φ, Ψ$ functions
+as well as $f,g$. $M,N$ are DTM unless stated otherwise, $M_k$ with $k$ tapes.
 
 \TODO{Blum complexity measure.}
 
 \TODO{Recursive, computable notions.}
 
 \fsection{Speedups and compressions}
-\fsection{Complexity hierarchy}
 
-\thm{$Φ$ recursive function $→ ∃$ recursive language $L ∉ DBLUM(Φ(n))$.}
+\thm[Alphabet compression.]{If $f$ is a time-constructible function $f: {\msbm N} \Natu → \Natu$ with a TM with alphabet $Γ$, then $f$ is computable
+in time $4 \log |Γ| T(n)$ with a 4-character alphabet TM.}
+
+\prf{Use alphabet $0,1,→,|$. Encode ternary and higher objects into binary.}
+
+\thm[Linear space compression]{ $L$ is accepted by $M_k$ with $S(n)$, then $∀r∈ℕ∃ N_k$ such that
+$N_k$ accepts $L$ with $S_N(n) = ⌈S(n)/r⌉$.}
+
+\prf{Since we do not care about time, we can encode a $r$-tuple of characters
+into one character. We also need special characters so that we know on which character is
+our tape. Moving may then be replaced with changing a a\c{b}c to
+ab\c{c}.}
+
+\res{$∀ r ∈ ℕ: \DSPACE(S(n)) = DSPACE(S(n)/r)$.}
+
+\res{$∀ r ∈ ℕ: \NSPACE(S(n)) = NSPACE(S(n)/r)$.}
+
+\thm[Tape reduction]{If we have a $M_k$ accepting $L$, then there is $M_1$ accepting $L$ with equal
+$S(n)$.}
+
+\prf{Again, we do not care about time, so we simply store all $k$ characters on one tape and and have special
+characters for storing state of the emulated heads.}
+
+\thm[Tape time reduction]{If we have a $M_k$ accepting $L$ in time $T(n)$, there is a $M_1$ accepting
+it in time $5kT(n)^2$.}
+
+\prf{Input is at the beginning of the 1 tape. Encode the other tapes after it. Create a larger alphabet with all characters having an
+extra flag whether the head is on them or not. Sweep the tape twice,
+first time load the marked characters to your ``registers'', the
+second time do the transition.  }
+
+\lem{Let $k≥2, r>0$. If we have a $M_k$ accepting $L$ with time complexity $T(n)$,
+there is a $N$ that accepts $L$ in time $n + ⌈n/r⌉ + 6⌈t/r⌉]$.}
+
+\prf{Assume we can write on the input tape. First, encode the input on the
+first work tape and make it $r$ times denser. Then use input tape as
+work tape. In every step, read one character to the left and one
+character to the right of the current head position. This can be done
+in 4 moves. In $r$ steps of the original $M_k$, only $r$ characters
+can be changed from the current head position. The $M_k$ could only
+modify two of the three positions, and we can edit them using $2$
+steps. Of course, this increases the complexity of the transition
+function.}
+
+
+\thm[Linear Speedup]{Let $k≥2, ε>0$. Then if $M_k$ accepts $L$ in time $T(n) ≥ ω(n)$, there exists $N$ s.t.
+it accepts $L$ in time $εT(n)$.}
+
+\prf{Simply choose $r$ in the Lemma based on $ε$, usually things like $21/ε$.
+}
+
+% ---
+
+\fsection{Constructible functions}
+
+\dfn{A function $Φ: ℕ → ℕ$ is recursive if there is a TM that can compute $1^{f(n)}$ with input of size $1^n$.}
+
+\dfn{A function $Φ$ is T/S-enumerable in T/S $O(f) ≡$ it is recursive and $ ∃$ TM such that the TM enumerates it
+within $cf(n)$ steps for input of size $n$.}
+
+\dfn{A function $Φ$ is T/S-constructible (time-constructible or space-constructible) $≡ ∃ $ a TM such that it halts
+after exactly $Φ(n)$ steps for input of size $n$.}
+
+\lem{Let $f_1 + f_2$ and $f_2$ be a T-constructible functions and $∃ε>0 ∃n_0 ∀ n≥ n_0 f_1(n) ≥ εf_2(n) + (1+ε)n$.
+Then $f_1$ is time constructible also.}
+
+\prf{Apply speedup to find a machine pacing exactly at $f_1$.}
+
+\thm[Time Equivalence]{Let $f:ℕ→ℕ$ be a function s.t. $∃ε>0∃n_0∀n≥n_0: f(n) ≥ (1+ε)n$.
+Then $f$ time-enumerable in time $O(f) ⇔ f$ time constructible.}
+
+\prf{Backwards direction immediate, forwards direction by previous lemma.}
+
+\thm[Space Equivalence]{Space-enumerability and constructibility coincide.}
+
+\prf{We can use space compression to get it exactly, no lemmas required.}
+
+\thm{Every time constructible $f$ is space constructible.}
+
+% ---
+
+\fsection{Complexity classes}
+
+\TODO{DSPACE, DTIME}
+
+\thm{$Φ$ recursive function $→ ∃$ recursive language $L ∉ DTIME/DSPACE(Φ(n))$.}
 \prf{ Diagonal argument. Order machines, inputs $L ≡ \{x_i | M_i$ does not accept $x_i$ in time $Φ(|x_i|) \}$.}
 
 \thm{
 \itemize\ibull
-\: $Φ, Ψ: ℕ → ℕ$ and $Ψ ∈ Ω(Φ)$ with $Ψ$ being space-constructible $\imply ∃ L ∈ DSPACE(Ψ) ∖ DSPACE(Φ)$.
-\: $Φ, Ψ: ℕ → ℕ$ and $Ψ ∈ Ω(Φ \log Φ)$ with $Ψ$ being time-constructible $\imply ∃ L ∈ DTIME(Ψ) ∖ DTIME(Φ)$.
+\: $Φ, Ψ: ℕ → ℕ$ and $Ψ ∈ Ω(Φ)$ with $Ψ$ being space-constructible $→  ∃ L ∈ DSPACE(Ψ) ∖ DSPACE(Φ)$.
+\: $Φ, Ψ: ℕ → ℕ$ and $Ψ ∈ Ω(Φ \log Φ)$ with $Ψ$ being time-constructible $→ ∃ L ∈ DTIME(Ψ) ∖ DTIME(Φ)$.
 \endlist
 }
 
-\fsection{Constructible functions}
+\prf{ {\bf Part 1.} Create a machine $M$ which allocates $Ψ$ memory and accepts only if any single-tape machine
+$M_w$ refuses $w$ in space $Ψ$. If this language was in $\DSPACE(Φ)$, there would be a machine $N$ recognizing this.
+This machine $N$ can be assumed to be single-tape and always stops. We can emulate this machine, and so we have
+a contradiction.
 
-\dfn{A function $Φ$ is BLUM-enumerable in time $O(f) ≡ ∃$ TM such that the tm halts within $cf(n)$ steps for
-input of size $n$.}
-
-\dfn{A function $Φ$ is BLUM-constructible (time-constructible or space-constructible) $≡ ∃ $ a TM such that it halts
-after exactly $Φ(n)$ steps for input of size $n$.}
-
-
-\fsection{Complexity classes}
-\TODO{DSPACE, DTIME}
+{\bf Part 2.} Similarly, only we use $Φ \log Φ$ for the tape reduction theorem. We set time to be so high that
+the would-be machine can be emulated safely.
+}
 
 \thm[Relationship Theorem]{
 \itemize\ibull
-\: $\DBLUM ⊆ \NBLUM$.
-\: $\DTIME ⊆ \DSPACE$.
-\: $\NTIME ⊆ \DSPACE$ for s-c. functions.
+\: $\DTIME  ⊆ \NTIME$.
+\: $\DSPACE ⊆ \NSPACE$.
+\: $\DTIME  ⊆ \DSPACE$.
+\: $\NTIME  ⊆ \DSPACE$ for s-c. functions.
 \: $L ∈ \DSPACE(Φ(n)) ∧ Φ(n) ≥ \log n \then L ∈ \DTIME(c_L^{Φ(n)})$, with $c_L ≡ c(L)$. 
 \: $L ∈ \NSPACE(Φ(n)) ∧ Φ(n) ≥ \log n \then L ∈ \DTIME(c_L^{Φ(n)})$, with $c_L ≡ c(L)$.
 \: $L ∈ \NTIME(Φ(n)) \then L ∈ \DTIME(c_L^{Φ(n)})$ with $c_L ≡ c(L)$.
@@ -50,7 +148,7 @@ after exactly $Φ(n)$ steps for input of size $n$.}
 
 \fsection{Savitch Theorem}
 
-\thm[Savitch]{If $Φ(n) ≥ \log n$ and $Φ$ is space-constructible $\then NSPACE(Φ(n)) ⊆ DSPACE(Φ^2(n))$.
+\thm[Savitch]{If $Φ(n) ≥ \log n$ and $Φ$ is space-constructible $\then NSPACE(Φ(n)) ⊆ DSPACE(Φ^2(n))$.}
 
 \prf{USTCON is an NL-complete problem. (Basically, any problem in NL can be solved through graph search of
 the state space.) We can solve USTCON by recursion -- basically, for every middle vertex $v$, we check whether
@@ -79,7 +177,6 @@ third colour. Use a gadget so that no three variables in the clause get F.
 assignment.
 
 
-}
 \fsection{$\PSPACE$}
  
 \dfn{$\PSPACE ≡$ a class of problems solvable with polynomial space.}
@@ -88,17 +185,59 @@ assignment.
 
 \thm{$\pr{TQBF}$ is a $\PSPACE$-complete problem.}
 
-\prf{$\pr{TQBF} ∈ \PSPACE$: Evaluating it recursively uses $poly(n)$ memory.
+\prf{$\pr{TQBF} ∈ \PSPACE$: If it has $n$ variables and formula is of size $m$, evaluating it recursively uses $poly(n+m)$ memory. In fact, you can do it in $O(n+m)$ space since you restrict yourself on the same formula.
 
 $\pr{TQBF}$ is complete: Transform every problem searching on a Turing machine to a $\pr{TQBF}$ in a similar
-way like in the Savitch theorem.}
+way like in the Savitch theorem. Specifically, there exists a SAT formula that can decide adjacency, use it
+inductively to declare formulas that calculate $2^{i-1}$ adjacency. }
 
 \fsection{Polynomial Hierarchy}
 
-\fsection{Pseudopolynomial alg.}
+\dfn{$Σ^p_2$ is a class $x ∈ L ≡ ∃u ∈ {0,1}^{|q(x)|} ∀v ∈ {0,1}^{|q(x)|} M(x,u,v)=1$.}
 
-\fsection{Strong NP-completeness}
+Contains NP and coNP. EXACT INDSET example.
 
-\fsection{#P, #P-completeness}
+\dfn{$Π^p_2$ complement of $Σ_2^p$. Contains EXACT INDSET also.}
+
+\dfn{$Σ^p_i$ and $Π^p_i$ defined analogously.}
+
+\obs{If $P=NP$ then $PH=P$.}
+
+\prf{Induction, simply use $P=NP$ to do away with the extra $∃$.}
+
+\thm{If there is a PH-complete language, then PH collapses.}
+
+\prf{(Sketch.) If there is such a language, it is a member of some class, and then the higher classes collapse.}
+
+\thm{$Σ_i-SAT$ is a $Σ^p_i$-complete problem.}
+
+\fsection{Pseudopolynomial alg., Strong NP-completeness}
+
+\dfn{ An algorithm is {\it strongly NP-complete} $≡$ it is NP-complete even if all its input numerical variables
+are bounded by the size of the input.}
+
+\obs{Bin packing is strongly NP-complete.}
+
+\obs{Subset sum, backpack problem and its related problems are not strongly NP complete, because they employ
+pseudopolynomial algorithms.}
+
+\fsection{\#P, \#P-completeness}
+
+\dfn{$\#P ≡$ a class of enumerating problems (i.e. functions) where the associated decision problems are polynomial.}
+
+\dfn{A function from $\{0,1\}*$ to $\{0,1\}*$  is in $FP ≡$ it can be computed by a TM in polynomial time.}
+
+\opn{FP = \#P is an analog of P = NP.}
+
+\dfn{A function $g$ is in $FP^f$ if it can be computed by a polynomial-time TM with oracle access to $f$.}
+
+\dfn{A function $f$ is \#P-complete if it is in $\#P$ and every $g ∈ \#P$ is in $FP^f$. }
+
+\thm{If \#CYCLE has a polynomial-time solution then $P=NP$. }
+
+\thm{\#SAT is \#P-complete.}
+
+Some \#P problems can be approximated easily, others not so much. Even easy problem like \#CYCLE or \#PM are hard.
+\#PM is \#P-complete.
 
 \bye
