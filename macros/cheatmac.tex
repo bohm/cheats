@@ -5,7 +5,7 @@
 \input ucwmac
 \input ucw-ofs
 
-% \input color works on modern software, but this works on older machines also
+% \input color alone works on modern software, but this works on older machines also
 \input miniltx
 \input color.sty
 
@@ -131,10 +131,10 @@
 
 \outer\def\title#1{{\titlefont\centerline{#1}}\vskip 1ex plus .5ex minus.5ex}
 
-\outer\def\section#1{\par\filbreak
+\outer\def\section#1{\par\goodbreak
    \vskip .75ex plus 1ex minus 2ex {\headingfont #1}\mark{#1}%
    \vskip .5ex plus .5ex minus .5ex}
-\outer\def\subsection#1{\par\filbreak
+\outer\def\subsection#1{\par
    \vskip .75ex plus 1ex minus 2ex {\bf #1}\mark{#1}%
    \vskip .5ex plus .5ex minus .5ex}
 % fake section -- looks the same, but does not force itself

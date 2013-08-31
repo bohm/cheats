@@ -1,0 +1,258 @@
+\input cheatmac
+
+%TODO: define \alg
+
+\title{Combinatorial optimization}
+
+\fsection{Graph algorithms}
+
+\subsection{Union-find}
+
+Creating and updating an equivalence. Operations UNION (union of two classes)
+and FIND (detect equivalence class). FIND actually outputs a canonical
+representative.
+
+Tarjan's UF employs:
+
+\itemize\ibull
+\: Path compression -- compress any path that you go through by linking it at a root.
+\: Union by rank -- every representative remembers its $r(v)$ (rank). When doing UNION,
+declare higher ranking vertex as representative. If ranks equal, increase rank.
+\endlist
+
+\thm{With $n$ elements, $m$ operations UNION/FIND take $O( (n+m) \log^{*} n)$.}
+
+\prf{ Create buckets of vertices based on their rank. In the bucket $k$ there
+are vertices of rank $((2↑k-1),2↑k]$.
+
+\obs{In $k$-th bucket, there are at most $n/(2↑k)$ vertices}
+\prf[Obs.]{There are at most $n/2^r$ vertices of rank $r$, because of how rank
+merges trees. Apply this result to the buckets.}
+
+%TODO: Maybe a more verbose explanation after finals.
+
+Now, do the accounting.
+
+}
+
+% \subsection{Nagamochi-Ibaraki}
+
+\subsection{Minimum spanning tree}
+
+Minimum is counted based on the weight function. We say a tree is
+lighter if $T$ is better than another $T'$.
+
+\dfn{Light edges $≡$ we can swap them in a $T$ to get a lighter spanning tree.}
+
+\obs{We can arrive at any minimum spanning tree from any tree using swap operations.}
+
+\dfn{Blue edge $≡$ lightest edge of some edge cut.}
+
+\dfn{Red edge $≡$ heaviest edge on a cycle.}
+
+Meta-algorithm: try to avoid red edges while gathering blue edges.
+
+\alg{Jarnik's algorithm with a Fib. heap}
+\itemize\ibull
+\: Put all elements in a heap.
+\: Extract minimum edge $uv$ $(u ∈ T, v ∉ T)$, add to $T$.
+\: For all neighbours $w$ of $v$ which aren't in $T$:
+\: If edge $wv$ is lighter than any edge to $w$ in heap, add it.
+\: DECREASKEY the edge that is heavier than $wv$, if you added it.
+\endlist
+
+Complexity: $O(m + n log n)$.
+
+Note: oftentimes we can use Courcelle's Theorem to get fast algorithms
+on hard problems, if our structure is bounded by treewidth or other parameter.
+
+%TODO: Planar separator?
+
+\fsection{Algebraic and arithmetic algorithms}
+
+\subsection{Strassen}
+
+\subsection{Euclid's Algorithm}
+
+\subsection{RSA}
+
+\subsection{Working with Q^n}
+
+\fsection{Polytope theory}
+
+\dfn{{\it Projection} of $x$ onto a a closed, convex, nonempty set $K$ is a
+ point $p ∈ K$ that minimizes distance $||p - x||$.}
+ 
+\thm[Projection theorem]{$K$ closed, convex, nonempty in $R^n$, $p(x)$ projection of $x$.
+Then $∀z ∈ K$, $(z-p)^T(b-p) ≤ 0$.}
+
+\fsection{LP}
+
+The standard LP setting (everything without indices are vectors):
+$$ min c^Tx, $$
+$$ Ax = b, $$
+$$ x ≥ 0, $$
+
+We can always move to inequalities, change min to max, as long as we stay linear.
+
+\thm[Farkas Lemma]{Exactly one is true:
+\itemize\ibull
+\: $∃x≥0: Ax=b$
+\: $∃y: A^Ty ≥ 0, b^Ty < 0$.
+\endlist
+}
+
+\prf{
+
+Not two at the same time:
+
+$$ Ax = b → 0 ≤ x^T A^Ty = y^TAx = y^Tb < 0. $$
+
+(¬1 → 2): Assume no $Ax=b$. Look at cone $K = \{Ax| x≥0\}$. $b ∉ K$.
+Project $b$ onto $K$, get $p$. Use Projection Theorem: $∀z ∈ K, (z-p)^T(b-p) ≤ 0$.
+Define $y ≡ p - b$. $∀x: (Ax-p)^T(y) ≥ 0$ (inequality switches due to $y$). $p = Aw$ in cone,
+so $∀x: (Ax - Aw)^T(y) = (x-w)^T (A^Ty) ≤ 0$. Choose $x = w + (0,0,0,…,1,…,0)$. This extracts
+one column of $A$. $x≥0$, because $w ≥ 0$. So $(A^Ty) ≥ 0$.
+
+$y^Tb = (p-y)^T y = p^Ty - y^Ty.$ Again, $(Ax -p)^Ty ≥ 0$, so $p^Ty ≤ 0$ for $x ≡ 0$. However,
+$p^Ty ≠ 0$. 
+}
+
+\cor{Exactly one is true:
+\itemize\ibull
+\: $∃x≥0: Ax ≤ b$,
+\: $∃y≥0: A^Ty = 0, b^Ty <0$.
+\endlist
+}
+
+\subsection{Duality}
+
+Assume minimazation. We are trying to get a lower bound on the $c^Tx$. We can do this
+if we find a vector $y$ such that $y^T Ax = b^Ty$, and we try to make it happen so that
+$y^TA$ (coefficents of $x$) are below $c^T$. Therefore, we have a dual program:
+
+$$ max b^Ty$$
+$$ A^Ty ≤ c$$
+
+\thm[Weak duality]{Solution of dual $w ≤ z ≡$ solution of primal.}
+
+\prf{Directly from argument above.}
+
+\thm[Strong duality]{$w = z$.}
+
+\prf{
+Suppose primal bounded (and feasible), $x*$ optimum. We now look for $y$ s.t. $A^Ty ≤ c$ and
+$b^Ty ≥ z = c^Tx*$. Suppose there is none, then (applying Farkas corollary on
+modified matrices) there is $x ≥ 0, λ ≥ 0$ such that
+$$Ax = λb,$$
+$$c^Tx < λz.$$
+
+If $λ ≠ 0$, we can normalize it to be $λ = 1$ and we have improvement over an
+optimum. If $λ = 0$, we can go to $-∞$ with cost.
+}
+
+\fsection{Integrality and ILP}
+
+Incidence matrix $≡$ $V × E$.
+
+\dfn{A matrix $M$ is totally unimodular $≡$ every square submatrix has determinant -1,0 or 1.}
+
+\thm{Suppose $A$ is totally unimodular, then each vertex of the polyhedron $\{x|Ax ≤ b\}$ is integral.}
+
+\prf{Vertex $z$. Use observation that $A_z = \{col(A)| z_j ≠ 0\}$  has full rank. Therefore it is invertible.
+Since $|det A'| = 1$, all entries of the inverse are integer.}
+
+\thm[Hoffman-Kruskal]{$A$ is unimodular $⇔$ $∀ b$ integer vector the polyhedron
+$Ax ≤ b, x ≥ 0$ is integer.
+}
+
+\thm{$G$ bipartite $⇔$ incidence matrix $A$ is totally unimodular.}
+
+\prf{$G$ not bipartite $→$ take submatrix of odd cycle, calculate
+determinant.
+
+$G$ bipartite. Take $t×t$ matrix $M$, proceed by induction. if $M$
+has a column of zeroes or with just one $1$, all done. If each column
+has two $1$s, split the matrix based on the partitions.}
+
+
+\fsection{Simplex method}
+
+We work with a normalized problem, i.e.:
+$$ min c_B x_B + c_N x_N $$
+$$ s.t. A_B x_B + A_N x_N = b, x_B, x_N ≥ 0.$$
+
+Idea: in a minimization problem, we can look at the solution we're in
+as a base $x_B$ (full vertices) plus additional vectors that sum us up
+to $b$. We check if one $x_N$ can decrease the cost function. If so,
+increase contribution of $x_N$ while satisfying equality.
+
+Make sure that $x_B ≥ 0$ until it breaks, then we basically
+added a new vector to the base $B$. 
+
+Note: Many heuristics for pivot choice. Also we need to make sure that
+removing an element of the basis $k$ which doesn't create a loop in
+the next step.  (The loop may happen if one element is already set to
+$0$ in the basis.) Pivoting rule that works: choose $k,j$ minimal.
+
+\opn[Hirsch]{For $m$ hyperplanes in $d$ dimensions the length of the
+shortest path between any two vertices of the arrangement is at most
+$m-d$.}
+
+Not even a proof of the Hirsch conjecture would say much about the Simplex
+algorithm. Existence of polynomial scheme is still open.
+
+\fsection{Ellipsoid method}
+
+\fsection{Special matrices}
+
+\fsection{TSP}
+
+\fsection{Matching and flow networks}
+
+\subsection{Edmonds}
+
+\subsection{Dinitz}
+
+\alg{Dinitz}: Add augmenting flows, not just augmenting paths.
+Specifically:
+
+\itemize\ibull
+\: Create reserve network. Now we work only with that.
+\: Find shortest $s-t$ path by DFS. Cut all longer $s-t$ paths.
+\: Find blocking flow on the cleaned network. Whenever adding
+a $s-t$ path greedily, clean up the network.
+\: Add blocking flow. Iterate.
+\endlist
+
+Cleanup takes only $O(m)$ time per iteration, searching for blocking
+flow takes $O(nm)$.
+
+\obs{Number of iterations is $O(n)$.}
+
+\prf{The only new edges that get added in the next reserve network are backwards
+edges, which only increase the shortest $s-t$ length. Plus (after
+cleanup) longer paths may become relevant, but still, shortest $s-t$
+path increases before every reserve network construction, and so we
+have $O(n)$.}
+
+{\bf Integer capacities}
+\obs{On integer capacities, we can bound the running time of Dinitz by $O(|f|n + mn)$.}
+
+\prf{Every augmenting path extends the flow by at least $1$.}
+
+\thm{On integer capacities, we can make Dinitz run in time $O(mn log C)$.}
+
+\prf{We do it similarly to radix sort -- create flows by writing $C$ in binary,
+and then finding maximum flow using the first $k$-bits of each capacity. After that,
+we multiply the flow by $2$ (and add the smallest bit) and start with a close-enough flow.
+
+\obs{$|f_i| - 2|f_{i-1}| ≤ m$.}
+
+\prf{Max flow = min cut, but min cut has increased from $|R|$ to at most $2|R| + m$.}
+
+Now we use the previous observation on integer Dinitz and flow size to get the result.}
+
+\fsection{Matroid theory}
+
+\bye

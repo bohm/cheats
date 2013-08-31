@@ -21,6 +21,12 @@ vertices in every tree. Since balance only shifts by 1, it's pretty simple.
 
 \subsection{RB trees}
 
+Vertices contain color (red and black). Chief condition: all paths to the leaves
+are equally black. All leaves are considered to be black, and a parent of a red
+vertex must be black.
+
+
+
 \section{Heaps}
 
 We usually do: INSERT, DELETEMIN, MERGE, DECREASEKEY, INCREASEKEY, and DELETE.
@@ -59,9 +65,34 @@ cut any marked parent out of the tree and concatenate it with
 $H$. Increase also rips apart the vertex $v$, concatenates children
 into $H$, and finally concatenates $\{v\}$ as a trivial tree.
 
-\fsection{Tries}
+\section{Tries}
 
-\fsection{B-trees}
+Compressing dictionary structure in a tree. General tries can grow
+based on the dictionary, and quite fast. Long paths are inefficient,
+so we define {\it compressed tries}, which are tries with no
+non-splitting vertices. Initialization $O(Σl)$ for uncompressed tries,
+$O(l + Σ)$ for compressed (we are only making one initialization of a
+vertex -- the last one).
+
+\thm{Assuming all $l$-length sequences come with uniform probability
+and we have a sampling of size $n$,
+$E[{\rm c-trie\ size}] = log_k d$.}
+
+\prf{$q_d ≡$ probability trie has depth $d$. $E[{\rm c-trie size}] = ∑_d d(q_d - q_{d+1}) = ∑_d q_d$.
+
+Calculate opposite event -- trie is within depth $d-1$. Then prefixes from $n$ must decode all words
+uniquely, so: $P[{\rm unique}] = {{k^d \choose n} k^{n(d-l)} \over {k^l \choose n}}$.
+
+$$q_d ≤ 1 - P[{\rm unique] = 1 - ∏_{i=0}^{n-1}(1 - i/k^{d-1} ≤ 1 - e{-n^2/k^{d-1}} ≤ n^2/k^{d-1}.$$
+
+The substitution of the product to $e$ is done through integration.
+
+}
+
+\subsection{Suffix trees}
+
+
+\section{B-trees}
 
 {\bf General (a,b)-trees}: Every vertex has at least $a$ and at most $b$ sons. Also $a ≥ 2$ and $b ≥ 2a -1$,
 so we can split vertices efficiently. Does not hold for root.
@@ -75,7 +106,7 @@ We can then split 2 into 3, or 3 into 4 -- such trees are called $B^*$-trees.
 
 Also we can have redundant data, prefix trees, variable length data, or finger trees.
 
-\fsection{Hašování (řešení kolizí), univerzální hašování, perfektní hašování}
+\section{General hashing}
 
 Traditional operations: MEMBER, INSERT, DELETE.
 
@@ -83,7 +114,7 @@ Traditional operations: MEMBER, INSERT, DELETE.
 List size usually $l$. Domain of hash function either $U$ or $S$, depends on universality.
 Codomain of hash function (buckets) $M$ of size $m$. Load factor $α ≡ s/m$.}
 
-\fsection{Separated chains}
+\section{Separated chains}
 Assume the following:
 
 \itemize\ibull
@@ -143,7 +174,7 @@ Early v. Late insertion.
 
 {\bf Double hashing}
 
-\fsection{Universal hashing}
+\section{Universal hashing}
 
 Using universal hashing, we want to simulate random choice of $S$ from $U$, which is not always true.
 We assume $S$ is given, we construct a set of hashing functions that will ensure uniform choice.
@@ -162,15 +193,15 @@ for $c ≡ ⌈N/m⌉^2 / (N/m)^2$.
 }
 
 
-\fsection{Perfect hashing}
+\section{Perfect hashing}
 
-\fsection{Třídění ve vnitřní a vnější paměti}
+\section{Sorting in external/internal memory}
 
-\fsection{Dolní odhady pro uspořádání (rozhodovací stromy)}
+\section{Lower bounds for ordering (decision trees)}
 
 \TODO{That old lower bound, plus some probabilistic results from PALG.}
 
-\fsection{Dynamizace datových struktur}
+\section{Dynamization}
 
 One semidynamization approach needs the following condition: $f(x,A) \andamp f(x,B) = f(x,A ∪ B)$.
 Some problems are not decomposable like this (convex hull).
@@ -195,7 +226,7 @@ new one.  Once you finish INSERT and there are $≥ 2$ finalized
 structures $A_i$ on the highest level, move them to the bucket $i+1$
 and finish.
 
-\subsection{Dynamization}
+\subsection{Full Dynamization}
 
 In order to implement DELETE, take a number (say 1/8) and keep buckets
 full by $2^i$ with lazy deletion ensuring that you start reworking it
@@ -203,7 +234,7 @@ only after there is less than $1/8$ undeleted elements. Once you have
 too few elements, try to merge the bucket with the previous bucket
 $A_{i-1}$, reworking both in the process.
 
-\fsection{Self-correcting structures}
+\section{Self-correcting structures}
 
 {\bf Lists.}
 
@@ -240,7 +271,7 @@ Splay any element to the root.
 
 {\it Dynamic optimality:}
 
-\fsection{Relaxed search trees}
+\section{Relaxed search trees}
 
 Relaxation $≡$ attempt at accomodating parallelism through laziness.
 
