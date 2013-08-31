@@ -4,7 +4,7 @@
 {\bf Note}: Strange structure due to finals topics.
 Will improve later.
 
-\fsection{Graph coloring}
+\section{Graph coloring}
 
 \thm{A $d$-degenerate graph can be coloured with $d$+1 colours.}
 
@@ -36,7 +36,63 @@ and the rest on the outer face have $L(v)=3$ and the inside vertices $L(v)=5$. T
 Apply induction, look for chord, remove vertices if outer face chordless.
 }
 
-\thm[Erdos-Rabin-Taylor]{Gallai trees.}
+\subsection{Erdos-Rabin-Taylor}
+
+\dfn{$G$ is a \term{Gallai block} $≡$ $G$ is $K_n$ or $C_{2k+1}$. } 
+
+\dfn{$G$ is a Gallai tree $≡$ connected and (maximal) Gallai blocks form a tree.}
+
+\obs{Graph connected, lists of degree-size, one bigger. Then $G$ is colorable.}
+
+\res{1-connected graph with articulation can be coloured.}
+
+\thm[Erdos-Rabin-Taylor]{$G$ connected. $G$ degree-choosable $\iff$ $G \neq $ Gallai tree.}
+
+\lem[ERT lemma]{$G 2-$conn., $G$ not a Gallai tree block. Then $∃v ∈ G$ and
+$v' \not ~ v'' ∈ δ(G)$ s.t. $G - v' - v''$ conn.}
+
+\prf[ERT lemma]{ $G$ 3-connected: pick any non-adjacent vertices.
+
+$G$ only $2$-conn.: Pick a $x,y$ cut such that the minimal component is minimal.
+\itemize\ibull
+\: $xy \in ||G||$: Pick $v,v'$ two neighbours of $y$. Use Menger's theorem to assert
+victory.
+\: $xy \notin ||G||$: Choose the same $v',v''$ neighbors of $y$. 
+Define $Z_x$: vertices connected to $x$ after removing $v',v''$. Define $Z_y$ analogously.
+
+Consider $C_0 \equiv$ the smallest $G - x -y$. Both $Z_x$ and $Z_y$ have empty intersection
+with it, or we're done.
+
+In the end, only $v'$ is connected to $x$ and $y$, apply induction on $H = G/v'$. Case analysis
+based on whether or not is $H$ complete.
+\endlist
+}
+
+\lem[Application of ERT Lemma]{$G$ 2-connected, not a Gallai block. Then it is deg-choosable.}
+
+\prf{Assume there are different lists $L(u), L(v)$. We can find $u,v$ that are neighbors with
+this property. Think of $u$ as root. Colour the rest of the graph greedily because $v$ suddenly
+has more colours than neighbors.
+
+So there are no such lists. All the vertices are of the same degree. If it's an odd cycle, we are done.
+If not, use ERT lemma and find two vertices and use the greedy argument.
+}
+
+\prf[ERT lemma]{
+
+}
+
+\prf[Erdos-Rabin-Taylor]{ $G$ connected. Proving stronger assertion: If $G$ is not connected,
+it is a Gallai tree and each block has a ``designated'' list which it all shares.
+
+By induction on block size. One block: okay. More blocks: cut off corner block,
+proceed by induction.
+
+} 
+
+\res[Brooks]{If a graph $G$ is connected, it can either be coloured with lists of size $deg$ or
+it is a $K_l$ or a $C_{2k+1}$.}
+
 
 \lem[Kernel lemma]{ Let $G$ be a graph with associated lists for colouring. If $G$
 has an orientation with $d^{+}(v) < |S_v|$ everywhere, and this orientation also
@@ -59,7 +115,21 @@ Proven for $5$, $6$.
 
 \opn[List Coloring Conjecture]{Edge choosability and edge colorability coincide.}
 
-\fsection{Regular graphs}
+\section{Regular graphs}
+
+\thm[Moore]{$G$ d-regular without $K_3, K_4$ and with exactly $n=d^2+1$ vertices: $d \in {2,3,7,17}$.
+}
+
+\obs{For a Moore graph and its adjacency matrix, $A^2 = J - A + (d-1)I$.}
+
+\prf[Moore]{We know that $Sp(J) = \{n,0^{d-1}\}$. Because of observation, the eigenvalues also obey the
+polynomial property. Therefore, we have $\lambda^2 + + \lambda - (d-1)1 = n$ or $0$.
+
+For the main eigenvalue $d$, we get the condition $d^2 +1 = n$. For the
+remaining conditions the right side is zero. Solving it as a quadratic
+equation, we get solutions for $\lambda_1$ and $\lambda_2$ which are not $d$.
+The discriminant will be $\sqrt{4d-3}$. Condition on it being rational or not,
+and you get the remaining numbers.  }
 
 \thm[Turan]{$∀r>1, n$ every graph without a $K^r$ subgraph and $ex(n,K^r)$ edges is a
 Turan graph $T^{r-1}$.}
@@ -85,6 +155,7 @@ of size at least $εX, εY$ respectively has density $d(X,Y)$ $ε$-close to $d(A
 \: $|V_0| ≤ ε|V|$.
 \: $|V_i| = |V_j|$.
 \: All but most $εk^2$ pairs are not $ε$-regular.
+\endlist
 }
 
 \lem[Regularity lemma]{For every $ε$ and every $m ∃ M$ such that every graph of size $≥ m$
@@ -95,7 +166,7 @@ and at least $t_{r-1}(n) + ε n^2$ edges contain $K_r^s$ as a subgraph.}
 
 \lem[Removal lemma]{ TBD.}
 
-\fsection{Graph connectivity}
+\section{Graph connectivity}
 
 \thm[Menger]{$G$ graph. Then minimum number of vertices separating $A$ from $B$ in $G$
 is equal to the maximum number of disjoint $A-B$ paths in $G$.}
@@ -136,19 +207,27 @@ on its vertices and $2k$ vertices $S$ and $T$. Choose $k$ vertices in $K^{3k}$ t
 have endvertices on the $2k$ disjoint paths by Menger. Connect the paths.
 }
 
-\fsection{Special properties of oriented graphs}
+\section{Special properties of oriented graphs}
 
-\fsection{Algebraic properties of graphs}
+\section{Algebraic properties of graphs}
 
-\thm[Burnside lemma]{
+\subsection{Spectral theory}
 
-}
+\dfn{$\lambda$ is an {\it eigenvalue} $\equiv \exists x: Ax = \lambda x$. }
 
-\thm[Polya enumeration]{
+\obs{$Au - \lambda u = 0 \iff det |A - \lambda I| = 0$.}
 
-}
+\obs{$A$ has a base of eigenvectors $\iff$ $\exists X: X^*X=E$ and $X^*AX = I*(\lambda_1, \lambda_2, \dots)$.}
 
-\fsection{Matching theory}
+\res{$G$ graph, $A$ its adjacency matrix $\rightarrow$ there are $n$ different real eigenvalues of $A$.}
+
+\res{$G$ graph $d$-regular $\rightarrow$ $\Lambda_{max} = d$. }
+
+\obs{There exist cospectral graphs, for example $K_{1,4}$ and $C_4 + v$.}
+
+\subsection{Flows and Tutte polynomial}
+
+\section{Matching theory}
 
 \thm[Hall]{Bipartite graph has PM iff $∀ A⊆X: δ(A) ≥ |A|$. }
 \prf{Use Menger or mincut-maxflow on $G$. If there is not a perfect matching,
@@ -165,7 +244,7 @@ has a PM.  }
 
 Edmonds' Algorithm: Find an Edmonds forest, contract flowers (odd cycles).
 
-\fsection{Ramsey theorey}
+\section{Ramsey theorey}
 
 \dfn{$[X]^k$ is a set of all $k$-tuples of $X$.}
 
@@ -207,12 +286,17 @@ $L$ is therefore big enough and (by induction) contains a $l-1$ cap.
 \thm[Van-der-Waarden]{Given $k,r$ there exists $n_0$ such that if we colour all sequences of length $≥ n_0$
 with $k$ colours, we get a monochromatic arithmetic sequence of length $r$.}
 
-\thm[Hales-Jewett]{
+\thm[Hales-Jewett]{$\forall a$ (cube size) and $r$ (color number) there exists $N = HJ(a,r)$ such
+that colouring the cube $A^N$ with $r$ colours produces a monochromatic combinatorial line.}
+
+\prf[VdW from HJ]{Use $f((x_1, x_2, \dots, x_n)) = \sum_i x_i$. Given colouring of $[ft]$, colour
+element $\in K$ with the colour $c(f(x_1, x_2 \dots))$. Note that any combinatorial line is an
+arithmetic sequence.
 }
 
 \goodbreak
 
-\fsection{Infinite combinatorics}
+\section{Infinite combinatorics}
 
 \bigskip
 Infinite Ramsey.
@@ -220,7 +304,7 @@ Infinite Ramsey.
 \bigskip
 
 
-\fsection{Structural properties of set systems}
+\section{Structural properties of set systems}
 
 \thm[Sperner's Theorem]{
 }

@@ -204,6 +204,51 @@ algorithm. Existence of polynomial scheme is still open.
 
 \fsection{Ellipsoid method}
 
+Our problem is a modified problem: we want to find for a given polytope
+$Ax \leq b$ a solution or answer that it's empty.
+
+\obs{If we can answer the existence of an element in polynomial time, we can calculate
+LP in polynomial time.}
+
+\prf{Create a polytope in $R^{m+n}$ which encapsulates both the primal and the 
+dual conditions. If an element exists, it necessarily is an optimum.}
+
+\subsection{Finding initial ellipsoid.}
+
+\thm{if $P \equiv \{x | Cx \leq d \} \subseteq Q^{n}$ is a limited polytope and $C,d$ are integral,
+then all vertices of $P$ are contained within a ball of origin $(0,0)$ and radius $R = \sqrt{n} 2^{<C,d> + n log n}$.
+}
+
+\subsection{Simple iteration step}
+
+$$E_k = E(0,I), H_k = \{x| x_1 \leq 0 \}.$$
+
+Since the broken condition is in the direction of $x_1$, we want to create an ellipsoid of the form
+$$E' = \{ (x - te_1)^T Z^{-1} (x - te_1) \leq 1 \}.$$
+
+$Z$ will be diagonal. We want to ``shrink'' along $x_1$. Pick $p < 1, d > 1$ and set
+$Z$ diagonal with the diagonal $(1/p^2, 1/d^2, 1/d^2, \dots)$. We want our ellipsoid
+to touch points $e_1, e_2$ and be volume-minimal with this property.
+
+First condition gives: $(1+t)^2 / p^2 = 1$.
+Second condition gives: $t^2/p^2 + 1/d^2 = 1$.
+
+We know that $vol(E) = \sqrt{|det Z|} vol (B)$. Calculate the volume, you should get
+$t = -1/n+1$.
+
+\subsection{Complex iteration step}
+
+Affine transform the ellipsoid to the simple iteration step. You have to do
+some rotation for the hyperplane, but it will not matter. Harder calculations.
+
+\subsection{Ending observation}
+
+\obs{If a $P = {Ax \leq b}$ has full rank, then $vol(P) \geq 2^{-(n+1)<C> + n^3}$.}
+
+\prf{Sketch. (Affinely) transform the polytope into $n$ unit vectors and $0$.  Vertices are such
+that a subset of columns where $A_x$ have full rank. Use Cramer rule and calculate total volume.
+}
+
 \fsection{Special matrices}
 
 \fsection{TSP}
