@@ -2,6 +2,8 @@
 
 %TODO: define \alg
 
+\def\alg{ALG}
+\def\vcorr{\vskip -2.5em}
 \title{Combinatorial optimization}
 
 \fsection{Graph algorithms}
@@ -76,9 +78,57 @@ on hard problems, if our structure is bounded by treewidth or other parameter.
 
 \subsection{RSA}
 
-\subsection{Working with Q^n}
+\subsection{Working with $Q^n$}
 
 \fsection{Polytope theory}
+
+\dfn{{\it Polyhedron:} $P = \{x ∈ R^n | Ax ≤ b \}$.}
+
+\dfn{{\it Convex set:} $∀x,y λ_1 x + λ_2 y ∈ C$.}
+
+\dfn{{\it Convex hull:}}
+
+Basic property of convex sets: if an element is outside, it can be separated by a hyperplane,
+but an element on the inside cannot.
+
+\dfn{{\it Halfspace:} $\{x | c^Tx ≤ δ \}$.}
+
+\dfn{{\it Polytope:} Convex hull of a finite set of vertices.}
+
+\dfn{{\it Vertex:} A point in a polytope/polyhedron which isn't a convex combination of any two points.}
+
+\dfn{{\it Simplex:} Convex hull of an affinely independent set of vertices.}
+
+\dfn{{\it Geometric duality:} To a point $a ≠ 0$ in $R^d$ we assign the hyperplane $h = \{x| ax = 1\}$ and
+to a hyperplane not passing through the origin we do the same, assign to it the point $a$.}
+
+
+\dfn{$A_z ≡$ the set of vectors of $A$ satisfying $a_i z = b_i$}.
+
+\thm{$v$ vertex of $P ⇔ r(A_v) = n$}
+
+\prf{$⇒$: $A_z$ not full rank $→$ find $c: A_z c = 0$.
+$v$ is then a conv. combination of $v+δc, v - δc$ for some $δ >0$.
+
+$⇐$: $v$ not a vertex $→$ find two elements which combine to it;
+$A_v(x-y) = 0$. 
+}
+
+\thm{A bounded polyhedron with $t$ vertices $⇔ P=conv(x_1, …, x_t)$.}
+
+\prf{First implication $P = ⋂Γ$. Hyperplanes are of dimension $d-1$,
+apply induction. Get set of vertices $V_i$ for each hyperplane.
+$∪V$ is then the set of vertices of $P$. If there is a $x ∈ P$, it is
+on a line, and this line is bounded by at least two hyperplanes, but the
+elements on the hyperplanes can be expressed as a convex combination, as
+so $x$ is a conv. combination also.
+
+Second implication by duality.
+}
+
+\obs{Cyclic polytopes have $n$ vertices and roughly ${n - d/2 \choose d/2}$
+facets. Cyclic polytopes also maximize the number of faces in each dimension for
+$n$.}
 
 \dfn{{\it Projection} of $x$ onto a a closed, convex, nonempty set $K$ is a
  point $p ∈ K$ that minimizes distance $||p - x||$.}
@@ -89,8 +139,10 @@ Then $∀z ∈ K$, $(z-p)^T(b-p) ≤ 0$.}
 \fsection{LP}
 
 The standard LP setting (everything without indices are vectors):
-$$ min c^Tx, $$
+$$ \min c^Tx, $$
+\vcorr
 $$ Ax = b, $$
+\vcorr
 $$ x ≥ 0, $$
 
 We can always move to inequalities, change min to max, as long as we stay linear.
@@ -105,10 +157,9 @@ We can always move to inequalities, change min to max, as long as we stay linear
 \prf{
 
 Not two at the same time:
-
 $$ Ax = b → 0 ≤ x^T A^Ty = y^TAx = y^Tb < 0. $$
 
-(¬1 → 2): Assume no $Ax=b$. Look at cone $K = \{Ax| x≥0\}$. $b ∉ K$.
+($¬1 → 2$): Assume no $Ax=b$. Look at cone $K = \{Ax| x≥0\}$. $b ∉ K$.
 Project $b$ onto $K$, get $p$. Use Projection Theorem: $∀z ∈ K, (z-p)^T(b-p) ≤ 0$.
 Define $y ≡ p - b$. $∀x: (Ax-p)^T(y) ≥ 0$ (inequality switches due to $y$). $p = Aw$ in cone,
 so $∀x: (Ax - Aw)^T(y) = (x-w)^T (A^Ty) ≤ 0$. Choose $x = w + (0,0,0,…,1,…,0)$. This extracts
@@ -131,7 +182,8 @@ Assume minimazation. We are trying to get a lower bound on the $c^Tx$. We can do
 if we find a vector $y$ such that $y^T Ax = b^Ty$, and we try to make it happen so that
 $y^TA$ (coefficents of $x$) are below $c^T$. Therefore, we have a dual program:
 
-$$ max b^Ty$$
+$$ \max b^Ty$$
+\vcorr
 $$ A^Ty ≤ c$$
 
 \thm[Weak duality]{Solution of dual $w ≤ z ≡$ solution of primal.}
@@ -145,6 +197,7 @@ Suppose primal bounded (and feasible), $x*$ optimum. We now look for $y$ s.t. $A
 $b^Ty ≥ z = c^Tx*$. Suppose there is none, then (applying Farkas corollary on
 modified matrices) there is $x ≥ 0, λ ≥ 0$ such that
 $$Ax = λb,$$
+\vcorr
 $$c^Tx < λz.$$
 
 If $λ ≠ 0$, we can normalize it to be $λ = 1$ and we have improvement over an
@@ -179,7 +232,8 @@ has two $1$s, split the matrix based on the partitions.}
 \fsection{Simplex method}
 
 We work with a normalized problem, i.e.:
-$$ min c_B x_B + c_N x_N $$
+$$ \min c_B x_B + c_N x_N $$
+\vcorr
 $$ s.t. A_B x_B + A_N x_N = b, x_B, x_N ≥ 0.$$
 
 Idea: in a minimization problem, we can look at the solution we're in
@@ -207,6 +261,29 @@ algorithm. Existence of polynomial scheme is still open.
 Our problem is a modified problem: we want to find for a given polytope
 $Ax \leq b$ a solution or answer that it's empty.
 
+\dfn{A symmetric matrix $A ∈ R^{n+n}$ is positive definite, if $∀ x ≠ 0: x^T A x > 0$.}
+
+\thm{TFAE:
+\itemize\ibull
+\: All eigenvalues are positive,
+\: Inversion matrix $A^{-1}$ is also positive defiinite,
+\: $∃ U: U^TU = A$. $U$ will be denoted as $A^{1/2}$.
+\endlist
+}
+
+\dfn{A set $\{x| (x-a)^T A^{-1} (x-a) ≤ 1\}$ is called an {\it ellipsoid} with center $a$
+and defined by the (by the definition positive definite) matrix $A$.}
+
+\dfn{Affine map: $T = Qx + s$.} 
+
+\obs{An ellipsoid is an affine map of $E(0,I)$.}
+
+\prf{Translate it by $A^{1/2}$ and $a$.}
+
+\thm{For affine maps, $vol(T(X)) = |\det Q| vol(X)$.}
+
+\obs{for $vol(E(a,A))$ holds that $|det A^{1/2}|n^{-n} ≤ vol(E(a,A)) ≤ |det A^{1/2}| 2^{n}$.}
+
 \obs{If we can answer the existence of an element in polynomial time, we can calculate
 LP in polynomial time.}
 
@@ -214,6 +291,10 @@ LP in polynomial time.}
 dual conditions. If an element exists, it necessarily is an optimum.}
 
 \subsection{Finding initial ellipsoid.}
+\lem[Hadamard]{$|det C| ≤ ∏ || C_i ||$.}
+
+\lem{$C$ integral. Then $|det C| ≤ 2^{<C> - n^2}$.}
+
 
 \thm{if $P \equiv \{x | Cx \leq d \} \subseteq Q^{n}$ is a limited polytope and $C,d$ are integral,
 then all vertices of $P$ are contained within a ball of origin $(0,0)$ and radius $R = \sqrt{n} 2^{<C,d> + n log n}$.
@@ -251,11 +332,63 @@ that a subset of columns where $A_x$ have full rank. Use Cramer rule and calcula
 
 \fsection{Special matrices}
 
+Totally unimodular matrix.
+
+Positive semidefinite matrix.
+
 \fsection{TSP}
+
+\bigskip
+
+\bigskip
 
 \fsection{Matching and flow networks}
 
 \subsection{Edmonds}
+
+Edmonds' polytope:
+
+$$ f ∈ R^{E(G)}: ∑_v f(e) ≤ 1$$
+\vcorr
+$$ ∑_{e∈X} f(e) ≤ |X|-1/2 {\rm\ for\ odd\ }X. $$
+
+Perfect matching polytope has equality in the first condition and
+the second condition:
+
+$$ ∑_{e ∈ X} f(e) ≥ 1. $$
+
+{\dfn $r$-graph: Graph that is $r$-regular and all edge cuts of
+odd size are at of size at least $r$.}
+
+Example of an $r$-graph: cubic bridgeless graphs.
+
+\thm{Every $r$-graph has a uniform cover by perfect matchings.}
+
+\prf{Every element of the perfect matching polytope is a convex
+combination of perfect matchings. set $f(e) = 1/r$ everywhere,
+then this $f$ is in the polytope of PMP.}
+
+\res{Every cubic bridgeless graph has a uniform cover by perfect
+matchings (and also a perfect matching).}
+
+\res{Every cubic bridgeless graph has a perfect matching such
+that it contains no odd cut of size $3$.}
+
+\res{Every cubic bridgeless graph has perfect matchings $M_1$, $M_2$
+such that $E(M_1) ∪ E(M_2) ≥ 3E/5$. }
+
+\prf{Take one PM $M$ that contains no odd cut of size $3$. Define $f(e) = 1/5$
+on it and $f(e) = 2/5$ elsewhere. Then $f(e)$ is in PMP. Since $f(E ∖ M) = 2/5 |E ∖ M|$,
+there is one perfect matching $M_i$ that attains this. Take $M ∪ M_i$ and get $1/3 + 2/3 2/5 = 3/5 E$.
+}
+
+Edmonds' algorithm:
+
+Find augmenting paths using an augmenting path BFS tree (Edmonds' tree). If you find an augmenting
+path, good. If not, you may find an odd cycle that started as an augmenting path. Contact this cycle,
+find augmenting path in the next graph. Proceed until possible.
+
+Total complexity: $O(n^2(n + m))$.
 
 \subsection{Dinitz}
 

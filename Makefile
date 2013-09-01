@@ -1,5 +1,5 @@
 texinputs := TEXINPUTS=.:macros//:
-all: init datastruct complexity vyc1 pm palg graphtheory
+all: init datastruct complexity vyc1 pm palg graphtheory combopt
 
 init:
 	${texinputs} pdfcsplain -ini -enc plain-utf8-cs.tex
@@ -15,6 +15,8 @@ complexity:
 	${texinputs} pdfcsplain -fmt plain-utf8-cs complexity.tex
 datastruct:
 	${texinputs} pdfcsplain -fmt plain-utf8-cs datastruct.tex
+combopt:
+	${texinputs} pdfcsplain -fmt plain-utf8-cs combopt.tex
 graphtheory:
 	${texinputs} pdfcsplain -fmt plain-utf8-cs graphtheory.tex
 

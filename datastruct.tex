@@ -47,7 +47,7 @@ fast. Adding $n$ elements again in $O(n)$.
 
 \dfn{$dtl(x) ≡$ minimum distance from $x$ to leaf (downwards).}
 
-Leftist rule: left son has dtl $≤$ to the right son.
+Leftist rule: left son has dtl $≥$ to the right son.
 
 Only one tree, compared to binomial, but worse amortized complexity.
 
@@ -83,7 +83,7 @@ $E[{\rm c-trie\ size}] = log_k d$.}
 Calculate opposite event -- trie is within depth $d-1$. Then prefixes from $n$ must decode all words
 uniquely, so: $P[{\rm unique}] = {{k^d \choose n} k^{n(d-l)} \over {k^l \choose n}}$.
 
-$$q_d ≤ 1 - P[{\rm unique] = 1 - ∏_{i=0}^{n-1}(1 - i/k^{d-1} ≤ 1 - e{-n^2/k^{d-1}} ≤ n^2/k^{d-1}.$$
+$$q_d ≤ 1 - P[{\rm unique}] = 1 - ∏_{i=0}^{n-1}(1 - i/k^{d-1}) ≤ 1 - e{-n^2/k^{d-1}} ≤ n^2/k^{d-1}.$$
 
 The substitution of the product to $e$ is done through integration.
 
