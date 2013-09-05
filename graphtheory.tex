@@ -36,7 +36,7 @@ and the rest on the outer face have $L(v)=3$ and the inside vertices $L(v)=5$. T
 Apply induction, look for chord, remove vertices if outer face chordless.
 }
 
-\subsection{Erdos-Rabin-Taylor}
+\subsection{Erdos-Rubin-Taylor}
 
 \dfn{$G$ is a \term{Gallai block} $≡$ $G$ is $K_n$ or $C_{2k+1}$. } 
 
@@ -46,7 +46,7 @@ Apply induction, look for chord, remove vertices if outer face chordless.
 
 \res{1-connected graph with articulation can be coloured.}
 
-\thm[Erdos-Rabin-Taylor]{$G$ connected. $G$ degree-choosable $\iff$ $G \neq $ Gallai tree.}
+\thm[Erdos-Rubin-Taylor]{$G$ connected. $G$ degree-choosable $\iff$ $G \neq $ Gallai tree.}
 
 \lem[ERT lemma]{$G 2-$conn., $G$ not a Gallai tree block. Then $∃v ∈ G$ and
 $v' \not ~ v'' ∈ δ(G)$ s.t. $G - v' - v''$ conn.}
@@ -78,7 +78,7 @@ So there are no such lists. All the vertices are of the same degree. If it's an 
 If not, use ERT lemma and find two vertices and use the greedy argument.
 }
 
-\prf[Erdos-Rabin-Taylor]{ $G$ connected. Proving stronger assertion: If $G$ is not connected,
+\prf[Erdos-Rubin-Taylor]{ $G$ connected. Proving stronger assertion: If $G$ is not connected,
 it is a Gallai tree and each block has a ``designated'' list which it all shares.
 
 By induction on block size. One block: okay. More blocks: cut off corner block,
@@ -110,6 +110,16 @@ edges meet ($X$ or $Y$). Prove condititons.  }
 Proven for $5$, $6$.
 
 \opn[List Coloring Conjecture]{Edge choosability and edge colorability coincide.}
+
+\subsection{Perfect graphs}
+
+\dfn{A {\it perfect graph} is a graph which has $∀G⊆_{ind}G': χ(G') = ω(G')$.}
+
+\obs{Bipartite graphs, interval graphs, chordal graphs are perfect.}
+
+\thm[Weak Perfect Graph Theorem]{$G$ is perfect $⇔$  $\overline{G}$ is perfect.}
+
+\thm[Strong Perfect Graph Theorem]{$G$ is perfect $⇔$ contains no odd hole or antihole (of size $≥ 5$).}
 
 \section{Regular graphs}
 
@@ -223,6 +233,25 @@ have endvertices on the $2k$ disjoint paths by Menger. Connect the paths.
 
 \subsection{Flows and Tutte polynomial}
 
+\thm[Recipe Theorem]{ Let $f(G,x,y)$ be a function on graphs such that for some $α, β, γ$, it satisfies the following
+recurences:
+
+\itemize\ibull
+\: $f(\overline{K_n}) = γ^n$,
+\: $f(G) = xf(G/e)$ if $e$ is a loop,
+\: $f(G) = yf(G∖e)$ if $e$ is a coloop (bridge),
+\: $f(G) = αf(G/e) + βf(G∖e)$ otherwise.
+\endlist
+Then it can be computed using the formula
+$$f(G,x,y) = γ^{c(G)} α^{r(G)} β^{r^*(G)} T(G,x/α,y/β).$$
+}
+
+\obs{Chromatic polynomial can be expressed as $P(G;z) = z^{c(G)} (-1)^{r(G)} T(G,1-z,0)$.
+}
+
+\obs{Flow polynomial can be expressed as $F(G;k) = (-1)^{r^*(G)} T(0,k-1)$.
+}
+
 \section{Matching theory}
 
 \thm[Hall]{Bipartite graph has PM iff $∀ A⊆X: δ(A) ≥ |A|$. }
@@ -314,24 +343,44 @@ Infinite Ramsey.
 
 \section{Structural properties of set systems}
 
-\thm[Sperner's Theorem]{
+\thm[Sperner's Theorem]{ Any set system on $n$ elements has all
+antichains of size $≤ {n \choose n/2}$. 
 }
 
-\bigskip
+\prf{Follows from Bollobas's theorem below.}
 
-\thm[Dilworth]{
-
+\thm[Dilworth]{ 
 }
 
-\bigskip
-
-\thm[Sunflower lemma]{
+\thm[Sunflower lemma]{If a $s$-regular set system $F ≥ s! (k-1)^s$,
+then it contains a sunflower with $k$ petals.
 }
 
-\bigskip
-
-\thm[Bollobas]{
+\prf{Induction. Base case simple. If there is a subset of $k$ mutually disjoint sets,
+we win, so assume there is not. Apply induction and win.
 }
+
+\thm[Erdos-Ko-Rado]{
+Ground set $n \ge 2k$. If a
+$k$-regular set system $F$ has an intersection, then $|F| \le {n-1 \choose k-1}$.
+}
+
+\prf{In PM cheatsheet.}
+
+\dfn{
+Define $n(k,l)$ as maximal $n \st \exists \mls A n \andamp \mls B n \st$
+\numlist\ndotted
+\:$|A_i| = k, |B_i| = l,$
+\:$A_i \cap B_i = \emptyset,$
+\:$i \neq j \then A_i \cap B_j \neq \emptyset.$
+\endlist
+}
+
+\thm[Bollobás' lemma on intersections]{
+$n(k,l) = {k + l \choose k}$.
+}
+
+\prf{In PM cheatsheet.}
 
 \thm[Kruskal-Katona]{
 }
