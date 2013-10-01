@@ -1,0 +1,187 @@
+\input cheatmac
+
+\title{Diskrétní matematika}
+
+\section{Pojmy}
+
+\subsection{Množiny, relace}
+
+\dfn[Potenční množina]{$2^X \equiv$ systém všech podmnožin $X$.}
+
+\dfn[Relace]{Relace na $X \equiv$ podmnožina kartézského součinu $X \times X$.
+Lidsky řečeno, nějaká množina uspořádaných dvojic z $X$.}
+
+\dfn{Relace je \term{reflexivní}, pokud $\forall $}
+
+\dfn{Relace je \term{tranzitivní} $\equiv$  .}
+
+\dfn{Relace je \term{symetrická} $\equiv$ .}
+
+\dfn{Relace je \term{antisymetrická} $\equiv$ .}
+
+\dfn{Relace je \term{uspořádání} $\equiv$ je reflexivní, antisymetrická, tranzitivní.}
+
+\dfn{Relace je \term{ekvivalence} $\equiv$ je reflexivní, symetrická, tranzitivní.}
+
+\subsection{Uspořádání}
+
+\subsection{Počítání}
+
+\dfn[Faktoriál]{ $n! \equiv n \cdot (n-1) \cdots 1$.}
+
+\dfn[Padající faktoriál]{ $n^{\underline{k}} \equiv n \cdot (n-1) \cdots (n-k+1)$.}
+
+\dfn[Závorkové notace]{$[k]$ nejčastěji $\equiv \{1,2,\dots,k\}$, ale také $[n=1] \equiv 1$, pokud $n=1$, a $0$ jinak.}
+
+\dfn[Kombinační číslo]{
+$${n \choose k} \equiv {n! \over (n-k)! k!} = n^{\underline{k}} / k! = 
+{n-1 \choose k} + {n-1 \choose k-1} $$}
+
+\dfn[Stirlingova čísla (2. druhu)]{
+$${n \brace k} \equiv k { n-1 \brace k} + {n-1 \brace k-1}$$
+$${n \brace k} = {1\over k!} \sum_{j=0}^k (-1)^j {k \choose j} (k-j)^n$$
+}
+
+\dfn[Bellova čísla (počet ekvivalencí)]{
+$$B(n) \equiv \sum_{i=0}^n {n \brace i} $$
+}
+
+{\it Fibonacciho posloupnost:}
+$$F_0 \equiv 0, F_1 \equiv 1, F_n \equiv F_{n-1} + F_{n-2}$$
+$$F_n = {\varphi^n - (1-\varphi)^n \over \sqrt{5}}; \varphi = (1+\sqrt{5})/2.$$
+
+{\it Harmonická posloupnost:}
+$$H_0 \equiv 0, H_n \equiv \sum_{i=1}^n 1/i; H_n \approx \ln n$$
+
+{\it Binomická věta:}
+$$(x+y)^n = {n \choose 0}x^n y^0 + {n \choose 1}x^{n-1} y^1 + \dots + {n \choose n}x^0 y^n$$
+{\it Zobecněná binomická věta ($r$ reálné):}
+$$(x+y)^r = \sum_{i=0}^{\infty} {r \choose i} x^{i}y^{r-i} $$
+
+\subsection{Grafy}
+
+$G = (V,E)$ graf. Hrany $(a,b) \rightarrow$ {\it orientovaný graf}.
+{\it Multihrany} $\{a,b\},\{a,b\}$ a {\it smyčky} $\{a,a\}$ se obvykle neuvažují.
+Značení: $n = |G| = |V|$ počet vrcholů, $m = ||G|| = |E|$ počet hran.
+
+{\it Úplný graf} $K_n = ([n],{[n] \choose 2})$. Je-li orientovaný, říká
+se mu {\it turnaj} (mezi 2 vrcholy turnaje je jen jedna or. hrana).
+
+{\it Bipartitní graf} má dvě skupiny vrcholu, hrany jdou jen mezi skupinami.
+{\it Úplný bipartitní} $K_{m,n}$ má max. počet hran pro dané $m,n$.
+
+{\it Kružnice} $C_n$ má vrcholy zapojene do řetězu. {\it Cesta} $P_n$
+je kružnice bez hrany.
+
+$G$ je {\it souvislý}, pokud se z~každého vrcholu dostanu po hranách do každého
+jiného. Zobecněně: Graf je (vrholově n. hranově) $(k+1)$-souvislý, pokud po odebrání
+$k$ (hran n. vrcholů) je graf stále souvislý. Hrana n. vrchol je {\it kritická}, pokud jejich
+odebrání sníží $k$-souvislost. $1$-kritická hrana je {\it most}, $1$-kritický vrchol
+{\it artikulace}.
+
+Graf $T$ je {\it strom}, pokud je souvislý a bez kružnice. Graf je {\it les}, pokud je
+disj. sjednocení stromů. Každý strom je les, pro les platí $||T|| = |T| -c$, kde $c$
+je počet komponent.
+
+{\it Podgraf} $G'$ je nějaká podmnožina vrcholů grafu $G$ a nějaká podmnožina
+těchto vybraných vrcholů. Podgraf je {\it indukovaný}, pokud vybereme všechny hrany,
+které mají oba konce v $G'$ a jsou hranami $G$.
+
+{\it Klika} je podgraf, který je také $K_i$ pro nějaké $i$. {\it Nezávislá množina}
+je množina vrcholů, kde žádné dva spolu nesousedí. {\it Kostra} je největší podgraf co
+do počtu vrcholů, který je zároveň stromem. Velikost největší kliky se značí
+$\kappa(G)$, velikost největší nez. množiny $\alpha(G)$.
+
+
+\section{Techniky}
+
+\subsection{Matematická indukce}
+
+Náhled na přirozená čísla:
+\itemize\ibull
+\: $0$ je přirozené číslo. ($1$ též.)
+\: Pokud $x$ je přirozené čislo, $x+1$ je také přirozené číslo.
+\endlist
+Druhé pravidlo je ve formě implikace -- to, že $x$ je přirozené číslo,
+máme \uv{zadarmo} jako předpoklad. Stejným způsobem se dá nahlížet na
+cokoli, co má \uv{uvnitř} strukturu přirozených čísel.
+
+{\it Příklad 1:} $\sum_{i=0}^n (2i+1) = (n+1)^2$.
+\itemize\ibull
+\: Základ indukce: $\sum_{i=0}^0 (2i+1) = 1 = (0+1)^2$.
+\: Indukční krok: Dokazujeme implikaci. Předpokládem je, že vzorec $\sum_{i=0}^n (2i+1)$ platí pro všechna čísla od $0$ do $n$. Našim cílem je ukázat, že vzorec platí i pro hodnotu $n+1$.
+
+Standardní postup: Situaci (vzorec) pro $n+1$ upravíme na vzorec pro $n$ a nějaký zbytek,
+vzorec pro $n$ nahradíme pravou stranou pro $n$ (indukční předpoklad) a pravou stranu pro $n$
+a zbytek upravíme na pravou stranu pro $n+1$. 
+\endlist
+
+$$ \sum_{i=0}^{n+1} (2i+1) = \left( \sum_{i=0}^n (2i+1) \right) + \left(2(n+1)+1\right) = $$
+$$ = (n+1)^2 + (2n+3) = n^2 + 2n +1 + 2n + 3 = n^2 + 4n + 4 = (n+2)^2. $$
+
+{\it Příklad 2:} Mějme rovinu a na ni $n$ přímek v obecné poloze
+(žádné dvě nejsou rovnoběžné, žádné tři se neprotínají ve stejném
+bodě). Pak tyto přímky rovinu sekají na ${n+1 \choose 2}$ oblastí.
+
+\itemize\ibull
+\: Základ indukce: Jedna přímka seká rovinu na $2$ oblasti.
+\: Indukční krok: Dokazujeme implikaci. Máme v rovině $n+1$ přímek v
+obecné poloze. Víme, že když jednu odebereme, v rovině zbude $n$
+přímek a dostaneme ${n+1 \choose 2}$ oblastí (indukční
+předpoklad). Vrátíme tedy přímku do roviny, tato přímka má $n$
+průsečíků z ostatními přímkami a tedy protíná $n+1$ oblastí napůl,
+čili vznikne $n+1$ nových oblastí (zbytek). Sečteme:
+\endlist
+
+$${n+1 \choose 2} + (n+1) = {n+2 \choose 2}.$$ 
+
+
+\subsection{Postup řešení sumačního příkladu}
+
+Možnosti, co lze udělat:
+\itemize\ibull
+\: Zkusit malé případy, uhodnout výsledek, dokázat indukcí.
+\: Rozložit sumu různými způsoby (a la $\sum k/2^k$).
+\: Využít aritmetiku sum, vyměnit sumace.
+\: Použít binomickou větu.
+\: Když nic, tak aspoň vymyslet nějaké odhady.
+\: Bude: najít lineární rekurenci.
+\: Použít vytvořující funkce.
+\: Použít diskrétní integraci.
+\endlist
+
+\subsection{Známé sumy}
+$$\sum_{i=0}^n 2^i = 2^{i+1}-1. $$
+$$\sum_{i=1}^n (2i-1) = n^2.$$
+$$\sum_{i=0}^n i2^i = (n-1)2^{n+1} + 2.$$
+$$\sum_{i=0}^n {n \choose i} = 2^n.$$
+$$\sum_{i=r}^n {i \choose r} = {n+1 \choose r+1}.$$
+$$\sum_{i=0}^{k-1} {k+i \choose k-i-1} = F_{2k}. $$
+$$\sum_{i=0}^{k} {k+i \choose k-i} = F_{2k+1}. $$
+$$\sum_{i=0}^n i^2 = n(n+1/2)(n+1)/3. $$
+$$\sum_{i=0}^n i^3 = (\sum_{i=0}^n i)^2.$$
+$$\sum_{i=0}^\infty 1/2^i = 2. $$
+$$\sum_{i=0}^\infty i/2^i = 4. $$
+
+\subsection{Princip inkluze a exkluze}
+Velikost sjednocení mů\-že\-me po\-čí\-tat pomocí postupného při\-čí\-tá\-ní a odčítání větších
+a větších průniků (jejichž velikosti budou menší). Zapsáno matematicky:
+
+$$|\bigcup_{1\dots n} A_i| = \sum_{j\ge 0} (-1)^j \sum_{I \in {1\dots n \choose j}} |\bigcap_I A_i|$$
+
+
+\subsection{Diskrétní integrace}
+Místo derivace bereme diferenci, její ekvivalent v~konečném světě:
+$$ \Delta(f(x)) = f(x+1) - f(x).$$
+Potom platí, že pokud chceme vyřešit sumu 
+$ \sum_{i=a}^{b} g(i) $, pak musíme \uv{diskrétně integrovat} -- najít funkci, jejíž
+diference splňuje $\Delta(f(x)) = g(x)$. Pak vzorec pro sumu je $f(b+1) - f(a)$, podobně,
+jako je to v reálném integrálním počtu.
+
+Také víme, že diference $x^n$ se chová ošklivě, ale funkce $x^{\underline{n}}$ má diferenci
+podobnou, jako derivace $x^n$:
+$$\Delta(x^{\underline{n}}) = n x^{\underline{n-1}}.$$
+Z~tohoto faktu pak
+$$\sum_{i=0}^n i^{\underline{r}} = {(n+1)^{\underline{r+1}} \over r+1}.$$
+
+\bye

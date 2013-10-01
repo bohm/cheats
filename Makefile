@@ -19,7 +19,8 @@ combopt:
 	${texinputs} pdfcsplain -fmt plain-utf8-cs combopt.tex
 graphtheory:
 	${texinputs} pdfcsplain -fmt plain-utf8-cs graphtheory.tex
-
+discrete:
+	${texinputs} pdfcsplain -fmt plain-utf8-cs discrete.tex
 clean:
 	rm -f *.log *.pdf *.fmt *.aux
 
