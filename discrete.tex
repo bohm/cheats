@@ -13,7 +13,6 @@ Lidsky řečeno, nějaká množina uspořádaných dvojic z $X$.}
 
 \dfn{Relace je \term{reflexivní}, pokud $∀x ∈ X: (x,x) ∈ R.$ (Zapisujeme $xRx$.)}
 
-
 \dfn{Relace je \term{symetrická} $≡ ∀x,y ∈ X: (xRy) → (yRx)$.}
 
 \dfn{Relace je \term{antisymetrická} $≡ ∀x,y ∈ X, x≠y: (xRy) → ¬(yRx)$ .}
@@ -40,12 +39,25 @@ antiřetězce $α(S)$.
 \thm[Dlouhý a široký]{Pro uspořádání $S=(X,≤)$ platí $α(S)ω(S) ≥ |X|$. 
 }
 
-\thm[Erdös-Szekerés]{Kažďá posloupnost $n^2+1$ reálných čísel obsahuje
+\thm[Erdös-Szekerés]{Každá posloupnost $n^2+1$ reálných čísel obsahuje
 monotónní posloupnost délky $n+1$.
 }
 
-\thm[Dilworth]{Každé uspořádání $S$ jde plně pokrýt $α(S)$
+\thm[Dilworth]{Každé uspořádání $S$ jde plně pokrýt pomocí $α(S)$
 disjunktních řetězců.}
+
+\subsection{Zobrazení}
+
+\dfn{\term{Zobrazení} je jen jiný nazev pro funkci.}
+
+V diskrétní matematice budou obvykle zobrazení z konečné množiny $M$
+do konečné množiny $N$. Pozor, $N$ není obor hodnot, zobrazení $f(x) =
+2$ může být třeba z $\{1,2,3\}$ do $\{1,2,3\}$.
+
+\dfn{Zobrazení $f$ je \term{prosté} $≡ ∀x,y ∈ M, x≠y: f(x) ≠ f(y)$. }
+
+\dfn{Zobrazení $f$ je \term{surjektivní} $≡ ∀y ∈ N ∃ x ∈ M: f(x) = y$.
+Také se říká, že $f$ je \uv{na}.}
 
 \subsection{Počítání}
 
@@ -55,7 +67,7 @@ disjunktních řetězců.}
 
 \dfn[Závorkové notace]{$[k]$ nejčastěji $\equiv \{1,2,\dots,k\}$, ale také $[n=1] \equiv 1$, pokud $n=1$, a $0$ jinak.}
 
-\dfn[Kombinační číslo]{
+\dfn[Kombinační čísla]{
 $${n \choose k} \equiv {n! \over (n-k)! k!} = n^{\underline{k}} / k! = 
 {n-1 \choose k} + {n-1 \choose k-1} $$}
 
@@ -84,7 +96,7 @@ $$(x+y)^r = \sum_{i=0}^{\infty} {r \choose i} x^{i}y^{r-i} $$
 \subsection{Grafy}
 
 $G = (V,E)$ graf. Hrany $(a,b) \rightarrow$ {\it orientovaný graf}.
-{\it Multihrany} $\{a,b\},\{a,b\}$ a {\it smyčky} $\{a,a\}$ se obvykle neuvažují.
+{\it Multihrany} $\{a,b\}$, $\{a,b\}$ a {\it smyčky} $\{a,a\}$ se obvykle neuvažují.
 Značení: $n = |G| = |V|$ počet vrcholů, $m = ||G|| = |E|$ počet hran.
 
 {\it Úplný graf} $K_n = ([n],{[n] \choose 2})$. Je-li orientovaný, říká
@@ -116,7 +128,7 @@ je množina vrcholů, kde žádné dva spolu nesousedí. {\it Kostra} je největ
 do počtu vrcholů, který je zároveň stromem. Velikost největší kliky se značí
 $\kappa(G)$, velikost největší nez. množiny $\alpha(G)$.
 
-
+\vfill\eject
 % preferably on the second page
 \section{Techniky}
 
@@ -146,7 +158,7 @@ $$ = (n+1)^2 + (2n+3) = n^2 + 2n +1 + 2n + 3 = n^2 + 4n + 4 = (n+2)^2. $$
 
 {\it Příklad 2:} Mějme rovinu a na ni $n$ přímek v obecné poloze
 (žádné dvě nejsou rovnoběžné, žádné tři se neprotínají ve stejném
-bodě). Pak tyto přímky rovinu sekají na ${n+1 \choose 2}$ oblastí.
+bodě). Pak tyto přímky rovinu sekají na ${n+1 \choose 2} + 1$ oblastí.
 
 \itemize\ibull
 \: Základ indukce: Jedna přímka seká rovinu na $2$ oblasti.
@@ -158,8 +170,7 @@ průsečíků z ostatními přímkami a tedy protíná $n+1$ oblastí napůl,
 čili vznikne $n+1$ nových oblastí (zbytek). Sečteme:
 \endlist
 
-$${n+1 \choose 2} + (n+1) = {n+2 \choose 2}.$$ 
-
+$${n+1 \choose 2} + 1 + (n+1) = {n^2 + n + 2n + 2 \over 2} + 1 = {n+2 \choose 2} + 1.$$ 
 
 \subsection{Postup řešení sumačního příkladu}
 Možnosti, co lze udělat:
@@ -174,18 +185,16 @@ Možnosti, co lze udělat:
 \: Použít diskrétní integraci.
 \endlist
 
+\goodbreak
 \subsection{Známé sumy}
-$$\sum_{i=0}^n 2^i = 2^{i+1}-1. $$
-$$\sum_{i=1}^n (2i-1) = n^2.$$
-$$\sum_{i=0}^n i2^i = (n-1)2^{n+1} + 2.$$
-$$\sum_{i=0}^n {n \choose i} = 2^n.$$
-$$\sum_{i=r}^n {i \choose r} = {n+1 \choose r+1}.$$
-$$\sum_{i=0}^{k-1} {k+i \choose k-i-1} = F_{2k}. $$
-$$\sum_{i=0}^{k} {k+i \choose k-i} = F_{2k+1}. $$
-$$\sum_{i=0}^n i^2 = n(n+1/2)(n+1)/3. $$
-$$\sum_{i=0}^n i^3 = (\sum_{i=0}^n i)^2.$$
-$$\sum_{i=0}^\infty 1/2^i = 2. $$
-$$\sum_{i=0}^\infty i/2^i = 4. $$
+\medskip
+\halign{# \hfil & # \hfil\cr
+$\sum_{i=0}^n 2^i = 2^{i+1}-1. $ & $\sum_{i=1}^n (2i-1) = n^2$ \cr
+$\sum_{i=0}^n i2^i = (n-1)2^{n+1} + 2.$ & $\sum_{i=0}^n {n \choose i} = 2^n.$ \cr
+$\sum_{i=r}^n {i \choose r} = {n+1 \choose r+1}.$ & $\sum_{i=0}^{k-1} {k+i \choose k-i-1} = F_{2k}. $ \cr
+$\sum_{i=0}^{k} {k+i \choose k-i} = F_{2k+1}. $ & $\sum_{i=0}^n i^2 = n(n+1/2)(n+1)/3. $ \cr
+$\sum_{i=0}^n i^3 = (\sum_{i=0}^n i)^2.$ & $\sum_{i=0}^\infty 1/2^i = 2. $ \cr
+$\sum_{i=0}^\infty i/2^i = 2. $ \cr}
 
 \subsection{Princip inkluze a exkluze}
 Velikost sjednocení mů\-že\-me po\-čí\-tat pomocí postupného při\-čí\-tá\-ní a odčítání větších
@@ -205,7 +214,7 @@ $|A|,$ kde $A = \{x ; x$ je rozmístění 8 kamenů na šachovnici $4 × 4$
 tak, že žádné 4 neleži na stejném řádku nebo sloupci$\}$.
 
 $x$ je tedy onen jev, který chceme spočítat. Všimněme si, že ho můžeme
-rozdělit na menší kusy pomocí logických spojek $\andamp$, $¬$ a $∨$:
+rozdělit na menší kusy pomocí logických spojek $∧$, $¬$ a $∨$:
 
 $A = \{x ; x$ je rozmístění 8 kamenů tak že 4 nejsou na prvním řádku
 $∧$ 4 nejsou na druhém řádku $∧$ 4 nejsou na třetím řádku \dots $\}$.
