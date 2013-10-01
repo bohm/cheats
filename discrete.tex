@@ -6,24 +6,46 @@
 
 \subsection{Množiny, relace}
 
-\dfn[Potenční množina]{$2^X \equiv$ systém všech podmnožin $X$.}
+\dfn[Potenční množina]{$2^X ≡$ systém všech podmnožin $X$.}
 
-\dfn[Relace]{Relace na $X \equiv$ podmnožina kartézského součinu $X \times X$.
+\dfn[Relace]{$R$ Relace na $X ≡$ podmnožina kartézského součinu $X \times X$.
 Lidsky řečeno, nějaká množina uspořádaných dvojic z $X$.}
 
-\dfn{Relace je \term{reflexivní}, pokud $\forall $}
+\dfn{Relace je \term{reflexivní}, pokud $∀x ∈ X: (x,x) ∈ R.$ (Zapisujeme $xRx$.)}
 
-\dfn{Relace je \term{tranzitivní} $\equiv$  .}
 
-\dfn{Relace je \term{symetrická} $\equiv$ .}
+\dfn{Relace je \term{symetrická} $≡ ∀x,y ∈ X: (xRy) → (yRx)$.}
 
-\dfn{Relace je \term{antisymetrická} $\equiv$ .}
+\dfn{Relace je \term{antisymetrická} $≡ ∀x,y ∈ X, x≠y: (xRy) → ¬(yRx)$ .}
 
-\dfn{Relace je \term{uspořádání} $\equiv$ je reflexivní, antisymetrická, tranzitivní.}
+\dfn{Relace je \term{tranzitivní} $≡ ∀x,y,z ∈ X: (xRy \andamp yRz) → (xRz)$.}
 
-\dfn{Relace je \term{ekvivalence} $\equiv$ je reflexivní, symetrická, tranzitivní.}
+\dfn{Relace je \term{uspořádání} $≡$ je reflexivní, antisymetrická, tranzitivní.}
+
+\dfn{Relace je \term{ekvivalence} $≡$ je reflexivní, symetrická, tranzitivní.}
 
 \subsection{Uspořádání}
+
+\nta{Většinou uspořádání značíme $(X,≤)$, čili píšeme $x≤y$ místo $xRy$.}
+
+\dfn{\term{Řetězec} $C ⊆ X$ je množina prvků, ktere jsou všechny navzájem uspořádané,
+čili $∀x,y ∈ C: x≤y ∨ y≤x$. Obvykle jsou uspořádané za sebou.}
+
+\dfn{\term{Antiřetězec} $A ⊆ X$ je množina prvků, kde ani jeden není menší než jiný,
+čili mezi sebou nemají žádné vztahy. $∀x,y ∈ A, x ≠ y: ¬(x≤y ∨ y ≤ x)$.}
+
+Velikost největšího řetězce v uspořádání $S$ značíme $ω(S)$, velikost největšího
+antiřetězce $α(S)$.
+
+\thm[Dlouhý a široký]{Pro uspořádání $S=(X,≤)$ platí $α(S)ω(S) ≥ |X|$. 
+}
+
+\thm[Erdös-Szekerés]{Kažďá posloupnost $n^2+1$ reálných čísel obsahuje
+monotónní posloupnost délky $n+1$.
+}
+
+\thm[Dilworth]{Každé uspořádání $S$ jde plně pokrýt $α(S)$
+disjunktních řetězců.}
 
 \subsection{Počítání}
 
@@ -55,6 +77,7 @@ $$H_0 \equiv 0, H_n \equiv \sum_{i=1}^n 1/i; H_n \approx \ln n$$
 
 {\it Binomická věta:}
 $$(x+y)^n = {n \choose 0}x^n y^0 + {n \choose 1}x^{n-1} y^1 + \dots + {n \choose n}x^0 y^n$$
+
 {\it Zobecněná binomická věta ($r$ reálné):}
 $$(x+y)^r = \sum_{i=0}^{\infty} {r \choose i} x^{i}y^{r-i} $$
 
@@ -67,8 +90,9 @@ Značení: $n = |G| = |V|$ počet vrcholů, $m = ||G|| = |E|$ počet hran.
 {\it Úplný graf} $K_n = ([n],{[n] \choose 2})$. Je-li orientovaný, říká
 se mu {\it turnaj} (mezi 2 vrcholy turnaje je jen jedna or. hrana).
 
-{\it Bipartitní graf} má dvě skupiny vrcholu, hrany jdou jen mezi skupinami.
-{\it Úplný bipartitní} $K_{m,n}$ má max. počet hran pro dané $m,n$.
+{\it Bipartitní graf} má dvě skupiny vrcholů, hrany jdou jen mezi skupinami (partitami).
+{\it Úplný bipartitní} $K_{m,n}$ má partitu velikosti $m$, partitu velikosti $n$, a hrany
+jsou všechny dvojice mezi nimi.
 
 {\it Kružnice} $C_n$ má vrcholy zapojene do řetězu. {\it Cesta} $P_n$
 je kružnice bez hrany.
@@ -93,6 +117,7 @@ do počtu vrcholů, který je zároveň stromem. Velikost největší kliky se z
 $\kappa(G)$, velikost největší nez. množiny $\alpha(G)$.
 
 
+% preferably on the second page
 \section{Techniky}
 
 \subsection{Matematická indukce}
@@ -137,7 +162,6 @@ $${n+1 \choose 2} + (n+1) = {n+2 \choose 2}.$$
 
 
 \subsection{Postup řešení sumačního příkladu}
-
 Možnosti, co lze udělat:
 \itemize\ibull
 \: Zkusit malé případy, uhodnout výsledek, dokázat indukcí.
@@ -169,6 +193,56 @@ a větších průniků (jejichž velikosti budou menší). Zapsáno matematicky:
 
 $$|\bigcup_{1\dots n} A_i| = \sum_{j\ge 0} (-1)^j \sum_{I \in {1\dots n \choose j}} |\bigcap_I A_i|$$
 
+
+{\it Přiklad: Spočítejte počet rozmístění 8 kamenů na šachovnici $4 × 4$ tak, aby žádné 4 neležely na stejném řádku nebo sloupci.}
+
+Myšlenka inkluze a exkluze spočívá v tom, že umíme náš problém
+rozdělit na nějaké části pomocí pravidelnosti. Obecně \term{jev}
+(pojem z pravděpodobnosti) bude nějaká událost, kterou budeme chtít
+spočítat nebo vyjádřit. Úkol se nás tedy ptá na:
+
+$|A|,$ kde $A = \{x ; x$ je rozmístění 8 kamenů na šachovnici $4 × 4$
+tak, že žádné 4 neleži na stejném řádku nebo sloupci$\}$.
+
+$x$ je tedy onen jev, který chceme spočítat. Všimněme si, že ho můžeme
+rozdělit na menší kusy pomocí logických spojek $\andamp$, $¬$ a $∨$:
+
+$A = \{x ; x$ je rozmístění 8 kamenů tak že 4 nejsou na prvním řádku
+$∧$ 4 nejsou na druhém řádku $∧$ 4 nejsou na třetím řádku \dots $\}$.
+
+Vidíme, že naše jevy umíme rozložit na menší části pomocí operace
+$∧$. Úplně stejně umíme rozložit i množinu $A$, akoráte pomocí operace
+$∩$ (není náhoda, že vypadá jako $∧$:
+
+Pokud $A_i ≡ \{x ; x $ je množina rozložení 8 kamenů tak, že 4 nejsou
+na $i$-tém řádku $\}$ a $B_i ≡ \{x; x $ je množina rozložení 8 kamenů
+tak, že 4 nejsou na $i$-tém sloupci $\}$, tak
+
+$$A = A_1 ∩ A_2 ∩ A_3 ∩ A_4 ∩ B_1 ∩ B_2 ∩ B_3 ∩ B_4.$$
+
+Poslední potíž máme s tím, že princip inkluze a exkluze počítá průniky
+a ne sjednocení. Na to nam ale pomohou De Morganova pravidla, platí totiž:
+
+$$\overline{A} = \overline{A_1} ∪ \overline{A_2} ∪ \overline{A_3} \dots $$
+
+Pokud přecházíme z původního problému na problém opačný, často se
+říká, že počítáme \term{špatné jevy} -- zde je vidět proč,
+$\overline{A_1} = \{x; x$ je rozmístění 8 kamenů na šachovnici tak, že
+4 kameny {\bf jsou} na prvním řádku.$\}$.
+
+Velikosti jednotlivých špatných jevů spočítáme snadno úvahou:
+$|\overline{A_i}| = |\overline{B_i}| = {12 \choose 4}$.
+
+Protože kamenů je jen $8$, tak mohou být max. dva řádky nebo sloupce
+najednou zaplněny. Z toho máme $|\overline{A_i} ∩ \overline{A_j}| =
+|\overline{B_i} ∩ \overline{B_j}| = 1$ a velikosti průniků trojic a
+výše už jsou nulové.  Ještě si rozmyslíme, že průnik řadku a sloupce
+není nulový: $|\overline{A_i} ∩ \overline{B_j}| = {9 \choose 1}$.
+
+Nyní aplikujeme princip inkluze a exkluze, jak ho známe:
+
+$$|\overline{A}| = |⋃\overline{A_i}| = ∑_i |\overline{A_i}| + ∑_i |\overline{B_i}| - ∑_{i,j}|\overline{A_i} ∩ \overline{A_j}| -$$
+$$ - ∑_{i,j} |\overline{B_i} ∩ \overline{B_j}| - ∑_{i,j}|\overline{A_i} ∩ \overline{B_j}| + 0 - 0 …$$
 
 \subsection{Diskrétní integrace}
 Místo derivace bereme diferenci, její ekvivalent v~konečném světě:
