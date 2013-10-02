@@ -59,6 +59,8 @@ do konečné množiny $N$. Pozor, $N$ není obor hodnot, zobrazení $f(x) =
 \dfn{Zobrazení $f$ je \term{surjektivní} $≡ ∀y ∈ N ∃ x ∈ M: f(x) = y$.
 Také se říká, že $f$ je \uv{na}.}
 
+\dfn{Zobrazení $f$ je \term{bijekce} $≡$ $f$ je prosté a na.}
+ 
 \subsection{Počítání}
 
 \dfn[Faktoriál]{ $n! \equiv n \cdot (n-1) \cdots 1$.}
@@ -71,7 +73,12 @@ Také se říká, že $f$ je \uv{na}.}
 $${n \choose k} \equiv {n! \over (n-k)! k!} = n^{\underline{k}} / k! = 
 {n-1 \choose k} + {n-1 \choose k-1} $$}
 
-\dfn[Stirlingova čísla (2. druhu)]{
+
+\dfn[Stirlingova čísla 1. druhu]{
+$${n \brack k} ≡ (n-1) {n-1 \brack k} + {n-1 \brack k-1}$$
+}
+
+\dfn[Stirlingova čísla 2. druhu]{
 $${n \brace k} \equiv k { n-1 \brace k} + {n-1 \brace k-1}$$
 $${n \brace k} = {1\over k!} \sum_{j=0}^k (-1)^j {k \choose j} (k-j)^n$$
 }
@@ -86,6 +93,10 @@ $$F_n = {\varphi^n - (1-\varphi)^n \over \sqrt{5}}; \varphi = (1+\sqrt{5})/2.$$
 
 {\it Harmonická posloupnost:}
 $$H_0 \equiv 0, H_n \equiv \sum_{i=1}^n 1/i; H_n \approx \ln n$$
+
+{\it Catalanova čísla/posloupnost:}
+$$C_0 = 1 , C_1 = 1, C_n = ∑_{i=0}^n (C_i C_{n-i})$$
+$$C_n = {1 \over n+1} {2n \choose n} ≈ {4^n \over n^{3/2} \sqrt{π}}.$$
 
 {\it Binomická věta:}
 $$(x+y)^n = {n \choose 0}x^n y^0 + {n \choose 1}x^{n-1} y^1 + \dots + {n \choose n}x^0 y^n$$
@@ -110,7 +121,7 @@ jsou všechny dvojice mezi nimi.
 je kružnice bez hrany.
 
 $G$ je {\it souvislý}, pokud se z~každého vrcholu dostanu po hranách do každého
-jiného. Zobecněně: Graf je (vrholově n. hranově) $(k+1)$-souvislý, pokud po odebrání
+jiného. Zobecněně: Graf je (hranově n. vrcholově) $(k+1)$-souvislý, pokud po odebrání
 $k$ (hran n. vrcholů) je graf stále souvislý. Hrana n. vrchol je {\it kritická}, pokud jejich
 odebrání sníží $k$-souvislost. $1$-kritická hrana je {\it most}, $1$-kritický vrchol
 {\it artikulace}.
