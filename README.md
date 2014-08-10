@@ -21,7 +21,7 @@ The PDF files are hosted at my university page, and will be linked below.
 
 - [Combinatorial Optimization](http://iuuk.mff.cuni.cz/~bohm/cheats/combopt.pdf) (final exam cheat sheet)
 - [Data Structures](http://iuuk.mff.cuni.cz/~bohm/cheats/datastruct.pdf) (final exam cheat sheet)
-- [Graph Theory](http://iuuk.mff.cuni.cz/~bohm/cheats/combopt.pdf) (final exam cheat sheet)
+- [Graph Theory](http://iuuk.mff.cuni.cz/~bohm/cheats/graphtheory.pdf) (final exam cheat sheet)
 - [Complexity](http://iuuk.mff.cuni.cz/~bohm/cheats/complexity.pdf) (final exam cheat sheet)
 
 
