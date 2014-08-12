@@ -1,126 +1,48 @@
-% set up PDF output here, so we won't pollute the source
-\pdfoutput=1
-\pdfpkresolution=600
+\documentclass[8pt]{extarticle}
 
-\input ucwmac
-\input ucw-ofs
+\usepackage[a4paper,margin=1cm,landscape]{geometry}
+\usepackage[utf8x]{inputenc}
+\usepackage{paralist}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{multicol}
 
-% \input color alone works on modern software, but this works on older machines also
-\input miniltx
-\input color.sty
-
-\language\czech
-
-\landscape
-
-\newcount\columnsperpage
-
-\columnsperpage=3
+\input unifix % Unicode fixes for math and others
+\pagestyle{empty}
 
 \def\versionnumber{0.01}  % Version of this reference card
 \def\year{2012}
 \def\month{January}
 \def\version{\month\ \year\ v\versionnumber}
 
-% make \bye not \outer so that the \def\bye in the \else clause below
-% can be scanned without complaint.
-\def\bye{\par\vfill\supereject\end}
+\font\titlefont=csbx12
+\font\headingfont=csbx12
+% \font\smallfont=csr6
+% \font\smallsy=cssy6
+% \font\eightrm=csr8
+% \font\eighti=csmi8
+% \font\eightsy=cssy8
+% \font\eightbf=csbx8
+% \font\eighttt=cstt8
+% \font\eightit=csti8
+% \font\eightsl=cssl8
+% \textfont0=\eightrm
+% \textfont1=\eighti
+% \textfont2=\eightsy
+% \def\rm{\eightrm}
+% \def\bf{\eightbf}
+% \def\tt{\eighttt}
+% \def\it{\eightit}
+% \def\sl{\eightsl}
+% \font\msbm=msbm8
+% \def\mathbb{\msbm}
 
-\newdimen\intercolumnskip
-\newbox\columna
-\newbox\columnb
+% \DeclareMathSizes{8}{12}{10}{6}   % For size 8 text
 
-\def\ncolumns{\the\columnsperpage}
-
-\message{[\ncolumns\space
-   column\if 1\ncolumns\else s\fi\space per page]}
-
-\def\scaledmag#1{ scaled \magstep #1}
-
-% This multi-way format was designed by Stephen Gildea
-% October 1986.
-% Modified for Czech fonts.
-
-\if 1\ncolumns
-   \hsize 4in
-   \vsize 10in
-   \voffset -.7in
-   \font\titlefont=\fontname\tenbf \scaledmag3
-   \font\headingfont=\fontname\tenbf \scaledmag2
-   \font\smallfont=\fontname\sevenrm
-   \font\smallsy=\fontname\sevensy
-
-   \footline{\hss\folio}
-   \def\makefootline{\baselineskip10pt\hsize6.5in\line{\the\footline}}
-\else
-   \hsize 3.56in
-   \vsize 7.75in
-   \hoffset -.75in
-   \voffset -.745in
-   \font\titlefont=csbx10 \scaledmag2
-   \font\headingfont=csbx10 \scaledmag1
-   \font\smallfont=csr6
-   \font\smallsy=cssy6
-   \font\eightrm=csr8
-   \font\eighti=csmi8
-   \font\eightsy=cssy8
-   \font\eightbf=csbx8
-   \font\eighttt=cstt8
-   \font\eightit=csti8
-   \font\eightsl=cssl8
-   
-   \textfont0=\eightrm
-   \textfont1=\eighti
-   \textfont2=\eightsy
-   \def\rm{\eightrm}
-   \def\bf{\eightbf}
-   \def\tt{\eighttt}
-   \def\it{\eightit}
-   \def\sl{\eightsl}
-   \font\msbm=msbm8
-   \def\mathbb{\msbm}
-   
-   \normalbaselineskip=.8\normalbaselineskip
-   \normallineskip=.8\normallineskip
-   \normallineskiplimit=.8\normallineskiplimit
-   \normalbaselines\rm          %make definitions take effect
-
-   \if 2\ncolumns
-     \let\maxcolumn=b
-     \footline{\hss\rm\folio\hss}
-     \def\makefootline{\vskip 2in \hsize=6.86in\line{\the\footline}}
-   \else \if 3\ncolumns
-     \let\maxcolumn=c
-     \nopagenumbers
-   \else
-     \errhelp{You must set \columnsperpage equal to 1, 2, or 3.}
-     \errmessage{Illegal number of columns per page}
-   \fi\fi
-
-   % \intercolumnskip=.46in
-   \intercolumnskip=.20in
-   \def\abc{a}
-   \output={%
-       % This next line is useful when designing the layout.
-       %\immediate\write16{Column \folio\abc\space starts with \firstmark}
-       \if \maxcolumn\abc \multicolumnformat \global\def\abc{a}
-       \else\if a\abc
-        \global\setbox\columna\columnbox \global\def\abc{b}
-         %% in case we never use \columnb (two-column mode)
-         \global\setbox\columnb\hbox to -\intercolumnskip{}
-       \else
-        \global\setbox\columnb\columnbox \global\def\abc{c}\fi\fi}
-   \def\multicolumnformat{\shipout\vbox{\makeheadline
-       \hbox{\box\columna\hskip\intercolumnskip
-         \box\columnb\hskip\intercolumnskip\columnbox}
-       \makefootline}\advancepageno}
-   \def\columnbox{\leftline{\pagebody}}
-
-   \def\bye{\par\vfill\supereject
-     \if a\abc \else\null\vfill\eject\fi
-     \if a\abc \else\null\vfill\eject\fi
-     \end}
-\fi
+\normalbaselineskip=.8\normalbaselineskip
+\normallineskip=.8\normallineskip
+\normallineskiplimit=.8\normallineskiplimit
+\normalbaselines\rm          %make definitions take effect
 
 \parindent 0pt
 \parskip 1ex plus .5ex minus .5ex
@@ -153,8 +75,8 @@
 \def\endtext{\endgroup}
 
 % smaller indenting of itemize lists for a compact format
-\itemindent=0.15in
-\itemnarrow=0in
+% \itemindent=0.15in
+% \itemnarrow=0in
 
 % math-related definitions (compressed than usual):
 \def\slightnegindent{\parshape 2 -3pt \hsize 0in \hsize}

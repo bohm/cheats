@@ -1,4 +1,8 @@
 \input cheatmac
+\usepackage[czech]{babel}
+\begin{document}
+\begin{multicols}{3}
+
 \title{Pravděpodobnostní metoda}
 
 
@@ -16,7 +20,7 @@ $P[|X-E[X]| ≥ λσ] ≤ {1 \over λ^2}.$
 }
 
 \prf{
-$\sigma^2 = \var[X] = E[(X - E[X])^2] \ge \lambda^2 \sigma^2 P[|X-E[X]| \ge \lambda\sigma. $
+$\sigma^2 = \var[X] = E[(X - E[X])^2] \ge \lambda^2 \sigma^2 P[|X-E[X]|] \ge \lambda\sigma. $
 }
 
 \thm[Černov]{
@@ -76,12 +80,12 @@ Union bound.
 \fsection{Náhodné permutace}
 
 \dfn{
-Systém množin $F$ {\I má průnik} pokud mají průnik všechny dvojice množin z $F$.
+Systém množin $F$ \textit{má průnik} pokud mají průnik všechny dvojice množin z $F$.
 }
 
 \thm[Slunečnicové lemma]{
 Nosná množina $n \ge 2k$. Pokud má systém
-$k-prvkových$ množin $F$ průnik, tak $|F| \le {n-1 \choose k-1}$.
+$k$-prvkových množin $F$ průnik, tak $|F| \le {n-1 \choose k-1}$.
 }
 
 \lem[Lemma pro lemma]{
@@ -104,11 +108,12 @@ Počítej dvěma způsoby.
 
 \dfn{
 Definujme $n(k,l)$ jako maximální $n \st \exists \mls A n \andamp \mls B n \st$
-\numlist\ndotted
-\:$|A_i| = k, |B_i| = l,$
-\:$A_i \cap B_i = \emptyset,$
-\:$i \neq j \then A_i \cap B_j \neq \emptyset.$
-\endlist
+
+\begin{enumerate}
+\item $|A_i| = k, |B_i| = l,$
+\item $A_i \cap B_i = \emptyset,$
+\item $i \neq j \then A_i \cap B_j \neq \emptyset.$
+\end{enumerate}
 }
 
 \thm[Bollobásovo lemma o průnicích]{
@@ -171,13 +176,13 @@ $\forall k,l \exists G \st \chi(G) > k \andamp g(G) > l$.
 
 \prf{
 Nastav $\varepsilon = 1/2l, p = n^{\varepsilon-1}$. Střední hodnota počtu cyklů
-délky $l$ je $$E[X] \le \sum_{i=3}^l n^{\varepsilon i} = o(n).$$
+délky $l$ je \[E[X] \le \sum_{i=3}^l n^{\varepsilon i} = o(n).\]
 Zvol $n \st E[X] < n/4$. To nám dá $E[X] < 1/2$, použij Markova na $P[X \ge n/2] < 1/2$.
 
 Teď počitej barevnost pomocí největší nezávislé. (Barevné třídy jsou
 nezávislé.) $a$ buď $\lceil 3/p \ln n \rceil$, pak máme
-$$P[\alpha \ge a] \le {n \choose a} (1-p)^{{a \choose 2}} \le n^a e^{-p{a \choose 2}} =
-e^{(\ln n -p(a-1)/2)a}.$$
+\[P[\alpha \ge a] \le {n \choose a} (1-p)^{{a \choose 2}} \le n^a e^{-p{a \choose 2}} =
+e^{(\ln n -p(a-1)/2)a}.\]
 
 To jde do nuly, tedy zase máme $P[\alpha] < 1/2$. Smaž jeden vrchol ze všech
 krátkých cyklů.  Zbyde půlka vrcholů, barevnost odhadni velikostí $\alpha$.
@@ -200,7 +205,7 @@ No a pokud vzdálenost je kolem $b$, pak výška musí být nejvýš $2c/b$,
 což znamená, že $R$ je v pásu šířky $4c/b$ a šířky $\sqrt{2}$. Nyní
 zintegrujeme možnosti podle $b$:
 
-$$ \int_0^{\sqrt{2}}(2 \pi b)(4 \sqrt{2} c / b) db = 16 \pi c. $$ 
+\[ \int_0^{\sqrt{2}}(2 \pi b)(4 \sqrt{2} c / b) db = 16 \pi c. \] 
 
 Zvolíme $c = 1/(100n^2)$ a spočítáme střední hodnotu počtu trojic,
 které splňují, že jejich obsah je víc než $c$. Je to $E[T] \le {2n
@@ -250,7 +255,7 @@ $H$ bipartitní graf s $\Delta = r$ v jedné partitě $\then$ $ex(n,H) \le cn^{2
 \prf{
 Vol $m = a+b$, $t = r$, $c = \max\left(a^{1/r},{3a+b \over r}\right)$, $||G|| > ex$.
 Pak $d \ge 2cn^{1-1/r}$, odhadni $r!$ pomocí $(r/e)^r$ a konečně:
-$$ (2c)^r - {n^r \over r!} {(a+b)^r \over n}^r \ge c^r \ge a. $$
+\[ (2c)^r - {n^r \over r!} {(a+b)^r \over n}^r \ge c^r \ge a. \]
 
 Pro celkové vítězství aplikujeme předchozí lemma.
 }
@@ -266,8 +271,7 @@ Vezmi náhodný součet $2m$ $0/1$-proměnných s $p=1/2$. $E[X] = m, \var[X] = 
 Pravděpodobnost, že $X$ nabyde přesně $m+k$ pro $|k| < \sqrt{m}$, 
 je nejvýš ${2m \choose m-k}2^{-2m} \le {2m \choose m}2^{-2m}$.
 Celkem tedy:
-
-$$1/2 \le \sum_{|k| < \sqrt{m}} P[X = m+k] \le (2\sqrt{m} -1) {2m \choose m} 2^{-2m}.$$
+\[1/2 \le \sum_{|k| < \sqrt{m}} P[X = m+k] \le (2\sqrt{m} -1) {2m \choose m} 2^{-2m}.\]
 }
 
 \lem[O malém rozptylu.]{
@@ -294,8 +298,8 @@ vrcholů zvlášť, navíc to ještě sečteme podle velikostí průniků $t$,  
 bude daný součet pro průniky velikosti $t$.
 
 Kovarianci dvou $k$-tic $S$,$T$ mohu odhadnout pomocí $E[X_S X_T] \le 2^{{t
-\choose 2} - 2{k \choose 2}}.$ $C(t)$ pak kombinatoricky jako $$C(t) \le {n
-\choose k}{k \choose t}{n - k \choose k - t} E[X_S X_T].$$
+\choose 2} - 2{k \choose 2}}.$ $C(t)$ pak kombinatoricky jako \[C(t) \le {n
+\choose k}{k \choose t}{n - k \choose k - t} E[X_S X_T].\]
 
 Budeme nyní chtít ulimitit $\sum_{t \ge 2}^k {C(t) \over E[X]^2 }$ do nuly,
 trikem ji rozložíme na dvě sumy: do $k/2$ a nad $k/2$.
@@ -307,16 +311,16 @@ k^2t (n^{\underline{t}} t!)^{-1} 2^{t^2/2} \le (k^2 2^{-k/2}2^{t/2})^{t}.$
 
 Sumu pak omez jako geometrickou řadu. Druhá část počítá jen s jednou mocninou
 $E[X]$. Použijeme, že $3/2 \log n \le k$.
-
-$$\eqalign{{C(t) \over E[X]} &\le {k \choose k-t} {n \choose k-t} 2^{{t \choose 2} - {k \choose 2}} \le
-(kn2^{-(k+t-1)/2})^{k-t}\cr &\le (2^{\log k + 2k/3 - 3k/4})^{k-t}.\cr}$$
-
+\begin{align*}
+{C(t) \over E[X]} &\le {k \choose k-t} {n \choose k-t} 2^{{t \choose 2} - {k \choose 2}} ≤ (kn2^{-(k+t-1)/2})^{k-t}\\
+                  &\le (2^{\log k + 2k/3 - 3k/4})^{k-t}.
+\end{align*}
 Opět omez geometrickou řadou a použij fakt, že $E[X]$ jde do nekonečna, čili to
 platí i pro druhé mocniny.
 }
 
 \dfn{
-$H$ graf je {\I balancovaný}, pokud jeho hustota je větší nebo
+$H$ graf je \textit{balancovaný}, pokud jeho hustota je větší nebo
 rovna všem jeho podgrafům.
 }
 
@@ -325,7 +329,7 @@ Pokud je $H$ balancovaný, $\rho$ jeho hustota, pak funkce $n^{-1/\rho}$ je jeho
 }
 
 \dfn{
-Množina $R \subseteq [n]$ bude mít {\I různé sumy}, pokud její všechny
+Množina $R \subseteq [n]$ bude mít \textit{různé sumy}, pokud její všechny
 sumy jsou různé. $f(n)$ je maximální velikost takové $R$.
 }
 
@@ -345,13 +349,12 @@ $P[\ldots] < 2^{-k}(\lambda n \sqrt{k} + 1)$. Spojíme nerovnosti a upravíme.
 
 \thm[Symetrické LLL]{ Buď $A_1, \dots, A_n \st P[A_i] \le p$ a všech\-ny vý\-stup\-ně v zá\-vi\-slostním
 orientovaném grafu jsou nanejvýš $d$. Pokud $ep(d+1) \le 1$, pak 
-$$P[\bigcup_{i=1}^n \overline{A_i}] > 0.$$
+\[P[\bigcup_{i=1}^n \overline{A_i}] > 0.\]
 }
 
 \thm[Asymetrické LLL]{ Buď $A_i$, nastav k nim reálné 0-1-proměnné $x_i$. Pokud platí
-$$P[A_i] \ge x_i \prod_{(i,j) \in E} (1-x_j), $$
-Pak
-$$P[\bigcap_i \overline{A_i}] \ge \prod_i (1-x_i) > 0.$$
+\[P[A_i] \ge x_i \prod_{(i,j) \in E} (1-x_j), \text{pak} \]
+\[P[\bigcap_i \overline{A_i}] \ge \prod_i (1-x_i) > 0.\]
 }
 
 \prf{Je třeba počítat $A_i$ (to, co nechceme, aby se stalo) za předpokladu, že
@@ -360,10 +363,10 @@ už se nějaka podmnožina $S$ jevů nestala. Indukcí podle $S$ dokazujeme: $ P
 Základ indukce je hned z předpokladů. Dále rozdělíme $S$ na zajímavé $(S_1)$ a nezávislé na $A_i$ $(S_2)$.
 Rozepíšeme:
 
-$$P[A_i | \bigcap_{j \in S} \overline{A_j}] =
+\[P[A_i | \bigcap_{j \in S} \overline{A_j}] =
 {P[A_i \cap \bigcap_{j \in S_1} \overline{A_j} | \bigcap_{l \in S_2} \overline{A_l}] \over
  P[\bigcap_{j \in S_1} \overline{A_j} | \bigcap_{l \in S_2} \overline{A_l}]}.
-$$
+\]
 
 Nahoře můžeme odhadnout pomocí $P[A_i | \dots]$, což dá $x_i$ z předpokladů věty,
 neboť $S_2$ byly nezávislé na $A_i$. Dole použijeme indukci: rozdělíme jmenovatel
@@ -394,7 +397,7 @@ buď přímo následníci $v$ nebo mají s $v$ společného následníka. Těch 
 $ep(d+1) \le e(1-1/k)^\delta (\delta \Delta + 1) \le 1$.
 }
 
-\dfn{Obarvěme reálná čísla $k$ barvami. $S \subseteq R$ je {\I duhová} $\equiv c(S) = [k]$.}
+\dfn{Obarvěme reálná čísla $k$ barvami. $S \subseteq R$ je \textit{duhová} $\equiv c(S) = [k]$.}
 
 \thm{$\forall k \exists m \st \forall S \subseteq R, |S|=m$, umíme nabarvit
 reálná čísla $k$ barvami tak, aby jakékoli posunutí $m$ bylo duhové.}
@@ -412,7 +415,7 @@ Nekonečně mnoho posunutí: kompaktnost.
 %\: $\sum_{(i,j) \in E} (2p)^t_j \le t_j /2$.
 %\endlist
 
-%\dfn{} Obarvení je {\I silně hvězdicové} ($\chi_h$), pokud indukovaný graf každých dvou barev
+%\dfn{} Obarvení je \textit{silně hvězdicové} ($\chi_h$), pokud indukovaný graf každých dvou barev
 %je hvězda (plus izolované vrcholy).
 
 %\thm{} Pro $G$ s $\Delta$ a $m$ hranami, $\chi_h(G) \le 14 \sqrt{\Delta m}$.
@@ -451,5 +454,5 @@ Pak $P[X < (1 - \varepsilon/2)OPT^*] \le \exp(-{\varepsilon^2 \over 10} OPT^*)
 
 Druhou stranu uděláme totožně.
 }
-
-\bye
+\end{multicols}
+\end{document}
