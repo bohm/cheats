@@ -1,4 +1,6 @@
 \input cheatmac
+\begin{document}
+\begin{multicols}{3}
 
 \def\len{{\rm len}}
 
@@ -117,10 +119,10 @@ Codomain of hash function (buckets) $M$ of size $m$. Load factor $α ≡ s/m$.}
 \section{Separated chains}
 Assume the following:
 
-\itemize\ibull
-\: $h$ splits items into buckets independently and equally. Think $h(x) = x \mod m$.
-\: $S$ is randomly independently chosen from $U$.
-\endlist
+\begin{itemize}
+\item $h$ splits items into buckets independently and equally. Think $h(x) = x \mod m$.
+\item $S$ is randomly independently chosen from $U$.
+\end{itemize}
 
 Separated chains $≡$ just linked lists for each bucket.
 
@@ -238,11 +240,11 @@ $A_{i-1}$, reworking both in the process.
 
 {\bf Lists.}
 
-\itemize\ibull
-\: MFR: move first element to front. 
-\: TR: slowly increase element's position when accessed.
-\: TIMESTAMP: have timestamps, move back based on them.
-\endlist
+\begin{itemize}
+\item MFR: move first element to front. 
+\item TR: slowly increase element's position when accessed.
+\item TIMESTAMP: have timestamps, move back based on them.
+\end{itemize}
 
 
 \thm{Expected time of MFR $P_{MFR} ≤ 2P_{OPT}$.}
@@ -275,4 +277,5 @@ Splay any element to the root.
 
 Relaxation $≡$ attempt at accomodating parallelism through laziness.
 
-\bye
+\end{multicols}
+\end{document}

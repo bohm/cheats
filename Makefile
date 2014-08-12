@@ -1,27 +1,26 @@
 texinputs := TEXINPUTS=.:macros//:
-# all: init datastruct complexity vyc1 pm palg graphtheory combopt
-all: pm
+all: init datastruct complexity vyc1 pm palg graphtheory combopt
 
 init:
 	${texinputs} pdfcsplain -ini -enc plain-utf8-cs.tex
 pm:
 	${texinputs} pdflatex pm.tex
 sandbox:
-	${texinputs} pdfcsplain -fmt plain-utf8-cs sandbox.tex
+	${texinputs} pdflatex sandbox.tex
 vyc1:
-	${texinputs} pdfcsplain -fmt plain-utf8-cs vyc1.tex
+	${texinputs} pdflatex vyc1.tex
 palg:
-	${texinputs} pdfcsplain -fmt plain-utf8-cs palg.tex
+	${texinputs} pdflatex palg.tex
 complexity:
-	${texinputs} pdfcsplain -fmt plain-utf8-cs complexity.tex
+	${texinputs} pdflatex complexity.tex
 datastruct:
-	${texinputs} pdfcsplain -fmt plain-utf8-cs datastruct.tex
+	${texinputs} pdflatex datastruct.tex
 combopt:
-	${texinputs} pdfcsplain -fmt plain-utf8-cs combopt.tex
+	${texinputs} pdflatex combopt.tex
 graphtheory:
-	${texinputs} pdfcsplain -fmt plain-utf8-cs graphtheory.tex
+	${texinputs} pdflatex graphtheory.tex
 discrete:
-	${texinputs} pdfcsplain -fmt plain-utf8-cs discrete.tex
+	${texinputs} pdflatex discrete.tex
 clean:
 	rm -f *.log *.pdf *.fmt *.aux
 

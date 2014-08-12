@@ -1,4 +1,6 @@
 \input cheatmac
+\begin{document}
+\begin{multicols}{3}
 
 \title{Graph theory}
 {\bf Note}: Strange structure due to finals topics.
@@ -54,10 +56,10 @@ $v' \not ~ v'' ∈ δ(G)$ s.t. $G - v' - v''$ conn.}
 \prf[ERT lemma]{ $G$ 3-connected: pick any non-adjacent vertices.
 
 $G$ only $2$-conn.: Pick a $x,y$ cut such that the minimal component is minimal.
-\itemize\ibull
-\: $xy \in ||G||$: Pick $v,v'$ two neighbours of $y$. Use Menger's theorem to assert
+\begin{itemize}
+\item $xy \in ||G||$: Pick $v,v'$ two neighbours of $y$. Use Menger's theorem to assert
 victory.
-\: $xy \notin ||G||$: Choose the same $v',v''$ neighbors of $y$. 
+\item $xy \notin ||G||$: Choose the same $v',v''$ neighbors of $y$. 
 Define $Z_x$: vertices connected to $x$ after removing $v',v''$. Define $Z_y$ analogously.
 
 Consider $C_0 \equiv$ the smallest $G - x -y$. Both $Z_x$ and $Z_y$ have empty intersection
@@ -65,7 +67,7 @@ with it, or we're done.
 
 In the end, only $v'$ is connected to $x$ and $y$, apply induction on $H = G/v'$. Case analysis
 based on whether or not is $H$ complete.
-\endlist
+\end{itemize}
 }
 
 \lem[Application of ERT Lemma]{$G$ 2-connected, not a Gallai block. Then it is deg-choosable.}
@@ -157,11 +159,11 @@ of size at least $εX, εY$ respectively has density $d(X,Y)$ $ε$-close to $d(A
 }
 
 \dfn{An {\it $ε$-regular partition} for given $ε$ satisfies the following:
-\itemize\ibull
-\: $|V_0| ≤ ε|V|$.
-\: $|V_i| = |V_j|$.
-\: All but most $εk^2$ pairs are not $ε$-regular.
-\endlist
+\begin{itemize}
+\item $|V_0| ≤ ε|V|$.
+\item $|V_i| = |V_j|$.
+\item All but most $εk^2$ pairs are not $ε$-regular.
+\end{itemize}
 }
 
 \lem[Regularity lemma]{For every $ε$ and every $m ∃ M$ such that every graph of size $≥ m$
@@ -236,12 +238,12 @@ have endvertices on the $2k$ disjoint paths by Menger. Connect the paths.
 \thm[Recipe Theorem]{ Let $f(G,x,y)$ be a function on graphs such that for some $α, β, γ$, it satisfies the following
 recurences:
 
-\itemize\ibull
-\: $f(\overline{K_n}) = γ^n$,
-\: $f(G) = xf(G/e)$ if $e$ is a loop,
-\: $f(G) = yf(G∖e)$ if $e$ is a coloop (bridge),
-\: $f(G) = αf(G/e) + βf(G∖e)$ otherwise.
-\endlist
+\begin{itemize}
+\item $f(\overline{K_n}) = γ^n$,
+\item $f(G) = xf(G/e)$ if $e$ is a loop,
+\item $f(G) = yf(G∖e)$ if $e$ is a coloop (bridge),
+\item $f(G) = αf(G/e) + βf(G∖e)$ otherwise.
+\end{itemize}
 Then it can be computed using the formula
 $$f(G,x,y) = γ^{c(G)} α^{r(G)} β^{r^*(G)} T(G,x/α,y/β).$$
 }
@@ -277,10 +279,10 @@ Edmonds' Algorithm: Find an Edmonds forest, contract flowers (odd cycles).
 we find a monochromatic infinite subset.}
 
 \prf{Prove it by induction on $k$, with $c$ fixed. Construct a series of sets $X_i$ and associated elements $x_i$ such that:
-\itemize\ibull
-\: $X_{i+1} = X_i - x_i.$
-\: All $k$-sets $x_i ∪ Z$ with $Z$ from $X_{i+1}$ are monochromatic with colour that we associate with $x_i$.
-\endlist
+\begin{itemize}
+\item $X_{i+1} = X_i - x_i.$
+\item All $k$-sets $x_i ∪ Z$ with $Z$ from $X_{i+1}$ are monochromatic with colour that we associate with $x_i$.
+\end{itemize}
 
 Just pick $x_i$ arbitrarily and note that if you associate the colour of $x_i$ to $k-1$-sets of $X_i - x_i$,
 you can apply induction on $k$ and get condition 2.
@@ -369,11 +371,11 @@ $k$-regular set system $F$ has an intersection, then $|F| \le {n-1 \choose k-1}$
 
 \dfn{
 Define $n(k,l)$ as maximal $n \st \exists \mls A n \andamp \mls B n \st$
-\numlist\ndotted
-\:$|A_i| = k, |B_i| = l,$
-\:$A_i \cap B_i = \emptyset,$
-\:$i \neq j \then A_i \cap B_j \neq \emptyset.$
-\endlist
+\begin{enumerate}
+\item $|A_i| = k, |B_i| = l,$
+\item $A_i \cap B_i = \emptyset,$
+\item $i \neq j \then A_i \cap B_j \neq \emptyset.$
+\end{enumerate} 
 }
 
 \thm[Bollobás' lemma on intersections]{
@@ -385,4 +387,5 @@ $n(k,l) = {k + l \choose k}$.
 \thm[Kruskal-Katona]{
 }
 
-\bye
+\end{multicols}
+\end{document}

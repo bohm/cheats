@@ -1,4 +1,7 @@
 \input cheatmac
+\usepackage[czech]{babel}
+\begin{document}
+\begin{multicols}{3}
 
 \def\DSPACE{{\rm DSPACE}}
 \def\NSPACE{{\rm NSPACE}}
@@ -29,7 +32,7 @@ as well as $f,g$. $M,N$ are DTM unless stated otherwise, $M_k$ with $k$ tapes.
 
 \fsection{Speedups and compressions}
 
-\thm[Alphabet compression.]{If $f$ is a time-constructible function $f: {\msbm N} \Natu → \Natu$ with a TM with alphabet $Γ$, then $f$ is computable
+\thm[Alphabet compression.]{If $f$ is a time-constructible function $f: \Natu → \Natu$ with a TM with alphabet $Γ$, then $f$ is computable
 in time $4 \log |Γ| T(n)$ with a 4-character alphabet TM.}
 
 \prf{Use alphabet $0,1,→,|$. Encode ternary and higher objects into binary.}
@@ -118,10 +121,10 @@ Then $f$ time-enumerable in time $O(f) ⇔ f$ time constructible.}
 \prf{ Diagonal argument. Order machines, inputs $L ≡ \{x_i | M_i$ does not accept $x_i$ in time $Φ(|x_i|) \}$.}
 
 \thm{
-\itemize\ibull
-\: $Φ, Ψ: ℕ → ℕ$ and $Ψ ∈ Ω(Φ)$ with $Ψ$ being space-constructible $→  ∃ L ∈ DSPACE(Ψ) ∖ DSPACE(Φ)$.
-\: $Φ, Ψ: ℕ → ℕ$ and $Ψ ∈ Ω(Φ \log Φ)$ with $Ψ$ being time-constructible $→ ∃ L ∈ DTIME(Ψ) ∖ DTIME(Φ)$.
-\endlist
+\begin{itemize}
+\item $Φ, Ψ: ℕ → ℕ$ and $Ψ ∈ Ω(Φ)$ with $Ψ$ being space-constructible $→  ∃ L ∈ DSPACE(Ψ) ∖ DSPACE(Φ)$.
+\item $Φ, Ψ: ℕ → ℕ$ and $Ψ ∈ Ω(Φ \log Φ)$ with $Ψ$ being time-constructible $→ ∃ L ∈ DTIME(Ψ) ∖ DTIME(Φ)$.
+\end{itemize}
 }
 
 \prf{ {\bf Part 1.} Create a machine $M$ which allocates $Ψ$ memory and accepts only if any single-tape machine
@@ -134,15 +137,15 @@ the would-be machine can be emulated safely.
 }
 
 \thm[Relationship Theorem]{
-\itemize\ibull
-\: $\DTIME  ⊆ \NTIME$.
-\: $\DSPACE ⊆ \NSPACE$.
-\: $\DTIME  ⊆ \DSPACE$.
-\: $\NTIME  ⊆ \DSPACE$ for s-c. functions.
-\: $L ∈ \DSPACE(Φ(n)) ∧ Φ(n) ≥ \log n \then L ∈ \DTIME(c_L^{Φ(n)})$, with $c_L ≡ c(L)$. 
-\: $L ∈ \NSPACE(Φ(n)) ∧ Φ(n) ≥ \log n \then L ∈ \DTIME(c_L^{Φ(n)})$, with $c_L ≡ c(L)$.
-\: $L ∈ \NTIME(Φ(n)) \then L ∈ \DTIME(c_L^{Φ(n)})$ with $c_L ≡ c(L)$.
-\endlist
+\begin{itemize}
+\item $\DTIME  ⊆ \NTIME$.
+\item $\DSPACE ⊆ \NSPACE$.
+\item $\DTIME  ⊆ \DSPACE$.
+\item $\NTIME  ⊆ \DSPACE$ for s-c. functions.
+\item $L ∈ \DSPACE(Φ(n)) ∧ Φ(n) ≥ \log n \then L ∈ \DTIME(c_L^{Φ(n)})$, with $c_L ≡ c(L)$. 
+\item $L ∈ \NSPACE(Φ(n)) ∧ Φ(n) ≥ \log n \then L ∈ \DTIME(c_L^{Φ(n)})$, with $c_L ≡ c(L)$.
+\item $L ∈ \NTIME(Φ(n)) \then L ∈ \DTIME(c_L^{Φ(n)})$ with $c_L ≡ c(L)$.
+\end{itemize}
 }
 
 \fsection{Savitch Theorem}
@@ -164,15 +167,15 @@ at every step -- $O(\log^2 n)$ units of memory in total.}
 
 Standard transformations:
 
-\pr{TILE} $∝$ \pr{SAT}: $x_{ijk} = 1 ≡$ position $(i,j)$ contains a tile of type $k$. Add clauses
+$\pr{TILE} ∝ \pr{SAT}$: $x_{ijk} = 1 ≡$ position $(i,j)$ contains a tile of type $k$. Add clauses
 that ensure validity of transformations of tiles.
 
-\pr{SAT} $∝$ \pr{3-SAT}: Unwrap the long clauses into smaller ones using substitution.
+$\pr{SAT} ∝ \pr{3-SAT}$: Unwrap the long clauses into smaller ones using substitution.
 
-\pr{3-SAT} $∝$ \pr{3-COLOR}: Set a triangle to define T/F colours. Connect all literal vertices to the
+$\pr{3-SAT} ∝ \pr{3-COLOR}$: Set a triangle to define T/F colours. Connect all literal vertices to the
 third colour. Use a gadget so that no three variables in the clause get F.
 
-\pr{SAT} $∝$ \pr{CLIQUE}: Set vertices to literals so that every clique is an internally consistent
+$\pr{SAT} ∝ \pr{CLIQUE}$: Set vertices to literals so that every clique is an internally consistent
 assignment.
 
 
@@ -239,4 +242,5 @@ pseudopolynomial algorithms.}
 Some \#P problems can be approximated easily, others not so much. Even easy problem like \#CYCLE or \#PM are hard.
 \#PM is \#P-complete.
 
-\bye
+\end{multicols}
+\end{document}

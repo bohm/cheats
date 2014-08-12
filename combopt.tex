@@ -1,6 +1,7 @@
 \input cheatmac
-
-%TODO: define \alg
+\usepackage[czech]{babel}
+\begin{document}
+\begin{multicols}{3}
 
 \def\alg{ALG}
 \def\vcorr{\vskip -2.5em}
@@ -16,11 +17,11 @@ representative.
 
 Tarjan's UF employs:
 
-\itemize\ibull
-\: Path compression -- compress any path that you go through by linking it at a root.
-\: Union by rank -- every representative remembers its $r(v)$ (rank). When doing UNION,
+\begin{itemize}
+\item Path compression -- compress any path that you go through by linking it at a root.
+\item Union by rank -- every representative remembers its $r(v)$ (rank). When doing UNION,
 declare higher ranking vertex as representative. If ranks equal, increase rank.
-\endlist
+\end{itemize}
 
 \thm{With $n$ elements, $m$ operations UNION/FIND take $O( (n+m) \log^{*} n)$.}
 
@@ -55,13 +56,13 @@ lighter if $T$ is better than another $T'$.
 Meta-algorithm: try to avoid red edges while gathering blue edges.
 
 \alg{Jarnik's algorithm with a Fib. heap}
-\itemize\ibull
-\: Put all elements in a heap.
-\: Extract minimum edge $uv$ $(u ∈ T, v ∉ T)$, add to $T$.
-\: For all neighbours $w$ of $v$ which aren't in $T$:
-\: If edge $wv$ is lighter than any edge to $w$ in heap, add it.
-\: DECREASKEY the edge that is heavier than $wv$, if you added it.
-\endlist
+\begin{itemize}
+\item Put all elements in a heap.
+\item Extract minimum edge $uv$ $(u ∈ T, v ∉ T)$, add to $T$.
+\item For all neighbours $w$ of $v$ which aren't in $T$:
+\item If edge $wv$ is lighter than any edge to $w$ in heap, add it.
+\item DECREASKEY the edge that is heavier than $wv$, if you added it.
+\end{itemize}
 
 Complexity: $O(m + n log n)$.
 
@@ -139,25 +140,25 @@ Then $∀z ∈ K$, $(z-p)^T(b-p) ≤ 0$.}
 \fsection{LP}
 
 The standard LP setting (everything without indices are vectors):
-$$ \min c^Tx, $$
+\[ \min c^Tx, \]
 \vcorr
-$$ Ax = b, $$
+\[ Ax = b, \]
 \vcorr
-$$ x ≥ 0, $$
+\[ x ≥ 0, \]
 
 We can always move to inequalities, change min to max, as long as we stay linear.
 
 \thm[Farkas Lemma]{Exactly one is true:
-\itemize\ibull
-\: $∃x≥0: Ax=b$
-\: $∃y: A^Ty ≥ 0, b^Ty < 0$.
-\endlist
+\begin{itemize}
+\item $∃x≥0: Ax=b$
+\item $∃y: A^Ty ≥ 0, b^Ty < 0$.
+\end{itemize}
 }
 
 \prf{
 
 Not two at the same time:
-$$ Ax = b → 0 ≤ x^T A^Ty = y^TAx = y^Tb < 0. $$
+\[ Ax = b → 0 ≤ x^T A^Ty = y^TAx = y^Tb < 0. \]
 
 ($¬1 → 2$): Assume no $Ax=b$. Look at cone $K = \{Ax| x≥0\}$. $b ∉ K$.
 Project $b$ onto $K$, get $p$. Use Projection Theorem: $∀z ∈ K, (z-p)^T(b-p) ≤ 0$.
@@ -170,10 +171,10 @@ $p^Ty ≠ 0$.
 }
 
 \cor{Exactly one is true:
-\itemize\ibull
-\: $∃x≥0: Ax ≤ b$,
-\: $∃y≥0: A^Ty = 0, b^Ty <0$.
-\endlist
+\begin{itemize}
+\item $∃x≥0: Ax ≤ b$,
+\item $∃y≥0: A^Ty = 0, b^Ty <0$.
+\end{itemize}
 }
 
 \subsection{Duality}
@@ -182,9 +183,9 @@ Assume minimazation. We are trying to get a lower bound on the $c^Tx$. We can do
 if we find a vector $y$ such that $y^T Ax = b^Ty$, and we try to make it happen so that
 $y^TA$ (coefficents of $x$) are below $c^T$. Therefore, we have a dual program:
 
-$$ \max b^Ty$$
+\[ \max b^Ty\]
 \vcorr
-$$ A^Ty ≤ c$$
+\[ A^Ty ≤ c\]
 
 \thm[Weak duality]{Solution of dual $w ≤ z ≡$ solution of primal.}
 
@@ -196,9 +197,9 @@ $$ A^Ty ≤ c$$
 Suppose primal bounded (and feasible), $x*$ optimum. We now look for $y$ s.t. $A^Ty ≤ c$ and
 $b^Ty ≥ z = c^Tx*$. Suppose there is none, then (applying Farkas corollary on
 modified matrices) there is $x ≥ 0, λ ≥ 0$ such that
-$$Ax = λb,$$
+\[Ax = λb,\]
 \vcorr
-$$c^Tx < λz.$$
+\[c^Tx < λz.\]
 
 If $λ ≠ 0$, we can normalize it to be $λ = 1$ and we have improvement over an
 optimum. If $λ = 0$, we can go to $-∞$ with cost.
@@ -232,9 +233,9 @@ has two $1$s, split the matrix based on the partitions.}
 \fsection{Simplex method}
 
 We work with a normalized problem, i.e.:
-$$ \min c_B x_B + c_N x_N $$
+\[ \min c_B x_B + c_N x_N \]
 \vcorr
-$$ s.t. A_B x_B + A_N x_N = b, x_B, x_N ≥ 0.$$
+\[ s.t. A_B x_B + A_N x_N = b, x_B, x_N ≥ 0.\]
 
 Idea: in a minimization problem, we can look at the solution we're in
 as a base $x_B$ (full vertices) plus additional vectors that sum us up
@@ -264,11 +265,11 @@ $Ax \leq b$ a solution or answer that it's empty.
 \dfn{A symmetric matrix $A ∈ R^{n+n}$ is positive definite, if $∀ x ≠ 0: x^T A x > 0$.}
 
 \thm{TFAE:
-\itemize\ibull
-\: All eigenvalues are positive,
-\: Inversion matrix $A^{-1}$ is also positive defiinite,
-\: $∃ U: U^TU = A$. $U$ will be denoted as $A^{1/2}$.
-\endlist
+\begin{itemize}
+\item All eigenvalues are positive,
+\item Inversion matrix $A^{-1}$ is also positive defiinite,
+\item $∃ U: U^TU = A$. $U$ will be denoted as $A^{1/2}$.
+\end{itemize}
 }
 
 \dfn{A set $\{x| (x-a)^T A^{-1} (x-a) ≤ 1\}$ is called an {\it ellipsoid} with center $a$
@@ -302,10 +303,10 @@ then all vertices of $P$ are contained within a ball of origin $(0,0)$ and radiu
 
 \subsection{Simple iteration step}
 
-$$E_k = E(0,I), H_k = \{x| x_1 \leq 0 \}.$$
+\[E_k = E(0,I), H_k = \{x| x_1 \leq 0 \}.\]
 
 Since the broken condition is in the direction of $x_1$, we want to create an ellipsoid of the form
-$$E' = \{ (x - te_1)^T Z^{-1} (x - te_1) \leq 1 \}.$$
+\[E' = \{ (x - te_1)^T Z^{-1} (x - te_1) \leq 1 \}.\]
 
 $Z$ will be diagonal. We want to ``shrink'' along $x_1$. Pick $p < 1, d > 1$ and set
 $Z$ diagonal with the diagonal $(1/p^2, 1/d^2, 1/d^2, \dots)$. We want our ellipsoid
@@ -348,14 +349,14 @@ Positive semidefinite matrix.
 
 Edmonds' polytope:
 
-$$ f ∈ R^{E(G)}: ∑_v f(e) ≤ 1$$
+\[ f ∈ R^{E(G)}: ∑_v f(e) ≤ 1\]
 \vcorr
-$$ ∑_{e∈X} f(e) ≤ |X|-1/2 {\rm\ for\ odd\ }X. $$
+\[ ∑_{e∈X} f(e) ≤ |X|-1/2 {\rm\ for\ odd\ }X. \]
 
 Perfect matching polytope has equality in the first condition and
 the second condition:
 
-$$ ∑_{e ∈ X} f(e) ≥ 1. $$
+\[ ∑_{e ∈ X} f(e) ≥ 1. \]
 
 {\dfn $r$-graph: Graph that is $r$-regular and all edge cuts of
 odd size are at of size at least $r$.}
@@ -395,13 +396,13 @@ Total complexity: $O(n^2(n + m))$.
 \alg{Dinitz}: Add augmenting flows, not just augmenting paths.
 Specifically:
 
-\itemize\ibull
-\: Create reserve network. Now we work only with that.
-\: Find shortest $s-t$ path by DFS. Cut all longer $s-t$ paths.
-\: Find blocking flow on the cleaned network. Whenever adding
+\begin{itemize}
+\item Create reserve network. Now we work only with that.
+\item Find shortest $s-t$ path by DFS. Cut all longer $s-t$ paths.
+\item Find blocking flow on the cleaned network. Whenever adding
 a $s-t$ path greedily, clean up the network.
-\: Add blocking flow. Iterate.
-\endlist
+\item Add blocking flow. Iterate.
+\end{itemize}
 
 Cleanup takes only $O(m)$ time per iteration, searching for blocking
 flow takes $O(nm)$.
@@ -433,4 +434,5 @@ Now we use the previous observation on integer Dinitz and flow size to get the r
 
 \fsection{Matroid theory}
 
-\bye
+\end{multicols}
+\end{document}

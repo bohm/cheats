@@ -1,67 +1,82 @@
 \input cheatmac
+\usepackage[czech]{babel}
+\begin{document}
+\begin{multicols}{3}
+
+\newcommand{\ORF}{{\sc ORF}}
+\newcommand{\PRF}{{\sc PRF}}
+\newcommand{\CRF}{{\sc ČRF}}
 
 \title{Vyčíslitelnost 1}
 \section{Základní funkce}
-$$\eqalign{ O(x) &= 0\cr
-S(x) &= x+1\cr
-I^j_n(x_1 \dots x_n) &= x_j\cr
-S^m_n(f, g_{[1,m]}) &= h \st h(x_{[1,n]}) \simeq f(g_1(x_{[1,n]}) \dots g_m(x_{[1,n]})) \cr
-R_n(f,g) &= h \st \cases{h(0,x_{[2,n]}) = f(x_{[2,n]}) \cr h(i, x_{[2,n]}) = g(i, h(i, x_{[2,n]}), x_{[2,n]})\cr} \cr
-M_n(f) &= h \st \cr
-h(x_{[1,n]}) &\daeq z \iff \cases{f(x_{[1,n]}, z) \daeq 0 \cr \forall j < z: f(x_{[1,n]}) \daneq 0\cr} \cr}$$
+\begin{align*}
+O(x) &= 0\\
+S(x) &= x+1\\
+I^j_n(x_1 \dots x_n) &= x_j\\
+S^m_n(f, g_{[1,m]}) &= h \st h(x_{[1,n]}) \simeq f(g_1(x_{[1,n]}) \dots g_m(x_{[1,n]})) \\
+R_n(f,g) &= h \st \begin{cases}
+h(0,x_{[2,n]}) = f(x_{[2,n]}) \\
+h(i, x_{[2,n]}) = g(i, h(i, x_{[2,n]}), x_{[2,n]})
+\end{cases} \\
+M_n(f) &= h \st \\
+h(x_{[1,n]}) &\daeq z \iff \begin{cases}
+f(x_{[1,n]}, z) \daeq 0 \\
+\forall j < z: f(x_{[1,n]}) \daneq 0
+\end{cases}
+\end{align*}
 
-\itemize{\dfn{}}
-\:  $ČRF$ -- lze ji odvodit pomocí základních funkcí.
-\:  $ORF$ -- $ČRF$ a zároveň totální (všude definovaná).
-\:  $PRF$ -- lze ji odvodit bez použití minimalizace.
-\endlist
+\begin{itemize}
+\item  \CRF -- lze ji odvodit pomocí základních funkcí.
+\item  \ORF -- \CRF a zároveň totální (všude definovaná).
+\item  \PRF -- lze ji odvodit bez použití minimalizace.
+\end{itemize}
 
-\obs{} Zneužití značení v taháku: občas $ČRF$ třída (píši $f \in ČRF$), občas zastupuje slova
-{\I částečně rekurzivní funkce} (píši) $f\ ČRF$ n. $f {\rm\ je\ } ČRF$. Mělo by být jasné
+\obs{} Zneužití značení v taháku: občas \CRF třída (píši $f \in CRF$), občas zastupuje slova
+\textit{ částečně rekurzivní funkce} (píši) $f\ CRF$ n. $f {\rm\ je\ } CRF$. Mělo by být jasné
 z kontextu.
 
-\thm{} $PRF \subset ORF \subset ČRF$.
+\thm{} $PRF \subset ORF \subset CRF$.
 
 \prf{}
 
-\itemize\ibull
-\:  $ČRF \&\neg ORF$ je prázdná funkce $f$: $g(x,y) = y+1, f = M_1(g)$.
-\:  $ORF \&\neg PRF$ je Ackermannova funkce. Dá se naprogramovat, totální též, tedy je $ORF$. Pokud však definujeme
-úrovně výpočtu pro každé $k$, tak se dokážeme pomocí $k$ for cyklů ($PRF$) dostat jen do hloubky $k$ a nikdy to
+\begin{itemize}
+\item  $CRF \&\neg ORF$ je prázdná funkce $f$: $g(x,y) = y+1, f = M_1(g)$.
+\item  $ORF \&\neg PRF$ je Ackermannova funkce. Dá se naprogramovat, totální též, tedy je \ORF. Pokud však definujeme
+úrovně výpočtu pro každé $k$, tak se dokážeme pomocí $k$ for cyklů (\PRF) dostat jen do hloubky $k$ a nikdy to
 tedy nepokryjeme celé.
-\endlist
+\end{itemize}
 
-\thm{} $TM \simeq ČRF$, co se výpočetní síly týče.
+\thm{} $TM \simeq CRF$, co se výpočetní síly týče.
 
 \prf{} 
 
 \thm{Kleene} $\forall k \ge 1:$
 
-\numlist\nalpha
-\: $\exists ČRF \Psi_k(e, \mls{x}{k})$ univerzální pro $k$ proměnných.
-\: Lze efektivně získat z funkce její $e$ a z $e$ funkci.
-\: $\exists PRF_1 U \& \exists PRF_{k+2} T_k \st$ \hfil\break
+\begin{enumerate}
+\item $\exists CRF \Psi_k(e, \mls{x}{k})$ univerzální pro $k$ proměnných.
+\item Lze efektivně získat z funkce její $e$ a z $e$ funkci.
+\item $\exists PRF_1 U \& \exists PRF_{k+2} T_k \st$ \hfil\break
 $\Psi_k(e, x_{[1,k]}) \simeq U(\mu_y(T_k(e, x_{[1,k]},y)))$
-\: $\exists PRF_{m+1} s_m$ prostá a rostoucí $\st$ \hfil\break
+\item $\exists PRF_{m+1} s_m$ prostá a rostoucí $\st$ \hfil\break
 $\Psi_{m+n}(e,y_{[1,m]},x{[1,n]}) \simeq \Psi_m\left(s_m(e,y_{[1,m]}), x_{[1,n]}\right)$
-\: Univerzální funkce je standardní.
-\endlist
+\item Univerzální funkce je standardní.
+\end{enumerate}
 
-\thm{} Univerzální $PRF$ není sama $PRF$, univerzální $ORF$ není sama $ORF$. Univerzální $PRF$ je v $ORF$.
+\thm{} Univerzální \PRF není sama \PRF, univerzální \ORF není sama \ORF. Univerzální \PRF je v \ORF.
 
 \prf{} První dvě části diagonalizací.
 
 \section{Rekurzivní spočetnost}
-\itemize{\dfn{}}
-\: $\chi \equiv$ pravdivostní funkce výroku nebo charakteristická funkce mny.
-\: $PRP/ORP$ (predikáty) $\equiv$ jeho $\chi$ je $PRF/ORF$.
-\: $RSP$ predikát $\equiv$ obor konvergence $ČRF$.
-\: $M$ mna je rekurzivní $\equiv \chi \in ORF$.
-\: $M$ mna je rekurzivně spočetná ($RSM$) $\equiv M = dom(f), f \in ČRF$.
-\: $W_x = \left\{ m | \varphi_x(m) \da \right\}.$
-\: $K = \left\{x | x \in W_x \right\}.$
-\: $K_0 = \left\{ (y,x) | y \in W_x \right\}.$
-\endlist
+\begin{itemize}
+\item $\chi \equiv$ pravdivostní funkce výroku nebo charakteristická funkce mny.
+\item $PRP/ORP$ (predikáty) $\equiv$ jeho $\chi$ je $PRF/ORF$.
+\item $RSP$ predikát $\equiv$ obor konvergence \CRF.
+\item $M$ mna je rekurzivní $\equiv \chi \in ORF$.
+\item $M$ mna je rekurzivně spočetná ($RSM$) $\equiv M = dom(f), f \in CRF$.
+\item $W_x = \left\{ m | \varphi_x(m) \da \right\}.$
+\item $K = \left\{x | x \in W_x \right\}.$
+\item $K_0 = \left\{ (y,x) | y \in W_x \right\}.$
+\end{itemize}
 
 \thm{Post} $M$ rekurzivní $\iff$ $M$ i $\overline{M}$ jsou $RSM$. $P$ je $ORP$ $\iff$ $P$ a $\neg P$ jsou $RSP$.
 
@@ -71,40 +86,41 @@ obě $RSM$. Pro výroky se to získá z věty o selektoru (níže).
 
 \thm{Vlastnosti $\Psi$}
 
-\numlist\ndotted
-\: $\Psi_k(e,x_{[1,k]})\da, \Psi_k(x_{[1,k]})\da$ jsou $RSP$, ale ne $ORP/PRP$.
-\: $\neg\left(\Psi_k(e, x_{[1,k]})\da\right), \neg\left(\Psi_k(x_{[1,k]})\da\right)$ nejsou $RSP$.
-\: $\Psi_k$ nelze rozšířit do $ORF$.
-\endlist
+\begin{enumerate}
+\item $\Psi_k(e,x_{[1,k]})\da, \Psi_k(x_{[1,k]})\da$ jsou $RSP$, ale ne $ORP/PRP$.
+\item $\neg\left(\Psi_k(e, x_{[1,k]})\da\right), \neg\left(\Psi_k(x_{[1,k]})\da\right)$ nejsou $RSP$.
+\item $\Psi_k$ nelze rozšířit do \ORF.
+\end{enumerate}
 
 \prf{}
 
-\numlist\ndotted
-\: Zřejmá.
-\: $\Psi_1(x,x)\ua$ je $RSP \then \exists g \in ČRF$ co to počítá, tedy má kód $x_0$, diagonalizační spor.
-\: Varianta důkazu, že neexistuje univerzální $PRF$.\
-\endlist
+\begin{enumerate}
+\item Zřejmá.
+\item $\Psi_1(x,x)\ua$ je $RSP \then \exists g \in CRF$ co to počítá, tedy má kód $x_0$, diagonalizační spor.
+\item Varianta důkazu, že neexistuje univerzální \PRF.\
+\end{enumerate}
 
-\thm{O selektoru} $\forall RSP_{k+1} Q \exists ČRF_k \varphi \st$
-$$\eqalign{
-\Phi(x_{[1,n]})\da &\iff \exists y: Q\left(x_{[1,n]}, y\right)\cr
-\Phi(x_{[1,n]})\da &\then Q\left(x_{[1,n]}, \varphi(x_{[1,n]})\right)\cr}$$
+\thm{O selektoru} $\forall RSP_{k+1} Q \exists CRF_k \varphi \st$
+\begin{align*}
+\Phi(x_{[1,n]})\da &\iff \exists y: Q\left(x_{[1,n]}, y\right)\\
+\Phi(x_{[1,n]})\da &\then Q\left(x_{[1,n]}, \varphi(x_{[1,n]})\right)
+\end{align*}
 
 \prf{} Pro $Q \in RSP \exists T$ Turingův stroj takový, že $T$ se zastaví a přijme vstup $\iff$ $Q(x_{[1,n]},y)$.
 
-\itemize{\res{}}
-\: $\varphi \in ČRF \iff$ má rek. spočetný graf.
-\: $\forall RSM$ je oborem hodnot nějaké $ČRF$.
-\: $\forall f \in ČRF: \rng(f) \in RSM$.
-\endlist
+\begin{itemize}
+\item $\varphi \in CRF \iff$ má rek. spočetný graf.
+\item $\forall RSM$ je oborem hodnot nějaké \CRF.
+\item $\forall f \in CRF: \rng(f) \in RSM$.
+\end{itemize}
 
 \fsection{Převoditelnost}
-\itemize{\dfn{}}
-\: $A \le_m B \equiv \exists f, f \in ORF \st x \in A \iff f(x) \in B$.
-\: $A \le_1 B \equiv f$ navíc prostá.
-\: $M$ 1-úplná $\equiv$ $M \in RSM$ a $\forall B \in RSM: B \le_1 M$.
-\: $M$ m-úplná $\equiv$ $M \in RSM$ a $\forall B \in RSM: B \le_m M$.
-\endlist
+\begin{itemize}
+\item $A \le_m B \equiv \exists f, f \in ORF \st x \in A \iff f(x) \in B$.
+\item $A \le_1 B \equiv f$ navíc prostá.
+\item $M$ 1-úplná $\equiv$ $M \in RSM$ a $\forall B \in RSM: B \le_1 M$.
+\item $M$ m-úplná $\equiv$ $M \in RSM$ a $\forall B \in RSM: B \le_m M$.
+\end{itemize}
 
 \thm{Vlastnosti $K$} $K \in RSM$, $K$ není rekurzivní, $K$ je 1-úplná.
 
@@ -124,20 +140,20 @@ $$ \alpha(x,y,w)\da \iff \varphi_{h(y,x)}(w)\da \iff  \varphi_{h(y,x)}(h(y,x))\d
 
 \obs{} $PRF, ORF$ jsou úsekové vždy.
 
-\thm{Generátory $PRM$} Rekurzivní množiny jsou právě $\rng$ rostoucích úsekových $ČRF$. 
+\thm{Generátory $PRM$} Rekurzivní množiny jsou právě $\rng$ rostoucích úsekových \CRF. 
 
 \prf{}
 
-\itemize\ibull
-\: \uv{$\then$}: očísluj prvky rek. množiny, $f(0) = \mu_x(x \in M)$, $f(k+1) = \mu_y(y > f(k), y \in M)$.
-\: \uv{$\leftarrow$}: Pokud $f$ není totální, tak ji konečným cyklem umíme
+\begin{itemize}
+\item \uv{$\then$}: očísluj prvky rek. množiny, $f(0) = \mu_x(x \in M)$, $f(k+1) = \mu_y(y > f(k), y \in M)$.
+\item \uv{$\leftarrow$}: Pokud $f$ není totální, tak ji konečným cyklem umíme
 vyčíslit, $\rng(f)$ je rekurzivní.  Pokud $f$ totální je, tak musíme pro $y$
 najít $x \st f(x) = y$ bez minimalizace. Jenže víme, že díky úsekovosti a růstu
 platí, že $\exists x: x \le f(x)$. Tak prostě najdeme horní mez pomocí $y$ a
 pak minimalizujeme.
-\endlist
+\end{itemize}
 
-\thm{} Rekurzivně spočetné množiny jsou právě obory hodnot prostých úsekových $ČRF$.
+\thm{} Rekurzivně spočetné množiny jsou právě obory hodnot prostých úsekových \CRF.
 
 \prf{} Vyrob z $\varphi$ množinu $B = \{(x,s) | \varphi(x)$ vydá $x \in M$ přesně po $s$ krocích $\}$.
 Ta je rekurzivní, takže má generátor rostoucí úsekovou $f$. Zadefinujeme $g(j) = (f(j))_{2,1}$
@@ -157,18 +173,18 @@ Ta je rekurzivní, takže má generátor rostoucí úsekovou $f$. Zadefinujeme $
 $$ Q(x,y) \iff y \in W_x \& y > 2x.$$
 Tvrdíme, že $A = \rng(\varphi)$ je simple:
 
-\itemize\ibull
-\: Obor hodnot $ČRF$ je $RSM$.
-\: $\varphi(x) > 2x$, pokud $\varphi(x) \da \then$ z množiny $[0,2x]$ jsme do $A$ dali nejvýš $x$ čísel $\then \overline{A}$
+\begin{itemize}
+\item Obor hodnot \CRF je $RSM$.
+\item $\varphi(x) > 2x$, pokud $\varphi(x) \da \then$ z množiny $[0,2x]$ jsme do $A$ dali nejvýš $x$ čísel $\then \overline{A}$
 je nekonečná.
-\: z konstrukce plyne: nepřidali jsme žádnou nekonečnou $RSM$ do $\overline{A}$.
-\endlist
+\item z konstrukce plyne: nepřidali jsme žádnou nekonečnou $RSM$ do $\overline{A}$.
+\end{itemize}
 
 $\overline{A}$ je tedy imunní.
 
 \fsection{Věty o rekurzi}
 
-\thm{První} $f \in ČRF_1 \then \exists a \st \forall x:$
+\thm{První} $f \in CRF_1 \then \exists a \st \forall x:$
 $$\varphi_{f(a)}(x) \daeq \varphi_a(x).$$
 
 \prf{} Hledané $a$ bude tvaru $a = s_1(z,z)$. Protože $s_1 \in PRF$, tak $\varphi_{f(s_1(z,x))}(x)$
@@ -176,32 +192,33 @@ je funkcí jen $z,x \then \exists e \st:$
 $$\varphi_{f(s_1(z,z))}(x) \simeq \Psi_2(e,z,x) \simeq \Psi_1(s_1(e,z),x) \simeq \varphi_{s_1(e,z)}(x).$$
 Dosaď za $z = e$, $a = s_1(e,e)$.
 \goodbreak
-\thm{Druhá} $f \in ČRF_1 \then \exists {\rm\ rostoucí\ } g \in PRF_1 \st \forall x:$
+\thm{Druhá} $f \in CRF_1 \then \exists \text{rostoucí} g \in PRF_1 \st \forall x:$
 $$ \varphi_{f(g(j))}(x) \simeq \varphi_{g(j)}(x).$$
 
 \prf{} $g(j) = s_2(z,z,j)$, vol $z = e$, podobně jako první věta.
 \goodbreak
 \thm{Třetí, pro více proměnných}
-$f \in ČRF_{n+1} \then \exists a \forall x_{[1,n]}:$
+$f \in CRF_{n+1} \then \exists a \forall x_{[1,n]}:$
 $$ \varphi_a(x_{[1,n]}) \simeq f(a,x_{[1,n]}).$$
 
 \prf{}
-\itemize\ibull
-\: Jedna proměnná: $$f(y,x) \simeq \Psi_2(e,y,x) \simeq \Psi_1(s_1(e,y),x) \simeq \varphi_{s_1(e,y)}(x).$$
+\begin{itemize}
+\item Jedna proměnná: $$f(y,x) \simeq \Psi_2(e,y,x) \simeq \Psi_1(s_1(e,y),x) \simeq \varphi_{s_1(e,y)}(x).$$
 Vol $g(y) = s_1(e,y)$, použij první větu.
-\: Více proměnných:
-$$\eqalign{
-f(y,\mls x n ) &\simeq \Psi_{n+1}(e,y,\mls x n ) \simeq \Psi_n(s_1(e,y), \mls x n )\cr
-\Psi_n(s_1(e,y), \mls x n ) &\simeq \varphi_{s_1(e,y)}(\mls x n ).\cr}$$
+\item Více proměnných:
+\begin{align*}
+f(y,\mls x n ) &\simeq \Psi_{n+1}(e,y,\mls x n ) \simeq \Psi_n(s_1(e,y), \mls x n )\\
+\Psi_n(s_1(e,y), \mls x n ) &\simeq \varphi_{s_1(e,y)}(\mls x n ).
+\end{align*}
 $s_1(e,y)$ má pevný bod $a$, vol $y = a$.
-\endlist
+\end{itemize}
 
-\thm{Čtvrtá} $f \in ČRF_{n+1} \then \exists g \in PRF_n \st \forall x,\mls y n :$
+\thm{Čtvrtá} $f \in CRF_{n+1} \then \exists g \in PRF_n \st \forall x,\mls y n :$
 $$ \varphi_{f(g(\mls y n ), \mls y n )}(x) \simeq \varphi_{g(\mls y n )}(x).$$
 
 \prf{} Vol $g(\mls y n ) = s_{n+1}(z,z,\mls y n )$, zopakuj postup stejný, jako výše.
 
-\thm{Rice} $A$ buď netriviální třída $ČRF_1 \then B = \{x | \varphi_x \in A\}$ není rekurzivní.
+\thm{Rice} $A$ buď netriviální třída $CRF_1 \then B = \{x | \varphi_x \in A\}$ není rekurzivní.
 
 \prf{} Sporem, existuje nutně $b \in B$, $c \not \in B$, zadefinuj $f(x) = b$ pokud $x \not \in B$, $c$ jinak.
 $f(x)$ je $ORF \then \exists e \st \varphi_{f(e)}(x) \simeq \varphi_e(x)$, a tedy $e \in B$ a $e \not \in B$.
@@ -210,7 +227,7 @@ $f(x)$ je $ORF \then \exists e \st \varphi_{f(e)}(x) \simeq \varphi_e(x)$, a ted
 
 \fsection{Produktivní a kreativní množiny}
 
-\dfn{} $B$ je produktivní $\equiv \exists \Phi \in ČRF \st \forall x: W_x \subseteq B \then \Phi(x) \da \& \Phi(x) \in B \ W_x$.
+\dfn{} $B$ je produktivní $\equiv \exists \Phi \in CRF \st \forall x: W_x \subseteq B \then \Phi(x) \da \& \Phi(x) \in B \ W_x$.
 
 \dfn{} Funkci $\Phi$, která dokazuje produktivitu pro $B$, také říkáme produktivní.
 
@@ -218,11 +235,11 @@ $f(x)$ je $ORF \then \exists e \st \varphi_{f(e)}(x) \simeq \varphi_e(x)$, a ted
 
 \obs{} $K$ je kreativní. $\Phi$ by byla identita.
 
-\obs{} $f$ prostá a $ORF$, pak $\{x | f(x) \not \in W_x\}$ produktivní
+\obs{} $f$ prostá a \ORF, pak $\{x | f(x) \not \in W_x\}$ produktivní
 
 \obs{} Každá produktivní množina obsahuje nekonečnou $RSM$. 
 
-\thm{O produktivní $ORF$} $\forall B$ produktivní $\exists$ produktivní $f \in ORF$.
+\thm{O produktivní \ORF} $\forall B$ produktivní $\exists$ produktivní $f \in ORF$.
 
 \prf{}
 $B$ je produktivní, $\Phi$ přiřazená produktivní funkce. Výsledkem (jako obvykle) bude
@@ -231,54 +248,54 @@ nějaká funkce $f \equiv \varphi_{g(x)}$ pro vhodné $g$.
 Nejprve pomocná funkce $\alpha(x,y,z)$: $\alpha(x,y,z)\da \iff \Phi(x)\da \& z \in W_y$.
 Použijeme $s-m-n$ větu, dostaneme:
 $$ \alpha(x,y,z) \simeq \Psi_3(e,x,y,z) \simeq \Psi_1(s_2(e,z,y),z).$$
-Zadefinuj $PRF$ $\beta(x,y) \equiv s_2(e,x,y)$. Pak platí:
+Zadefinuj \PRF $\beta(x,y) \equiv s_2(e,x,y)$. Pak platí:
 $$ \Psi_1(\beta(x,y),z) \da \iff \Phi(x)\da \& z \in W_y. $$
 Co je $W_{\beta(x,y)}$? Pokud $\Phi(x) \ua$, tak $\emptyset$, jinak $W_y$.
 
 Nyní aplikuj čtvrtou větu o rekurzi:
-$$ \exists g \in PRF: \Psi_1(\Beta(g(y),y),z) \simeq \Psi_1(g(y),z). $$
+$$ \exists g \in PRF: \Psi_1(β(g(y),y),z) \simeq \Psi_1(g(y),z). $$
 $W_g(y)$ je tedy $W_{\beta(g(y),y)}$. Když $\Psi(g(y)) \da$, tak je to rovno $W_y$. 
 Sporem dokáži, že $\Psi(g(y))$ nemůže nikdy divergovat.
  
-\thm{O produktivní $ORF$ bijekci}
-Každá produktivní množina $B$ má i příslušnou produktivní funkci, která je v $ORF$ a je bijekcí.
+\thm{O produktivní \ORF bijekci}
+Každá produktivní množina $B$ má i příslušnou produktivní funkci, která je v \ORF a je bijekcí.
 
-\prf{} Z minulé věty máme $ORF$ $f$ pro příslušnou $B$. Tu nejdřív přepočítáme na surjektivní $g$,
+\prf{} Z minulé věty máme \ORF $f$ pro příslušnou $B$. Tu nejdřív přepočítáme na surjektivní $g$,
 a nakonec i na injektivní $h$.
 
-\itemize\ibull
-\: V prvním kroku vytvoříme nekonečnou $M \st x \in M \then W_x = \omega$. Volíme programy, které
+\begin{itemize}
+\item V prvním kroku vytvoříme nekonečnou $M \st x \in M \then W_x = \omega$. Volíme programy, které
 se zastaví na každý vstup.
-\: V druhém kroku zadefinujeme $g(x)$ jako $g(x) = f(x) | x \not \in M$ a nebo $g(x) = j$, pokud $x$ je $j$-tý
+\item V druhém kroku zadefinujeme $g(x)$ jako $g(x) = f(x) | x \not \in M$ a nebo $g(x) = j$, pokud $x$ je $j$-tý
 prvek $M$. 
-\: V třetím kroku definujeme $h(x)$ jako $g(x)$, pokud neporušíme prostotu. Když ji porušíme, najdeme index
+\item V třetím kroku definujeme $h(x)$ jako $g(x)$, pokud neporušíme prostotu. Když ji porušíme, najdeme index
 $y_1$ množiny $W_{y_1} = W_x \cup \{g(x)\}$ a podíváme se na $g(y_1)$. 
 
-\numlist\ndotted
-\: Pokud $W_{y_1} \subseteq B$, tak $g(y_1) \in B \backslash W_{y_1}$. Kdyby i $g(y_1)$ se trefilo do předchozích $h(x)$, přidej předchozí $h(x)$ do $W_{y_1}$, vytvoř $y_2$ a opakuj, dokud se nedostaneš mimo předchozí hodnoty $h(x)$.
-\: Pokud $W_{y_1} \not \subseteq B$, tak zvol $h(x)$ libovolně z nových hodnot.
-\endlist
-\endlist
+\begin{enumerate}
+\item Pokud $W_{y_1} \subseteq B$, tak $g(y_1) \in B \backslash W_{y_1}$. Kdyby i $g(y_1)$ se trefilo do předchozích $h(x)$, přidej předchozí $h(x)$ do $W_{y_1}$, vytvoř $y_2$ a opakuj, dokud se nedostaneš mimo předchozí hodnoty $h(x)$.
+\item Pokud $W_{y_1} \not \subseteq B$, tak zvol $h(x)$ libovolně z nových hodnot.
+\end{enumerate}
+\end{itemize}
 
 \thm{O ekvivalenci pojmů} $\overline{K} \le_1 B \iff \overline{K} \le_m B \iff B$ je produktivní.
 
 \prf{}
-\itemize\ibull
-\: $1 \then 2$ jasné.
-\: $2 \then 3$: Ukážeme, že produktivita se zachovává vzhůru. Máme $C \le_m B$, čili
+\begin{itemize}
+\item $1 \then 2$ jasné.
+\item $2 \then 3$: Ukážeme, že produktivita se zachovává vzhůru. Máme $C \le_m B$, čili
 $x \in C \iff h(x) \in B$. Je-li $W_x \subseteq B$, tak $h^{-1}(W_x) \subseteq C$. Sestrojíme
 tedy $\beta(x,y)$ tak, aby $\beta(x,y)\da \iff h(y) \in W_x$.
-\: $3 \then 1$: Hledáme prostou $h \in ORF \st x \in \overline{K} \iff h(x) \in B$.
+\item $3 \then 1$: Hledáme prostou $h \in ORF \st x \in \overline{K} \iff h(x) \in B$.
 Zadefinuj $\beta(y,x,w) \da \iff w = f(y) \& x \in K$. Použij $s-m-n$ větu: $\alpha(y,x) = s_2(e,y,x) \then 
 W_{\alpha(y,x)} = \{ w | f(w) = f(y) \& x \in K \}$. 
 Nyní použij čtvrtou větu o rekurzi: $\exists g(x) \st \varphi_{g(x}(z) \simeq \varphi_{\alpha(g(x),x)}(z)$.
-\endlist
+\end{itemize}
 
 \fsection{Neoddělitelné množiny}
 
 \dfn{} $A,B$ jsou rekurzivně neoddělitelné $\equiv$ $\neg\exists$ rekurzivní $M \st A \subseteq M \& B \subseteq \overline{M}$.
 
-\dfn{} $A,B$ jsou efektivně neoddělitelné $\exists ČRF f \st:$
+\dfn{} $A,B$ jsou efektivně neoddělitelné $\exists CRF f \st:$
 $$(A \subseteq W_x \& B \subseteq W_y \& W_x \cap W_y = \emptyset) \then f(x,y)\da \& f(x,y) \not \in W_x \cup W_y. $$
 
 \obs{} Efektivně neoddělitelné množiny jsou rek. neoddělitelné. 
@@ -296,7 +313,7 @@ $A = \{x | \varphi_x(x) \simeq 0 \}, B = \{ x | \varphi_x(x) \simeq 1 \}$.
 
 \obs{} Efektivně neoddělitelné $RSM$ $A$ a $B$ jsou kreativní.
 
-\thm{Dvojná věta o rekurzi} Pro $ORF$ $f,g$ existují $m,n \st \varphi_m \simeq \varphi_{f(m,n)} \& \varphi_n \simeq \varphi_{g(m,n)}$.
+\thm{Dvojná věta o rekurzi} Pro \ORF $f,g$ existují $m,n \st \varphi_m \simeq \varphi_{f(m,n)} \& \varphi_n \simeq \varphi_{g(m,n)}$.
 
 \prf{} $\varphi_{f(x,y)} \then$ VR4 $\then \exists \alpha \st \varphi_{f(\alpha(y),y)} \simeq \varphi_{\alpha(y)}$.
 $\varphi_{g(\alpha(y),y)} \then$ VR1 $\then \exists n \st \varphi_{g(\alpha(n), n)} \simeq \varphi_m$. Vol $m = \alpha(n)$.
@@ -307,21 +324,22 @@ $\varphi_{g(\alpha(y),y)} \then$ VR1 $\then \exists n \st \varphi_{g(\alpha(n), 
 
 \prf{}
 
-\itemize\ibull
-\: \uv{$\then$}: $(A,B)$ 1-úplné, mohu zvolit $(C,D)$ efektivně neoddělitelné,
+\begin{itemize}
+\item \uv{$\then$}: $(A,B)$ 1-úplné, mohu zvolit $(C,D)$ efektivně neoddělitelné,
 že $(C,D) \le_1 (A,B)$. Převodem přes $h$ tam a zpět získám funkci dokazující
 neodd. $(A,B)$.
 
-\: \uv{$\leftarrow$}: Máme $(C,D)$ efekt. neodd., což dokazuje $f$, a nějaké
+\item \uv{$\leftarrow$}: Máme $(C,D)$ efekt. neodd., což dokazuje $f$, a nějaké
 $(A,B)$. Zadefinuj $W_{\gamma_1(x)}$ a $W_{\gamma_2(x)}$ takto:
-$$\eqalign{
-x \in D &\then W_{\gamma_1(x)} = A \cup \{f(\gamma_1(x), \gamma_2(x))\} \& W_{\gamma_2(x)} = B, \cr
-x \in C &\then W_{\gamma_2(x)} = B \cup \{f(\gamma_1(x), \gamma_2(x))\} \& W_{\gamma_1(x)} = A. \cr}$$
+\begin{align*}
+x \in D &\then W_{\gamma_1(x)} = A \cup \{f(\gamma_1(x), \gamma_2(x))\} \& W_{\gamma_2(x)} = B, \\
+x \in C &\then W_{\gamma_2(x)} = B \cup \{f(\gamma_1(x), \gamma_2(x))\} \& W_{\gamma_1(x)} = A.
+\end{align*}
 
 Pokud $x \not \in C \cup D$ pak $f(\gamma_1(x), \gamma_2(x)) \not \in A \cup
 B$.  Pokud $x \in C$, tak $f(\gamma_1(x), \gamma_2(x)) \in A$. Pro $x \in D$
 podobně. Složení $f$ s $\gamma_{\{1,2\}}$ tedy dokazuje $1$-úplnost.
-\endlist
+\end{itemize}
 
 \section{Gödelova věta}
 \uv{V rozumných teoriích je množina dokazatelných a vyvratitelných formulí neoddělitelná.}
@@ -330,14 +348,14 @@ podobně. Složení $f$ s $\gamma_{\{1,2\}}$ tedy dokazuje $1$-úplnost.
 
 \thm{Gödel} Jestliže teorie $T$ 1. řádu je $ZAS$ a je bezesporná:
 
-\itemize\ibull
-\: Množina dokazatalných formulí není rekurzivní.
-\: je-li $T$ axiomatizovatelná, tak $\exists$ formule $f$ nerozhodnutelná v $T$ a nelze v $T$ rozhodnout vlastní bezespornost.
-\endlist
+\begin{itemize}
+\item Množina dokazatalných formulí není rekurzivní.
+\item je-li $T$ axiomatizovatelná, tak $\exists$ formule $f$ nerozhodnutelná v $T$ a nelze v $T$ rozhodnout vlastní bezespornost.
+\end{itemize}
 
 \section{Reprezentovatelnost}
 
-\dfn{} $f \in ČRF$ je reprezentovatelná $\equiv$ $f(\mls x n ) = y \iff \vdash F( \mls x n , y)$ a také
+\dfn{} $f \in CRF$ je reprezentovatelná $\equiv$ $f(\mls x n ) = y \iff \vdash F( \mls x n , y)$ a také
 $\vdash F(\mls x n , q) \& \vdash F(\mls x n , j) \then q = j$.
 
 \dfn{} $P$ predikát je diofantický $\equiv \exists p_1, p_2$ polynomy $\st \forall \mls x n :$
@@ -347,11 +365,12 @@ $$ \exists \mls y k P(\mls x n ) \iff p_1(\mls x n , \mls y k ) = p_2(\mls x n ,
 
 \prf{} Zpětná implikace je těžká a neříká se, dopředná naopak jednoduchá -- zkoušíme všechny možnosti.
 
-\thm{} $\forall f \in ČRF, f$ je reprezentovatelná, dokonce $\exists$ formule, která ji reprezentuje ve všech teoriích.
+\thm{} $\forall f \in CRF, f$ je reprezentovatelná, dokonce $\exists$ formule, která ji reprezentuje ve všech teoriích.
 
 \prf{} Podle Matjaseviče.
 
 \res{}  Jsou-li $A$, $B$ disj. $RSM$, pak $\exists G$ formule v $\sigma_1 \st$ \dots
 
 {\tt Verze \versionnumber, chyby zaručeny.} 
-\bye
+\end{multicols}
+\end{document}
