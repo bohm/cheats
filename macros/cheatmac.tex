@@ -1,4 +1,4 @@
-\documentclass[8pt]{extarticle}
+\documentclass[8pt]{extarticle} % extarticle handles 8pt
 
 \usepackage[a4paper,margin=1cm,landscape]{geometry}
 \usepackage[utf8x]{inputenc}
@@ -11,34 +11,13 @@
 \input unifix % Unicode fixes for math and others
 \pagestyle{empty}
 
-\def\versionnumber{0.01}  % Version of this reference card
-\def\year{2012}
-\def\month{January}
+\def\versionnumber{0.02}  % Version of this reference card
+\def\year{2014}
+\def\month{August}
 \def\version{\month\ \year\ v\versionnumber}
 
 \font\titlefont=csbx12
 \font\headingfont=csbx12
-% \font\smallfont=csr6
-% \font\smallsy=cssy6
-% \font\eightrm=csr8
-% \font\eighti=csmi8
-% \font\eightsy=cssy8
-% \font\eightbf=csbx8
-% \font\eighttt=cstt8
-% \font\eightit=csti8
-% \font\eightsl=cssl8
-% \textfont0=\eightrm
-% \textfont1=\eighti
-% \textfont2=\eightsy
-% \def\rm{\eightrm}
-% \def\bf{\eightbf}
-% \def\tt{\eighttt}
-% \def\it{\eightit}
-% \def\sl{\eightsl}
-% \font\msbm=msbm8
-% \def\mathbb{\msbm}
-
-% \DeclareMathSizes{8}{12}{10}{6}   % For size 8 text
 
 \normalbaselineskip=.8\normalbaselineskip
 \normallineskip=.8\normallineskip
@@ -173,6 +152,11 @@
     \statement
 }
 
+% set paralist's compact itemize as default
+\let\oldenumerate\enumerate
+\let\olditemize\itemize
+\renewcommand{\itemize}{\compactitem}
+\renewcommand{\enumerate}{\compactenum}
 
 \def\andamp{\mathop\&}
 
