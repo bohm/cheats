@@ -23,7 +23,7 @@ The PDF files are hosted at my university page, and will be linked below.
 - [Data Structures](http://iuuk.mff.cuni.cz/~bohm/cheats/datastruct.pdf) (final exam cheat sheet)
 - [Graph Theory](http://iuuk.mff.cuni.cz/~bohm/cheats/graphtheory.pdf) (final exam cheat sheet)
 - [Complexity](http://iuuk.mff.cuni.cz/~bohm/cheats/complexity.pdf) (final exam cheat sheet)
-
+- [General Math for CS](https://www.cosy.sbg.ac.at/~held/teaching/aads/TCS-cheat_sheet.pdf)
 
 
 #### Czech cheat sheets
